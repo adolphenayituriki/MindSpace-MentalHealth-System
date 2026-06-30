@@ -103,13 +103,17 @@ export default function Sidebar() {
   const { darkMode, toggleDark } = useTheme();
   const location = useLocation();
   const navigate = useNavigate();
-  const [expanded, setExpanded] = useState(false);
+  const [expanded, setExpanded] = useState(window.innerWidth >= 768);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
 
-  const close = useCallback(() => setExpanded(false), []);
+  const close = useCallback(() => { if (isMobile) setExpanded(false); }, [isMobile]);
 
   useEffect(() => {
-    const handleResize = () => setIsMobile(window.innerWidth < 768);
+    const handleResize = () => {
+      const mobile = window.innerWidth < 768;
+      setIsMobile(mobile);
+      if (!mobile) setExpanded(true);
+    };
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);

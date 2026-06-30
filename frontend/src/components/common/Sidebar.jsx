@@ -113,7 +113,6 @@ function MobileNav({ items, activePath, color }) {
               background: isActive ? `${color}18` : 'transparent',
               color: isActive ? (color || 'var(--primary)') : 'var(--text-muted)',
             }}>{item.icon}</span>
-            {isActive && <span className="mobile-nav-label" style={{ color: color || 'var(--primary)' }}>{item.label}</span>}
           </Link>
         );
       })}
@@ -216,6 +215,47 @@ export default function Sidebar() {
           </div>
 
           <nav className="sidebar-nav">
+            {isAdmin && (
+              <div className="sidebar-role-banner" style={{ background: '#EF444418', color: '#EF4444', borderBottom: '1px solid #EF444420' }}>
+                {'\u{1F6E1}\uFE0F'} Admin Panel
+              </div>
+            )}
+            {isCounselor && (
+              <div className="sidebar-role-banner" style={{ background: '#6366F118', color: '#6366F1', borderBottom: '1px solid #6366F120' }}>
+                {'\u{1F9D1}\u200D\u2695\uFE0F'} Counselor Workspace
+              </div>
+            )}
+
+            <NavSection items={navItems} startIdx={0} activePath={activePath} onClose={() => setShowMore(false)} />
+
+            {isAdmin && (
+              <NavSection
+                title="Management"
+                items={[
+                  { to: '/admin?tab=users', label: 'Users', icon: '\u{1F465}', desc: 'Manage accounts & roles' },
+                  { to: '/admin?tab=healing', label: 'Healing', icon: '\u{1F33F}', desc: 'Manage resources' },
+                  { to: '/admin?tab=counselors', label: 'Counselors', icon: '\u{1F9D1}\u200D\u2695\uFE0F', desc: 'Manage counselors' },
+                  { to: '/admin?tab=crisis', label: 'Crisis', icon: '\u{1F6E1}\uFE0F', desc: 'Manage crisis resources' },
+                  { to: '/admin?tab=communities', label: 'Communities', icon: '\u{1F3E0}', desc: 'Manage communities' },
+                ]}
+                startIdx={navItems.length}
+                activePath={activePath}
+                onClose={() => setShowMore(false)}
+              />
+            )}
+
+            {isCounselor && (
+              <NavSection
+                title="Resources"
+                items={[
+                  { to: '/healing', label: 'Healing Tools', icon: '\u{1F33F}', desc: 'Self-care resources' },
+                ]}
+                startIdx={navItems.length}
+                activePath={activePath}
+                onClose={() => setShowMore(false)}
+              />
+            )}
+
             <NavSection items={bottomItems} startIdx={0} activePath={activePath} onClose={() => setShowMore(false)} />
           </nav>
 

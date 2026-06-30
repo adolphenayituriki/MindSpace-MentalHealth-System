@@ -52,39 +52,30 @@ function ActionCard({ to, icon, label, desc, color }) {
   return (
     <Link to={to} style={{ textDecoration: 'none', display: 'block' }}>
       <motion.div
-        whileHover={{ y: -3 }}
+        whileHover={{ y: -2 }}
         whileTap={{ scale: 0.97 }}
         style={{
-          padding: '1.15rem 1.25rem',
+          padding: '0.7rem 0.9rem',
           cursor: 'pointer',
           display: 'flex',
           alignItems: 'center',
-          gap: '0.85rem',
+          gap: '0.65rem',
           background: 'var(--bg-card)',
-          border: '1.5px solid var(--border)',
-          borderRadius: 'var(--radius-lg)',
-          position: 'relative',
-          overflow: 'hidden',
+          border: '1px solid var(--border)',
+          borderRadius: 'var(--radius)',
           transition: 'border-color 0.2s, transform 0.2s',
         }}
-        onMouseEnter={(e) => { e.currentTarget.style.borderColor = color || 'var(--primary)'; }}
-        onMouseLeave={(e) => { e.currentTarget.style.borderColor = 'var(--border)'; }}
       >
         <div style={{
-          position: 'absolute', top: 0, left: 0, right: 0, height: '3px',
-          background: color || 'var(--primary)',
-          opacity: 0.6,
-        }} />
-        <div style={{
-          fontSize: '1.3rem', flexShrink: 0,
-          width: '44px', height: '44px',
+          fontSize: '1.1rem', flexShrink: 0,
+          width: '34px', height: '34px',
           display: 'flex', alignItems: 'center', justifyContent: 'center',
           background: `${color}14`,
           borderRadius: 'var(--radius)',
         }}>{icon}</div>
         <div style={{ flex: 1, minWidth: 0 }}>
-          <div style={{ fontWeight: 600, color: 'var(--text)', fontSize: '0.92rem' }}>{label}</div>
-          <div style={{ fontSize: '0.78rem', color: 'var(--text-secondary)', marginTop: '0.1rem', lineHeight: 1.4 }}>{desc}</div>
+          <div style={{ fontWeight: 600, color: 'var(--text)', fontSize: '0.84rem' }}>{label}</div>
+          <div style={{ fontSize: '0.7rem', color: 'var(--text-secondary)', marginTop: '0.05rem', lineHeight: 1.3 }}>{desc}</div>
         </div>
       </motion.div>
     </Link>
@@ -124,7 +115,7 @@ function UserDashboard({ user, lang, greeting }) {
         </div>
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '0.85rem', marginBottom: '1.5rem' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(170px, 1fr))', gap: '0.65rem', marginBottom: '1.5rem' }}>
         <ActionCard to="/reflect" icon={'\u{1F4AD}'} label={lang === 'rw' ? 'Ganira' : 'Reflect'} desc={lang === 'rw' ? 'Vugana n\'umujyanama w\'ubuzima' : 'Chat with your AI guide'} color="#0D9488" />
         <ActionCard to="/mood" icon={'\u{1F60A}'} label={lang === 'rw' ? 'Ibyiyumvo' : 'Mood'} desc={lang === 'rw' ? 'Andika uko umeze' : 'Log how you feel'} color="#F97316" />
         <ActionCard to="/journal" icon={'\u{1F4DD}'} label={lang === 'rw' ? 'Inyandiko' : 'Journal'} desc={lang === 'rw' ? 'Andika ibiri ku mutima' : 'Write your thoughts'} color="#8B5CF6" />

@@ -170,9 +170,6 @@ export default function Sidebar() {
     return (
       <>
         <header className="mobile-topbar">
-          <Link to="/" className="mobile-topbar-logo">
-            MindSpace
-          </Link>
           <motion.button
             className="hamburger"
             onClick={() => setShowMore((v) => !v)}
@@ -181,6 +178,9 @@ export default function Sidebar() {
           >
             <span /><span /><span />
           </motion.button>
+          <Link to="/" className="mobile-topbar-logo">
+            MindSpace
+          </Link>
         </header>
 
         <MobileNav items={navItems} activePath={activePath} color={accentColor} />

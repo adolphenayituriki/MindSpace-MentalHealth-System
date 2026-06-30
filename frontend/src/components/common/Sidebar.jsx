@@ -126,6 +126,7 @@ export default function Sidebar() {
   const { darkMode, toggleDark } = useTheme();
   const location = useLocation();
   const navigate = useNavigate();
+  const [collapsed, setCollapsed] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
   const [showMore, setShowMore] = useState(false);
@@ -317,11 +318,20 @@ export default function Sidebar() {
 
   return (
     <>
-      <aside className="sidebar">
+      <aside className={`sidebar ${collapsed ? 'sidebar-collapsed' : ''}`}>
         <div className="sidebar-header">
           <Link to="/" className="sidebar-logo">
             MindSpace
           </Link>
+          <motion.button
+            className="sidebar-collapse-btn"
+            onClick={() => setCollapsed((v) => !v)}
+            title={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
+          >
+            {collapsed ? '\u25B6' : '\u25C0'}
+          </motion.button>
         </div>
 
         <nav className="sidebar-nav">

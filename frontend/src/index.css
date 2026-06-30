@@ -859,10 +859,46 @@ a { color: var(--primary); text-decoration: none; }
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  color: #fff;
+  color: var(--primary);
   z-index: 0;
   pointer-events: none;
-  opacity: 0.6;
+  opacity: 0.9;
+}
+.hero-heart-lines path {
+  stroke-dasharray: 800;
+  stroke-dashoffset: 800;
+  animation: drawHeart 4s ease-in-out infinite;
+}
+.hero-heart-lines line {
+  stroke-dasharray: 120;
+  stroke-dashoffset: 120;
+  animation: drawLine 4s ease-in-out infinite;
+}
+.hero-heart-lines circle {
+  animation: fadeDot 4s ease-in-out infinite;
+}
+@keyframes drawHeart {
+  0% { stroke-dashoffset: 800; opacity: 0; }
+  15% { opacity: 1; }
+  40% { stroke-dashoffset: 0; opacity: 1; }
+  70% { opacity: 1; }
+  85% { opacity: 0; stroke-dashoffset: 0; }
+  100% { stroke-dashoffset: 800; opacity: 0; }
+}
+@keyframes drawLine {
+  0% { stroke-dashoffset: 120; opacity: 0; }
+  25% { opacity: 1; }
+  45% { stroke-dashoffset: 0; opacity: 1; }
+  70% { opacity: 1; }
+  85% { opacity: 0; stroke-dashoffset: 0; }
+  100% { stroke-dashoffset: 120; opacity: 0; }
+}
+@keyframes fadeDot {
+  0%, 15% { opacity: 0; }
+  30% { opacity: 0.9; }
+  70% { opacity: 0.9; }
+  85% { opacity: 0; }
+  100% { opacity: 0; }
 }
 
 .home-hero-content {

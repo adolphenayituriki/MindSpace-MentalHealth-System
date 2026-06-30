@@ -66,9 +66,10 @@ const accentColors = ['#0D9488', '#0891B2', '#6366F1', '#D97706', '#8B5CF6', '#E
 
 const heroSlides = [
   '/kigali.jpg',
+  '/kigali1.jpg',
+  '/kigali2.jpg',
+  '/kigali3.jpg',
   '/image.jpg',
-  '/image-2.jpg',
-  '/image-3.jpg',
 ];
 
 const partners = [
@@ -96,14 +97,14 @@ export default function HomePage() {
       {/* ─── HERO ─── */}
       <section className="home-hero">
         <div className="home-hero-bg">
-          <AnimatePresence mode="wait">
+          <AnimatePresence>
             <motion.div
               key={slideIdx}
               className="hero-slide"
-              initial={{ opacity: 0, scale: 1.08 }}
-              animate={{ opacity: 1, scale: 1 }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              transition={{ duration: 1, ease: 'easeInOut' }}
+              transition={{ duration: 1.2, ease: 'easeInOut' }}
               style={{ backgroundImage: `url(${heroSlides[slideIdx]})` }}
             />
           </AnimatePresence>

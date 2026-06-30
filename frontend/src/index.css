@@ -41,7 +41,8 @@
   --nav-height: 58px;
 }
 
-.dark {
+.dark,
+html.dark {
   --primary: #14B8A6;
   --primary-hover: #2DD4BF;
   --primary-light: #134E4A;
@@ -78,6 +79,7 @@ body {
   color: var(--text);
   line-height: 1.6;
   min-height: 100vh;
+  transition: background 0.3s ease, color 0.3s ease;
 }
 
 a { color: var(--primary); text-decoration: none; }
@@ -1280,6 +1282,12 @@ a { color: var(--primary); text-decoration: none; }
 }
 .dark .home-footer {
   background: #060C10;
+}
+.dark .scroll-progress-bar {
+  box-shadow: 0 0 8px rgba(20,184,166,0.5);
+}
+.dark .toast-item {
+  backdrop-filter: blur(8px);
 }
 
 .footer-inner {

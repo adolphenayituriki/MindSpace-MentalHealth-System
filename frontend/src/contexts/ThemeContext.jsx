@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useState, useEffect } from 'react';
 
 const ThemeContext = createContext(null);
 
@@ -6,6 +6,16 @@ export function ThemeProvider({ children }) {
   const [darkMode, setDarkMode] = useState(
     () => localStorage.getItem('mindspace_dark') === 'true'
   );
+
+  useEffect(() => {
+    if (darkMode) {
+      document.documentElement.classList.add('dark');
+      document.body.style.background = '#0B1121';
+    } else {
+      document.documentElement.classList.remove('dark');
+      document.body.style.background = '#F8FAFC';
+    }
+  }, [darkMode]);
 
   const toggleDark = () => {
     setDarkMode((prev) => {
@@ -16,7 +26,7 @@ export function ThemeProvider({ children }) {
 
   return (
     <ThemeContext.Provider value={{ darkMode, toggleDark }}>
-      <div className={darkMode ? 'dark' : 'light'}>{children}</div>
+      <div className={darkMode ? 'dark' : ''}>{children}</div>
     </ThemeContext.Provider>
   );
 }

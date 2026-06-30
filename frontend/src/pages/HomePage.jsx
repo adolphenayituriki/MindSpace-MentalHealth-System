@@ -81,15 +81,53 @@ const partners = [
   { name: 'UNICEF Rwanda', icon: '\u{1F49C}' },
 ];
 
+const modalContent = {
+  about: {
+    title: 'About MindSpace',
+    body: `MindSpace is a digital mental health platform built by Rwandans for Rwandans. We believe that mental health support should be accessible, anonymous, and culturally grounded — no matter who you are or where you live.
+
+Our platform connects users with mood tracking, guided journaling, peer support communities, professional counseling, and crisis resources — all in one secure space.
+
+We work closely with the Rwanda Biomedical Center (RBC), the Ministry of Health, and local healthcare providers to ensure our resources are accurate, relevant, and trustworthy.`,
+  },
+  mission: {
+    title: 'Our Mission',
+    body: `To break the silence around mental health in Rwanda by providing a free, anonymous, and culturally sensitive digital safe space where every Rwandan can understand, track, and improve their mental well-being.
+
+We envision a Rwanda where seeking mental health support is as natural as visiting a health center — where no one suffers in silence, and where every individual has the tools they need to thrive.
+
+Our approach is rooted in community, confidentiality, and cultural relevance — meeting people where they are, in the languages they speak.`,
+  },
+};
+
 export default function HomePage() {
   const { user } = useAuth();
   const [slideIdx, setSlideIdx] = useState(0);
+  const [modalKey, setModalKey] = useState(null);
 
   useEffect(() => {
     const timer = setInterval(() => {
       setSlideIdx((p) => (p + 1) % heroSlides.length);
     }, 5000);
     return () => clearInterval(timer);
+  }, []);
+
+  const openModal = (key) => setModalKey(key);
+  const closeModal = () => setModalKey(null);
+
+  useEffect(() => {
+    if (modalKey) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => { document.body.style.overflow = ''; };
+  }, [modalKey]);
+
+  useEffect(() => {
+    const handleKey = (e) => { if (e.key === 'Escape') closeModal(); };
+    window.addEventListener('keydown', handleKey);
+    return () => window.removeEventListener('keydown', handleKey);
   }, []);
 
   return (
@@ -302,11 +340,20 @@ export default function HomePage() {
               <div key={group.title} className="footer-group">
                 <h4>{group.title}</h4>
                 <ul>
-                  {group.links.map((l) => (
-                    <li key={l.label}>
-                      <Link to={l.to}>{l.label}</Link>
-                    </li>
-                  ))}
+                    {group.links.map((l) => {
+                      const modalKey = { 'About Us': 'about', 'Our Mission': 'mission' }[l.label];
+                      return (
+                        <li key={l.label}>
+                          {modalKey ? (
+                            <button className="footer-link-btn" onClick={() => openModal(modalKey)}>
+                              {l.label}
+                            </button>
+                          ) : (
+                            <Link to={l.to}>{l.label}</Link>
+                          )}
+                        </li>
+                      );
+                    })}
                 </ul>
               </div>
             ))}
@@ -321,6 +368,40 @@ export default function HomePage() {
           </p>
         </div>
       </footer>
+      {/* ─── ABOUT / MISSION MODAL ─── */}
+      <AnimatePresence>
+        {modalKey && (
+          <motion.div
+            className="modal-overlay"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            onClick={closeModal}
+          >
+            <motion.div
+              className="modal-content"
+              initial={{ opacity: 0, scale: 0.95, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 20 }}
+              transition={{ duration: 0.25, ease: 'easeOut' }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="modal-header">
+                <h3>{modalContent[modalKey]?.title}</h3>
+                <button className="modal-close" onClick={closeModal} aria-label="Close">
+                  &times;
+                </button>
+              </div>
+              <div className="modal-body">
+                {modalContent[modalKey]?.body.split('\n\n').map((p, i) => (
+                  <p key={i}>{p}</p>
+                ))}
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

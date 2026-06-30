@@ -1,6 +1,6 @@
-import { useState, useEffect, useCallback, useRef } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { useTranslation } from '../../i18n/i18n';
 import { useAuth } from '../../contexts/AuthContext';
 import { useTheme } from '../../contexts/ThemeContext';
@@ -45,20 +45,6 @@ const USER_BOTTOM = [
   { to: '/crisis', label: 'Crisis Support', icon: '\u{1F6E1}', desc: 'Get help now' },
 ];
 
-const overlayVariants = {
-  visible: { opacity: 1 },
-  hidden: { opacity: 0 },
-};
-
-const navItemVariants = {
-  hidden: { opacity: 0, x: -16 },
-  visible: (i) => ({
-    opacity: 1,
-    x: 0,
-    transition: { delay: i * 0.035, duration: 0.2, ease: 'easeOut' },
-  }),
-};
-
 function SidebarLink({ to, icon, label, desc, active, onClick }) {
   return (
     <Link
@@ -76,47 +62,22 @@ function SidebarLink({ to, icon, label, desc, active, onClick }) {
   );
 }
 
-function NavSection({ title, items, startIdx, activePath, onClose }) {
+function NavSection({ title, items, activePath, onClose }) {
   return (
     <div className="sidebar-section">
       {title && <div className="sidebar-section-title">{title}</div>}
-      {items.map((l, i) => (
-        <motion.div
+      {items.map((l) => (
+        <SidebarLink
           key={l.to}
-          custom={startIdx + i}
-          variants={navItemVariants}
-          initial="hidden"
-          animate="visible"
-        >
-          <SidebarLink
-            to={l.to}
-            icon={l.icon}
-            label={l.label}
-            desc={l.desc}
-            active={activePath === l.to}
-            onClick={onClose}
-          />
-        </motion.div>
+          to={l.to}
+          icon={l.icon}
+          label={l.label}
+          desc={l.desc}
+          active={activePath === l.to}
+          onClick={onClose}
+        />
       ))}
     </div>
-  );
-}
-
-function MobileNav({ items, activePath, color }) {
-  return (
-    <nav className="mobile-nav">
-      {items.map((item) => {
-        const isActive = activePath === item.to;
-        return (
-          <Link key={item.to} to={item.to} className="mobile-nav-link">
-            <span className="mobile-nav-icon" style={{
-              background: isActive ? `${color}18` : 'transparent',
-              color: isActive ? (color || 'var(--primary)') : 'var(--text-muted)',
-            }}>{item.icon}</span>
-          </Link>
-        );
-      })}
-    </nav>
   );
 }
 
@@ -126,12 +87,10 @@ export default function Sidebar() {
   const { darkMode, toggleDark } = useTheme();
   const location = useLocation();
   const navigate = useNavigate();
-  const [collapsed, setCollapsed] = useState(false);
-  const [menuOpen, setMenuOpen] = useState(false);
+  const [expanded, setExpanded] = useState(false);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
-  const [showMore, setShowMore] = useState(false);
 
-  const closeMenu = useCallback(() => setMenuOpen(false), []);
+  const close = useCallback(() => setExpanded(false), []);
 
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth < 768);
@@ -139,20 +98,18 @@ export default function Sidebar() {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  useEffect(() => {
-    closeMenu();
-  }, [location.pathname, closeMenu]);
+  useEffect(() => { close(); }, [location.pathname, close]);
 
   useEffect(() => {
-    document.body.style.overflow = menuOpen ? 'hidden' : '';
+    document.body.style.overflow = (isMobile && expanded) ? 'hidden' : '';
     return () => { document.body.style.overflow = ''; };
-  }, [menuOpen]);
+  }, [isMobile, expanded]);
 
   useEffect(() => {
-    const handleKey = (e) => { if (e.key === 'Escape') closeMenu(); };
+    const handleKey = (e) => { if (e.key === 'Escape') close(); };
     window.addEventListener('keydown', handleKey);
     return () => window.removeEventListener('keydown', handleKey);
-  }, [closeMenu]);
+  }, [close]);
 
   const toggleLang = () => {
     const next = getLanguage() === 'rw' ? 'en' : 'rw';
@@ -165,173 +122,44 @@ export default function Sidebar() {
   const bottomItems = isAdmin ? ADMIN_BOTTOM : isCounselor ? COUNSELOR_BOTTOM : USER_BOTTOM;
   const activePath = location.pathname;
   const accentColor = isAdmin ? '#EF4444' : isCounselor ? '#6366F1' : '#0D9488';
-
-  if (isMobile) {
-    return (
-      <>
-        <header className="mobile-topbar">
-          <motion.button
-            className="hamburger"
-            onClick={() => setShowMore((v) => !v)}
-            aria-label="More options"
-            whileTap={{ scale: 0.9 }}
-          >
-            <span /><span /><span />
-          </motion.button>
-          <Link to="/" className="mobile-topbar-logo">
-            MindSpace
-          </Link>
-        </header>
-
-        <MobileNav items={navItems} activePath={activePath} color={accentColor} />
-
-        <AnimatePresence>
-          {showMore && (
-            <motion.div
-              className="sidebar-overlay visible"
-              variants={overlayVariants}
-              initial="hidden"
-              animate="visible"
-              exit="hidden"
-              transition={{ duration: 0.2 }}
-              onClick={() => setShowMore(false)}
-              aria-hidden="true"
-            />
-          )}
-        </AnimatePresence>
-
-        <aside className={`sidebar mobile-drawer ${showMore ? 'open' : ''}`}>
-          <div className="sidebar-header">
-            <Link to="/" className="sidebar-logo" onClick={() => setShowMore(false)}>
-              MindSpace
-            </Link>
-            <motion.button
-              className="hamburger open"
-              onClick={() => setShowMore(false)}
-              aria-label="Close menu"
-              whileTap={{ scale: 0.9 }}
-            >
-              <span /><span /><span />
-            </motion.button>
-          </div>
-
-          <nav className="sidebar-nav">
-            {isAdmin && (
-              <div className="sidebar-role-banner" style={{ background: '#EF444418', color: '#EF4444', borderBottom: '1px solid #EF444420' }}>
-                {'\u{1F6E1}\uFE0F'} Admin Panel
-              </div>
-            )}
-            {isCounselor && (
-              <div className="sidebar-role-banner" style={{ background: '#6366F118', color: '#6366F1', borderBottom: '1px solid #6366F120' }}>
-                {'\u{1F9D1}\u200D\u2695\uFE0F'} Counselor Workspace
-              </div>
-            )}
-
-            <NavSection items={navItems} startIdx={0} activePath={activePath} onClose={() => setShowMore(false)} />
-
-            {isAdmin && (
-              <NavSection
-                title="Management"
-                items={[
-                  { to: '/admin?tab=users', label: 'Users', icon: '\u{1F465}', desc: 'Manage accounts & roles' },
-                  { to: '/admin?tab=healing', label: 'Healing', icon: '\u{1F33F}', desc: 'Manage resources' },
-                  { to: '/admin?tab=counselors', label: 'Counselors', icon: '\u{1F9D1}\u200D\u2695\uFE0F', desc: 'Manage counselors' },
-                  { to: '/admin?tab=crisis', label: 'Crisis', icon: '\u{1F6E1}\uFE0F', desc: 'Manage crisis resources' },
-                  { to: '/admin?tab=communities', label: 'Communities', icon: '\u{1F3E0}', desc: 'Manage communities' },
-                ]}
-                startIdx={navItems.length}
-                activePath={activePath}
-                onClose={() => setShowMore(false)}
-              />
-            )}
-
-            {isCounselor && (
-              <NavSection
-                title="Resources"
-                items={[
-                  { to: '/healing', label: 'Healing Tools', icon: '\u{1F33F}', desc: 'Self-care resources' },
-                ]}
-                startIdx={navItems.length}
-                activePath={activePath}
-                onClose={() => setShowMore(false)}
-              />
-            )}
-
-            <NavSection items={bottomItems} startIdx={0} activePath={activePath} onClose={() => setShowMore(false)} />
-          </nav>
-
-          <div className="sidebar-footer">
-            <div className="sidebar-controls">
-              <motion.button
-                className="sidebar-icon-btn"
-                onClick={toggleLang}
-                title="Switch language"
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
-              >
-                {getLanguage() === 'rw' ? 'EN' : 'RW'}
-              </motion.button>
-              <motion.button
-                className="sidebar-icon-btn"
-                onClick={toggleDark}
-                title={darkMode ? 'Light mode' : 'Dark mode'}
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
-              >
-                {darkMode ? '\u2600' : '\u263E'}
-              </motion.button>
-            </div>
-
-            <motion.div
-              className="sidebar-user"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.25, duration: 0.3 }}
-            >
-              <div className="sidebar-avatar" style={{
-                background: accentColor,
-              }}>
-                {(user?.displayName || 'G').charAt(0)}
-              </div>
-              <div className="sidebar-user-info">
-                <span className="sidebar-user-name">{user?.displayName || 'Guest'}</span>
-                <span className="sidebar-user-tag" style={{ textTransform: 'capitalize' }}>
-                  {isAdmin ? 'Admin' : isCounselor ? 'Counselor' : user?.isAnonymous ? 'Anonymous' : 'User'}
-                </span>
-              </div>
-              <motion.button
-                className="sidebar-logout"
-                onClick={() => { logout(); navigate('/'); setShowMore(false); }}
-                title="Log out"
-                whileHover={{ backgroundColor: 'rgba(239,68,68,0.12)', borderColor: 'var(--danger)' }}
-                whileTap={{ scale: 0.97 }}
-              >
-                <span>{'\u{23FB}'}</span>
-                <span>{getLanguage() === 'rw' ? 'Sohoka' : 'Logout'}</span>
-              </motion.button>
-            </motion.div>
-          </div>
-        </aside>
-      </>
-    );
-  }
+  const showExpanded = expanded && !isMobile;
+  const sidebarExpanded = expanded || (!isMobile && !expanded ? false : expanded);
 
   return (
     <>
-      <aside className={`sidebar ${collapsed ? 'sidebar-collapsed' : ''}`}>
+      {/* Mobile top bar */}
+      <header className="mobile-topbar">
+        <motion.button
+          className="hamburger"
+          onClick={() => setExpanded((v) => !v)}
+          aria-label="Toggle menu"
+          whileTap={{ scale: 0.9 }}
+        >
+          <span /><span /><span />
+        </motion.button>
+        <Link to="/" className="mobile-topbar-logo">MindSpace</Link>
+      </header>
+
+      {/* Mobile overlay */}
+      {isMobile && expanded && (
+        <div className="sidebar-overlay visible" onClick={close} aria-hidden="true" />
+      )}
+
+      {/* Sidebar - always visible on both desktop and mobile */}
+      <aside className={`sidebar ${!expanded ? 'sidebar-collapsed' : ''} ${isMobile ? 'sidebar-mobile' : ''}`}>
         <div className="sidebar-header">
-          <Link to="/" className="sidebar-logo">
-            MindSpace
-          </Link>
-          <motion.button
-            className="sidebar-collapse-btn"
-            onClick={() => setCollapsed((v) => !v)}
-            title={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
-          >
-            {collapsed ? '\u25B6' : '\u25C0'}
-          </motion.button>
+          <Link to="/" className="sidebar-logo" onClick={close}>MindSpace</Link>
+          {!isMobile && (
+            <motion.button
+              className="sidebar-collapse-btn"
+              onClick={() => setExpanded((v) => !v)}
+              title={expanded ? 'Collapse' : 'Expand'}
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
+            >
+              {expanded ? '\u25C0' : '\u25B6'}
+            </motion.button>
+          )}
         </div>
 
         <nav className="sidebar-nav">
@@ -346,7 +174,7 @@ export default function Sidebar() {
             </div>
           )}
 
-          <NavSection items={navItems} startIdx={0} activePath={activePath} onClose={() => {}} />
+          <NavSection items={navItems} activePath={activePath} onClose={close} />
 
           {isAdmin && (
             <NavSection
@@ -358,9 +186,8 @@ export default function Sidebar() {
                 { to: '/admin?tab=crisis', label: 'Crisis', icon: '\u{1F6E1}\uFE0F', desc: 'Manage crisis resources' },
                 { to: '/admin?tab=communities', label: 'Communities', icon: '\u{1F3E0}', desc: 'Manage communities' },
               ]}
-              startIdx={navItems.length}
               activePath={activePath}
-              onClose={() => {}}
+              onClose={close}
             />
           )}
 
@@ -370,15 +197,14 @@ export default function Sidebar() {
               items={[
                 { to: '/healing', label: 'Healing Tools', icon: '\u{1F33F}', desc: 'Self-care resources' },
               ]}
-              startIdx={navItems.length}
               activePath={activePath}
-              onClose={() => {}}
+              onClose={close}
             />
           )}
         </nav>
 
         <div className="sidebar-footer">
-          <NavSection items={bottomItems} startIdx={0} activePath={activePath} onClose={() => {}} />
+          <NavSection items={bottomItems} activePath={activePath} onClose={close} />
 
           <div className="sidebar-controls">
             <motion.button
@@ -407,9 +233,7 @@ export default function Sidebar() {
             animate={{ opacity: 1 }}
             transition={{ delay: 0.25, duration: 0.3 }}
           >
-            <div className="sidebar-avatar" style={{
-              background: accentColor,
-            }}>
+            <div className="sidebar-avatar" style={{ background: accentColor }}>
               {(user?.displayName || 'G').charAt(0)}
             </div>
             <div className="sidebar-user-info">
@@ -420,7 +244,7 @@ export default function Sidebar() {
             </div>
             <motion.button
               className="sidebar-logout"
-              onClick={() => { logout(); navigate('/'); }}
+              onClick={() => { logout(); navigate('/'); close(); }}
               title="Log out"
               whileHover={{ backgroundColor: 'rgba(239,68,68,0.12)', borderColor: 'var(--danger)' }}
               whileTap={{ scale: 0.97 }}

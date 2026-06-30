@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useAuth } from '../contexts/AuthContext';
 import { useTranslation } from '../i18n/i18n';
+import { useToast } from '../contexts/ToastContext';
 import { adminAPI, healingAPI, counselingAPI, crisisAPI, communityAPI } from '../services/api';
 
 const TABS = ['stats', 'users', 'healing', 'counselors', 'crisis', 'communities', 'assessments', 'courses', 'bookings'];
@@ -252,6 +253,7 @@ function UsersPanel({ lang }) {
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
   const [saving, setSaving] = useState(false);
+  const toast = useToast();
 
   const fetchUsers = useCallback(() => {
     setLoading(true);
@@ -261,19 +263,32 @@ function UsersPanel({ lang }) {
   useEffect(() => { fetchUsers(); }, [fetchUsers]);
 
   const handleRole = (id, role) => {
-    adminAPI.updateUserRole(id, role).then(fetchUsers).catch(() => {});
+    adminAPI.updateUserRole(id, role).then(() => {
+      toast?.success(lang === 'rw' ? 'Uruhare rwahinduwe' : 'Role updated');
+      fetchUsers();
+    }).catch(() => {
+      toast?.error(lang === 'rw' ? 'Ibyakozwe byanze' : 'Failed to update role');
+    });
   };
   const handleDelete = (id) => {
     if (!window.confirm(lang === 'rw' ? 'Ukuraho uyu mukoresha?' : 'Delete this user?')) return;
-    adminAPI.deleteUser(id).then(fetchUsers).catch(() => {});
+    adminAPI.deleteUser(id).then(() => {
+      toast?.success(lang === 'rw' ? 'Yakuvuyemo neza' : 'User deleted');
+      fetchUsers();
+    }).catch(() => {
+      toast?.error(lang === 'rw' ? 'Ibyakozwe byanze' : 'Delete failed');
+    });
   };
   const handleCreate = async (data) => {
     setSaving(true);
     try {
       await adminAPI.createUser(data);
+      toast?.success(lang === 'rw' ? 'Umukoresha yakozwe' : 'User created');
       setShowForm(false);
       fetchUsers();
-    } catch (_) {}
+    } catch (_) {
+      toast?.error(lang === 'rw' ? 'Ibyakozwe byanze' : 'Failed to create user');
+    }
     setSaving(false);
   };
 
@@ -373,6 +388,7 @@ function CrudPanel({
   const [editing, setEditing] = useState(null);
   const [showForm, setShowForm] = useState(false);
   const [saving, setSaving] = useState(false);
+  const toast = useToast();
 
   const fetchItems = useCallback(() => {
     setLoading(true);
@@ -391,18 +407,27 @@ function CrudPanel({
       const payload = transformSave ? transformSave(data) : data;
       if (editing) {
         await updateFn(editing[itemKey], payload);
+        toast?.success(lang === 'rw' ? 'Byahinduwe neza' : 'Updated successfully');
       } else {
         await createFn(payload);
+        toast?.success(lang === 'rw' ? 'Byakozwe neza' : 'Created successfully');
       }
       closeForm();
       fetchItems();
-    } catch (_) {}
+    } catch (_) {
+      toast?.error(lang === 'rw' ? 'Ibyakozwe byanze' : 'Action failed');
+    }
     setSaving(false);
   };
 
   const handleDelete = (id) => {
     if (!window.confirm(lang === 'rw' ? 'Ukuraho?' : 'Delete?')) return;
-    deleteFn(id).then(fetchItems).catch(() => {});
+    deleteFn(id).then(() => {
+      toast?.success(lang === 'rw' ? 'Byakuvuyemo neza' : 'Deleted successfully');
+      fetchItems();
+    }).catch(() => {
+      toast?.error(lang === 'rw' ? 'Ibyakozwe byanze' : 'Delete failed');
+    });
   };
 
   const getInitial = (item) => transformInitial ? transformInitial(item) : (item || {});
@@ -758,6 +783,7 @@ function CoursesPanel({ lang }) {
 function BookingsPanel({ lang }) {
   const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(true);
+  const toast = useToast();
 
   const fetchBookings = useCallback(() => {
     setLoading(true);
@@ -768,7 +794,12 @@ function BookingsPanel({ lang }) {
 
   const handleDelete = (id) => {
     if (!window.confirm(lang === 'rw' ? 'Ukuraho iki cyanya?' : 'Delete this booking?')) return;
-    adminAPI.deleteBooking(id).then(fetchBookings).catch(() => {});
+    adminAPI.deleteBooking(id).then(() => {
+      toast?.success(lang === 'rw' ? 'Cyakuvuyemo neza' : 'Booking deleted');
+      fetchBookings();
+    }).catch(() => {
+      toast?.error(lang === 'rw' ? 'Ibyakozwe byanze' : 'Delete failed');
+    });
   };
 
   if (loading) return <LoadingSkeleton />;

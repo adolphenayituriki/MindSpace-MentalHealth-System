@@ -23,8 +23,13 @@ export function ToastProvider({ children }) {
     setToasts((prev) => prev.filter((t) => t.id !== id));
   }, []);
 
+  const success = useCallback((msg) => addToast(msg, 'success'), [addToast]);
+  const error = useCallback((msg) => addToast(msg, 'error'), [addToast]);
+  const info = useCallback((msg) => addToast(msg, 'info'), [addToast]);
+  const warning = useCallback((msg) => addToast(msg, 'warning'), [addToast]);
+
   return (
-    <ToastContext.Provider value={{ toasts, addToast, removeToast }}>
+    <ToastContext.Provider value={{ toasts, addToast, removeToast, success, error, info, warning }}>
       {children}
     </ToastContext.Provider>
   );

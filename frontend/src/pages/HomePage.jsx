@@ -65,6 +65,7 @@ const stagger = {
 const accentColors = ['#0D9488', '#0891B2', '#6366F1', '#D97706', '#8B5CF6', '#EC4899'];
 
 const heroSlides = [
+  '/kigali.jpg',
   '/image.jpg',
   '/image-2.jpg',
   '/image-3.jpg',

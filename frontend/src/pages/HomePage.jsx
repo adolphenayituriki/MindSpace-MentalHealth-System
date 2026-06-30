@@ -183,6 +183,21 @@ export default function HomePage() {
           <div className="hero-shape hero-shape-1" />
           <div className="hero-shape hero-shape-2" />
           <div className="hero-shape hero-shape-3" />
+          <svg className="hero-heart-lines" viewBox="0 0 200 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M100 170 C40 120, 10 80, 10 50 C10 25, 30 10, 50 10 C70 10, 85 25, 100 45 C115 25, 130 10, 150 10 C170 10, 190 25, 190 50 C190 80, 160 120, 100 170Z"
+              stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" fill="none" opacity="0.15" />
+            <line x1="100" y1="45" x2="100" y2="135" stroke="currentColor" strokeWidth="1" opacity="0.1" />
+            <line x1="35" y1="40" x2="88" y2="80" stroke="currentColor" strokeWidth="1" opacity="0.08" />
+            <line x1="165" y1="40" x2="112" y2="80" stroke="currentColor" strokeWidth="1" opacity="0.08" />
+            <line x1="40" y1="90" x2="95" y2="110" stroke="currentColor" strokeWidth="1" opacity="0.08" />
+            <line x1="160" y1="90" x2="105" y2="110" stroke="currentColor" strokeWidth="1" opacity="0.08" />
+            <circle cx="50" cy="30" r="2.5" fill="currentColor" opacity="0.2" />
+            <circle cx="150" cy="30" r="2.5" fill="currentColor" opacity="0.2" />
+            <circle cx="100" cy="45" r="2.5" fill="currentColor" opacity="0.2" />
+            <circle cx="100" cy="170" r="3" fill="currentColor" opacity="0.25" />
+            <circle cx="15" cy="55" r="2" fill="currentColor" opacity="0.15" />
+            <circle cx="185" cy="55" r="2" fill="currentColor" opacity="0.15" />
+          </svg>
         </div>
         <div className="home-hero-content">
           <motion.h1

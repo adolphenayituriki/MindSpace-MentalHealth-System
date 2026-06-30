@@ -852,6 +852,19 @@ a { color: var(--primary); text-decoration: none; }
   to { transform: translate(-40%, -40%) scale(1.1); }
 }
 
+.hero-heart-lines {
+  position: absolute;
+  width: 320px;
+  height: auto;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #fff;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.6;
+}
+
 .home-hero-content {
   position: relative;
   z-index: 2;

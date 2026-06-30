@@ -1,5 +1,6 @@
+import { useState, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useTranslation } from '../i18n/i18n';
 import { useAuth } from '../contexts/AuthContext';
 
@@ -63,14 +64,50 @@ const stagger = {
 
 const accentColors = ['#0D9488', '#0891B2', '#6366F1', '#D97706', '#8B5CF6', '#EC4899'];
 
+const heroSlides = [
+  '/image.jpg',
+  '/image-2.jpg',
+  '/image-3.jpg',
+];
+
+const partners = [
+  { name: 'ICT Chamber', icon: '\u{1F4F1}' },
+  { name: 'RBC', icon: '\u{2695}\uFE0F' },
+  { name: 'MOH Rwanda', icon: '\u{1F3E5}' },
+  { name: 'CHUB', icon: '\u{1F3E2}' },
+  { name: 'WHO Rwanda', icon: '\u{1F30D}' },
+  { name: 'UNICEF Rwanda', icon: '\u{1F49C}' },
+];
+
 export default function HomePage() {
   const { user } = useAuth();
+  const [slideIdx, setSlideIdx] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setSlideIdx((p) => (p + 1) % heroSlides.length);
+    }, 5000);
+    return () => clearInterval(timer);
+  }, []);
 
   return (
     <div className="home-page">
       {/* ─── HERO ─── */}
       <section className="home-hero">
-        <div className="home-hero-bg" />
+        <div className="home-hero-bg">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={slideIdx}
+              className="hero-slide"
+              initial={{ opacity: 0, scale: 1.08 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 1, ease: 'easeInOut' }}
+              style={{ backgroundImage: `url(${heroSlides[slideIdx]})` }}
+            />
+          </AnimatePresence>
+        </div>
+        <div className="home-hero-bg-fallback" />
         <div className="hero-shapes">
           <div className="hero-shape hero-shape-1" />
           <div className="hero-shape hero-shape-2" />
@@ -213,6 +250,30 @@ export default function HomePage() {
           <Link to={user ? '/dashboard' : '/onboarding'} className="btn btn-primary btn-lg">
             {user ? 'Go to Dashboard' : 'Get Started Free'}
           </Link>
+        </div>
+      </section>
+
+      {/* ─── PARTNERS ─── */}
+      <section className="home-section home-partners-section">
+        <div className="section-heading">
+          <h2>Trusted Partners</h2>
+          <p>Working together to make mental health support accessible to all Rwandans</p>
+        </div>
+        <div className="partners-grid">
+          {partners.map((p, i) => (
+            <motion.div
+              key={p.name}
+              className="partner-logo"
+              custom={i}
+              variants={stagger}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+            >
+              <span className="partner-icon">{p.icon}</span>
+              <span className="partner-name">{p.name}</span>
+            </motion.div>
+          ))}
         </div>
       </section>
 

@@ -5,6 +5,9 @@ const CrisisResource = require('../models/CrisisResource');
 const Community = require('../models/Community');
 const Mood = require('../models/Mood');
 const CounselingSession = require('../models/CounselingSession');
+const { Assessment, AssessmentResult } = require('../models/Assessment');
+const { Course, Enrollment } = require('../models/Course');
+const { Booking } = require('../models/Booking');
 
 exports.getStats = async (req, res, next) => {
   try {
@@ -162,6 +165,113 @@ exports.updateCommunity = async (req, res, next) => {
 exports.deleteCommunity = async (req, res, next) => {
   try {
     await Community.findByIdAndDelete(req.params.id);
+    res.json({ message: 'Deleted' });
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.createUser = async (req, res, next) => {
+  try {
+    const { email, password, displayName, role, language } = req.body;
+    const existing = await User.findOne({ email });
+    if (existing) return res.status(409).json({ error: 'Email already in use' });
+    const user = await User.create({ email, password, displayName, role: role || 'user', language: language || 'en' });
+    res.status(201).json({ user });
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.listAssessments = async (req, res, next) => {
+  try {
+    const assessments = await Assessment.find().sort({ createdAt: -1 });
+    res.json({ assessments });
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.createAssessment = async (req, res, next) => {
+  try {
+    const assessment = await Assessment.create(req.body);
+    res.status(201).json({ assessment });
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.updateAssessment = async (req, res, next) => {
+  try {
+    const assessment = await Assessment.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    if (!assessment) return res.status(404).json({ error: 'Assessment not found' });
+    res.json({ assessment });
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.deleteAssessment = async (req, res, next) => {
+  try {
+    await Assessment.findByIdAndDelete(req.params.id);
+    res.json({ message: 'Deleted' });
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.listCourses = async (req, res, next) => {
+  try {
+    const courses = await Course.find().sort({ createdAt: -1 });
+    res.json({ courses });
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.createCourse = async (req, res, next) => {
+  try {
+    const course = await Course.create(req.body);
+    res.status(201).json({ course });
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.updateCourse = async (req, res, next) => {
+  try {
+    const course = await Course.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    if (!course) return res.status(404).json({ error: 'Course not found' });
+    res.json({ course });
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.deleteCourse = async (req, res, next) => {
+  try {
+    await Course.findByIdAndDelete(req.params.id);
+    res.json({ message: 'Deleted' });
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.listAllBookings = async (req, res, next) => {
+  try {
+    const bookings = await Booking.find()
+      .populate('user', 'displayName email')
+      .populate('counselor', 'fullName')
+      .sort({ date: -1 });
+    res.json({ bookings });
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.deleteBooking = async (req, res, next) => {
+  try {
+    await Booking.findByIdAndDelete(req.params.id);
     res.json({ message: 'Deleted' });
   } catch (error) {
     next(error);

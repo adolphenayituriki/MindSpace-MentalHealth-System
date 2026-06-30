@@ -99,6 +99,7 @@ export const chatAPI = {
 export const adminAPI = {
   getStats: () => callApi(() => api.get('/admin/stats')),
   getUsers: () => callApi(() => api.get('/admin/users')),
+  createUser: (data) => callApi(() => api.post('/admin/users', data)),
   updateUserRole: (userId, role) => callApi(() => api.patch(`/admin/users/${userId}/role`, { role })),
   deleteUser: (userId) => callApi(() => api.delete(`/admin/users/${userId}`)),
   createHealingResource: (data) => callApi(() => api.post('/admin/healing', data)),
@@ -113,6 +114,16 @@ export const adminAPI = {
   createCommunity: (data) => callApi(() => api.post('/admin/communities', data)),
   updateCommunity: (id, data) => callApi(() => api.put(`/admin/communities/${id}`, data)),
   deleteCommunity: (id) => callApi(() => api.delete(`/admin/communities/${id}`)),
+  getAssessments: () => callApi(() => api.get('/admin/assessments')),
+  createAssessment: (data) => callApi(() => api.post('/admin/assessments', data)),
+  updateAssessment: (id, data) => callApi(() => api.put(`/admin/assessments/${id}`, data)),
+  deleteAssessment: (id) => callApi(() => api.delete(`/admin/assessments/${id}`)),
+  getCourses: () => callApi(() => api.get('/admin/courses')),
+  createCourse: (data) => callApi(() => api.post('/admin/courses', data)),
+  updateCourse: (id, data) => callApi(() => api.put(`/admin/courses/${id}`, data)),
+  deleteCourse: (id) => callApi(() => api.delete(`/admin/courses/${id}`)),
+  getAllBookings: () => callApi(() => api.get('/admin/bookings')),
+  deleteBooking: (id) => callApi(() => api.delete(`/admin/bookings/${id}`)),
 };
 
 export const assessmentAPI = {

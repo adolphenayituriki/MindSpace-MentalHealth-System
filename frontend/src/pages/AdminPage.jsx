@@ -5,7 +5,7 @@ import { useAuth } from '../contexts/AuthContext';
 import { useTranslation } from '../i18n/i18n';
 import { adminAPI, healingAPI, counselingAPI, crisisAPI, communityAPI } from '../services/api';
 
-const TABS = ['stats', 'users', 'healing', 'counselors', 'crisis', 'communities'];
+const TABS = ['stats', 'users', 'healing', 'counselors', 'crisis', 'communities', 'assessments', 'courses', 'bookings'];
 
 const TAB_ICONS = {
   stats: '\u{1F4CA}',
@@ -14,6 +14,9 @@ const TAB_ICONS = {
   counselors: '\u{1F9D1}\u200D\u2695\uFE0F',
   crisis: '\u{1F6E1}\uFE0F',
   communities: '\u{1F3E0}',
+  assessments: '\u{1F9E9}',
+  courses: '\u{1F4DA}',
+  bookings: '\u{1F4C5}',
 };
 
 const LABELS = {
@@ -23,6 +26,9 @@ const LABELS = {
   counselors: { en: 'Counselors', rw: 'Abajyanama' },
   crisis: { en: 'Crisis Resources', rw: 'Ibikoresho by\'ihutirwa' },
   communities: { en: 'Communities', rw: 'Imiryango' },
+  assessments: { en: 'Assessments', rw: 'Ibizamini' },
+  courses: { en: 'Courses', rw: 'Amasomo' },
+  bookings: { en: 'Bookings', rw: 'Gufata icyanya' },
 };
 
 function Modal({ open, title, onClose, children }) {
@@ -192,6 +198,9 @@ export default function AdminPage() {
           {tab === 'counselors' && <CounselorsPanel lang={lang} />}
           {tab === 'crisis' && <CrisisPanel lang={lang} />}
           {tab === 'communities' && <CommunitiesPanel lang={lang} />}
+          {tab === 'assessments' && <AssessmentsPanel lang={lang} />}
+          {tab === 'courses' && <CoursesPanel lang={lang} />}
+          {tab === 'bookings' && <BookingsPanel lang={lang} />}
         </motion.div>
       </AnimatePresence>
     </motion.div>
@@ -241,6 +250,8 @@ function StatsPanel({ lang }) {
 function UsersPanel({ lang }) {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [showForm, setShowForm] = useState(false);
+  const [saving, setSaving] = useState(false);
 
   const fetchUsers = useCallback(() => {
     setLoading(true);
@@ -256,63 +267,95 @@ function UsersPanel({ lang }) {
     if (!window.confirm(lang === 'rw' ? 'Ukuraho uyu mukoresha?' : 'Delete this user?')) return;
     adminAPI.deleteUser(id).then(fetchUsers).catch(() => {});
   };
+  const handleCreate = async (data) => {
+    setSaving(true);
+    try {
+      await adminAPI.createUser(data);
+      setShowForm(false);
+      fetchUsers();
+    } catch (_) {}
+    setSaving(false);
+  };
 
   if (loading) return <LoadingSkeleton />;
 
   const roleColors = { admin: '#EF4444', counselor: '#6366F1', user: '#0D9488' };
 
+  const userFields = [
+    { key: 'displayName', label: 'Display Name', type: 'text', required: true },
+    { key: 'email', label: 'Email', type: 'email', required: true },
+    { key: 'password', label: 'Password', type: 'text', required: true },
+    { key: 'role', label: 'Role', type: 'select', options: ['user', 'counselor', 'admin'], required: true },
+    { key: 'language', label: 'Language', type: 'select', options: ['en', 'rw'] },
+  ];
+
   return (
-    <div className="card" style={{ padding: 0, overflow: 'hidden' }}>
-      <div style={{ overflowX: 'auto' }}>
-        <table className="admin-table" style={{ minWidth: '600px' }}>
-          <thead>
-            <tr>
-              <th>{lang === 'rw' ? 'Izina' : 'Name'}</th>
-              <th>{lang === 'rw' ? 'Email' : 'Email'}</th>
-              <th>{lang === 'rw' ? 'Ururimi' : 'Lang'}</th>
-              <th>{lang === 'rw' ? 'Uruhare' : 'Role'}</th>
-              <th style={{ textAlign: 'right' }}>{lang === 'rw' ? 'Ibyakozwe' : 'Actions'}</th>
-            </tr>
-          </thead>
-          <tbody>
-            {users.map((u) => (
-              <tr key={u._id}>
-                <td><strong>{u.displayName || u.anonymousId}</strong></td>
-                <td style={{ fontSize: '0.82rem', color: 'var(--text-secondary)' }}>{u.email || '\u2014'}</td>
-                <td>{u.language?.toUpperCase()}</td>
-                <td>
-                  <span
-                    className="admin-badge"
-                    style={{
-                      background: `${roleColors[u.role] || '#6B7280'}18`,
-                      color: roleColors[u.role] || '#6B7280',
-                      border: `1px solid ${roleColors[u.role] || '#6B7280'}30`,
-                      fontWeight: 600,
-                    }}
-                  >
-                    {u.role}
-                  </span>
-                  <select
-                    className="admin-select"
-                    value={u.role}
-                    onChange={(e) => handleRole(u._id, e.target.value)}
-                    disabled={u._id === users[0]?._id}
-                    style={{ marginLeft: '0.4rem', fontSize: '0.75rem', padding: '0.15rem 0.3rem' }}
-                  >
-                    <option value="user">user</option>
-                    <option value="counselor">counselor</option>
-                    <option value="admin">admin</option>
-                  </select>
-                </td>
-                <td style={{ textAlign: 'right' }}>
-                  <button className="btn btn-sm btn-danger" onClick={() => handleDelete(u._id)} style={{ fontSize: '0.75rem' }}>
-                    {lang === 'rw' ? 'Kuraho' : 'Delete'}
-                  </button>
-                </td>
+    <div>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
+        <span style={{ fontSize: '0.85rem', color: 'var(--text-secondary)' }}>
+          {users.length} {users.length === 1 ? (lang === 'rw' ? 'umukoresha' : 'user') : (lang === 'rw' ? 'abakoresha' : 'users')}
+        </span>
+        <button className="btn btn-primary btn-sm" onClick={() => setShowForm(true)}>
+          + {lang === 'rw' ? 'Ongeraho umukoresha' : 'Add User'}
+        </button>
+      </div>
+
+      <Modal open={showForm} title={lang === 'rw' ? 'Ongeraho umukoresha' : 'Add User'} onClose={() => setShowForm(false)}>
+        <AdminForm fields={userFields} initial={{}} onSave={handleCreate} onCancel={() => setShowForm(false)} saving={saving} lang={lang} />
+      </Modal>
+
+      <div className="card" style={{ padding: 0, overflow: 'hidden' }}>
+        <div style={{ overflowX: 'auto' }}>
+          <table className="admin-table" style={{ minWidth: '600px' }}>
+            <thead>
+              <tr>
+                <th>{lang === 'rw' ? 'Izina' : 'Name'}</th>
+                <th>{lang === 'rw' ? 'Email' : 'Email'}</th>
+                <th>{lang === 'rw' ? 'Ururimi' : 'Lang'}</th>
+                <th>{lang === 'rw' ? 'Uruhare' : 'Role'}</th>
+                <th style={{ textAlign: 'right' }}>{lang === 'rw' ? 'Ibyakozwe' : 'Actions'}</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {users.map((u) => (
+                <tr key={u._id}>
+                  <td><strong>{u.displayName || u.anonymousId}</strong></td>
+                  <td style={{ fontSize: '0.82rem', color: 'var(--text-secondary)' }}>{u.email || '\u2014'}</td>
+                  <td>{u.language?.toUpperCase()}</td>
+                  <td>
+                    <span
+                      className="admin-badge"
+                      style={{
+                        background: `${roleColors[u.role] || '#6B7280'}18`,
+                        color: roleColors[u.role] || '#6B7280',
+                        border: `1px solid ${roleColors[u.role] || '#6B7280'}30`,
+                        fontWeight: 600,
+                      }}
+                    >
+                      {u.role}
+                    </span>
+                    <select
+                      className="admin-select"
+                      value={u.role}
+                      onChange={(e) => handleRole(u._id, e.target.value)}
+                      disabled={u._id === users[0]?._id}
+                      style={{ marginLeft: '0.4rem', fontSize: '0.75rem', padding: '0.15rem 0.3rem' }}
+                    >
+                      <option value="user">user</option>
+                      <option value="counselor">counselor</option>
+                      <option value="admin">admin</option>
+                    </select>
+                  </td>
+                  <td style={{ textAlign: 'right' }}>
+                    <button className="btn btn-sm btn-danger" onClick={() => handleDelete(u._id)} style={{ fontSize: '0.75rem' }}>
+                      {lang === 'rw' ? 'Kuraho' : 'Delete'}
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );
@@ -599,5 +642,191 @@ function CommunitiesPanel({ lang }) {
         </>
       )}
     />
+  );
+}
+
+/* ─── ASSESSMENTS ─── */
+function AssessmentsPanel({ lang }) {
+  const fields = [
+    { key: 'title', label: 'Title', type: 'text', required: true },
+    { key: 'titleRw', label: 'Title (Kinyarwanda)', type: 'text' },
+    { key: 'description', label: 'Description', type: 'textarea' },
+    { key: 'descriptionRw', label: 'Description (Kinyarwanda)', type: 'textarea' },
+    { key: 'type', label: 'Type', type: 'select', options: ['relationship', 'stress', 'wellbeing', 'readiness', 'general'], required: true },
+    { key: 'estimatedMinutes', label: 'Estimated Minutes', type: 'number' },
+    { key: 'active', label: 'Active', type: 'select', options: ['true', 'false'] },
+  ];
+
+  return (
+    <CrudPanel
+      lang={lang}
+      fetchFn={() => adminAPI.getAssessments()}
+      extractItems={(r) => r.data?.assessments || []}
+      createFn={(data) => adminAPI.createAssessment({ ...data, active: data.active === 'true' })}
+      updateFn={(id, data) => adminAPI.updateAssessment(id, { ...data, active: data.active === 'true' })}
+      deleteFn={adminAPI.deleteAssessment}
+      fields={fields}
+      itemKey="_id"
+      itemTitle="title"
+      addLabel={lang === 'rw' ? 'Ongeraho ikizamini' : 'Add Assessment'}
+      editLabel={lang === 'rw' ? 'Hindura' : 'Edit'}
+      renderRow={(a, onEdit, onDelete) => (
+        <>
+          <div style={{ flex: 1, minWidth: 0 }}>
+            <strong>{a.title}</strong>
+            <div style={{ display: 'flex', gap: '0.4rem', flexWrap: 'wrap', marginTop: '0.2rem' }}>
+              <span className="admin-badge">{a.type}</span>
+              <span className="admin-meta">{a.questions?.length || 0} questions</span>
+              <span className="admin-meta">{a.estimatedMinutes || '-'} min</span>
+              {!a.active && <span className="admin-badge" style={{ background: '#EF444418', color: '#EF4444', border: '1px solid #EF444430' }}>Inactive</span>}
+            </div>
+          </div>
+          <div className="flex-row" style={{ gap: '0.35rem', flexShrink: 0 }}>
+            <button className="btn btn-sm" onClick={() => onEdit({ ...a, active: a.active ? 'true' : 'false' })}>{lang === 'rw' ? 'Hindura' : 'Edit'}</button>
+            <button className="btn btn-sm btn-danger" onClick={() => onDelete(a._id)}>{lang === 'rw' ? 'Kuraho' : 'Del'}</button>
+          </div>
+        </>
+      )}
+    />
+  );
+}
+
+/* ─── COURSES ─── */
+function CoursesPanel({ lang }) {
+  const fields = [
+    { key: 'title', label: 'Title', type: 'text', required: true },
+    { key: 'titleRw', label: 'Title (Kinyarwanda)', type: 'text' },
+    { key: 'subtitle', label: 'Subtitle', type: 'text' },
+    { key: 'subtitleRw', label: 'Subtitle (Kinyarwanda)', type: 'text' },
+    { key: 'description', label: 'Description', type: 'textarea' },
+    { key: 'descriptionRw', label: 'Description (Kinyarwanda)', type: 'textarea' },
+    { key: 'category', label: 'Category', type: 'select', options: ['premarital', 'couples', 'parenting', 'grief', 'retirement', 'wellbeing'], required: true },
+    { key: 'level', label: 'Level', type: 'select', options: ['beginner', 'intermediate', 'advanced'] },
+    { key: 'estimatedHours', label: 'Estimated Hours', type: 'number' },
+    { key: 'certificateEligible', label: 'Certificate Eligible', type: 'select', options: ['true', 'false'] },
+    { key: 'published', label: 'Published', type: 'select', options: ['true', 'false'] },
+  ];
+
+  return (
+    <CrudPanel
+      lang={lang}
+      fetchFn={() => adminAPI.getCourses()}
+      extractItems={(r) => r.data?.courses || []}
+      createFn={(data) => adminAPI.createCourse({
+        ...data,
+        certificateEligible: data.certificateEligible === 'true',
+        published: data.published === 'true',
+      })}
+      updateFn={(id, data) => adminAPI.updateCourse(id, {
+        ...data,
+        certificateEligible: data.certificateEligible === 'true',
+        published: data.published === 'true',
+      })}
+      deleteFn={adminAPI.deleteCourse}
+      fields={fields}
+      itemKey="_id"
+      itemTitle="title"
+      addLabel={lang === 'rw' ? 'Ongeraho isomo' : 'Add Course'}
+      editLabel={lang === 'rw' ? 'Hindura' : 'Edit'}
+      renderRow={(c, onEdit, onDelete) => (
+        <>
+          <div style={{ flex: 1, minWidth: 0 }}>
+            <strong>{c.title}</strong>
+            <div style={{ display: 'flex', gap: '0.4rem', flexWrap: 'wrap', marginTop: '0.2rem' }}>
+              <span className="admin-badge">{c.category}</span>
+              <span className="admin-meta">{c.level}</span>
+              <span className="admin-meta">{c.modules?.length || 0} modules</span>
+              {c.estimatedHours && <span className="admin-meta">{c.estimatedHours}h</span>}
+              {!c.published && <span className="admin-badge" style={{ background: '#EF444418', color: '#EF4444', border: '1px solid #EF444430' }}>Draft</span>}
+            </div>
+          </div>
+          <div className="flex-row" style={{ gap: '0.35rem', flexShrink: 0 }}>
+            <button className="btn btn-sm" onClick={() => onEdit({
+              ...c,
+              certificateEligible: c.certificateEligible ? 'true' : 'false',
+              published: c.published ? 'true' : 'false',
+            })}>{lang === 'rw' ? 'Hindura' : 'Edit'}</button>
+            <button className="btn btn-sm btn-danger" onClick={() => onDelete(c._id)}>{lang === 'rw' ? 'Kuraho' : 'Del'}</button>
+          </div>
+        </>
+      )}
+    />
+  );
+}
+
+/* ─── BOOKINGS ─── */
+function BookingsPanel({ lang }) {
+  const [bookings, setBookings] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  const fetchBookings = useCallback(() => {
+    setLoading(true);
+    adminAPI.getAllBookings().then((r) => { setBookings(r.data.bookings); setLoading(false); }).catch(() => setLoading(false));
+  }, []);
+
+  useEffect(() => { fetchBookings(); }, [fetchBookings]);
+
+  const handleDelete = (id) => {
+    if (!window.confirm(lang === 'rw' ? 'Ukuraho iki cyanya?' : 'Delete this booking?')) return;
+    adminAPI.deleteBooking(id).then(fetchBookings).catch(() => {});
+  };
+
+  if (loading) return <LoadingSkeleton />;
+
+  const statusColors = {
+    pending: '#F59E0B',
+    confirmed: '#0D9488',
+    completed: '#10B981',
+    cancelled: '#EF4444',
+  };
+
+  return (
+    <div>
+      <div style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', marginBottom: '1rem' }}>
+        {bookings.length} {bookings.length === 1 ? (lang === 'rw' ? 'icyanya' : 'booking') : (lang === 'rw' ? 'ibyanya' : 'bookings')}
+      </div>
+      <div className="admin-list">
+        {bookings.map((b, idx) => (
+          <motion.div
+            key={b._id}
+            className="admin-row"
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: idx * 0.03 }}
+          >
+            <div style={{ flex: 1, minWidth: 0 }}>
+              <strong>{b.user?.displayName || b.user?.email || 'Unknown'}</strong>
+              <div style={{ display: 'flex', gap: '0.4rem', flexWrap: 'wrap', marginTop: '0.2rem' }}>
+                <span className="admin-meta">{b.counselor?.fullName || 'Unknown counselor'}</span>
+                <span className="admin-meta">{new Date(b.date).toLocaleDateString()}</span>
+                <span className="admin-meta">{b.type}</span>
+                <span
+                  className="admin-badge"
+                  style={{
+                    background: `${statusColors[b.status] || '#6B7280'}18`,
+                    color: statusColors[b.status] || '#6B7280',
+                    border: `1px solid ${statusColors[b.status] || '#6B7280'}30`,
+                    fontWeight: 600,
+                  }}
+                >
+                  {b.status}
+                </span>
+              </div>
+              {b.topic && <div style={{ fontSize: '0.78rem', color: 'var(--text-secondary)', marginTop: '0.15rem' }}>{b.topic}</div>}
+            </div>
+            <div className="flex-row" style={{ gap: '0.35rem', flexShrink: 0 }}>
+              <button className="btn btn-sm btn-danger" onClick={() => handleDelete(b._id)}>
+                {lang === 'rw' ? 'Kuraho' : 'Del'}
+              </button>
+            </div>
+          </motion.div>
+        ))}
+        {bookings.length === 0 && (
+          <div className="card" style={{ padding: '2rem', textAlign: 'center', color: 'var(--text-secondary)' }}>
+            {lang === 'rw' ? 'Nta cyanya cyabonetse' : 'No bookings found'}
+          </div>
+        )}
+      </div>
+    </div>
   );
 }

@@ -28,4 +28,19 @@ router.post('/communities', staff, ctrl.createCommunity);
 router.put('/communities/:id', staff, ctrl.updateCommunity);
 router.delete('/communities/:id', admin, ctrl.deleteCommunity);
 
+router.post('/users', admin, ctrl.createUser);
+
+router.get('/assessments', staff, ctrl.listAssessments);
+router.post('/assessments', staff, ctrl.createAssessment);
+router.put('/assessments/:id', staff, ctrl.updateAssessment);
+router.delete('/assessments/:id', admin, ctrl.deleteAssessment);
+
+router.get('/courses', staff, ctrl.listCourses);
+router.post('/courses', staff, ctrl.createCourse);
+router.put('/courses/:id', staff, ctrl.updateCourse);
+router.delete('/courses/:id', admin, ctrl.deleteCourse);
+
+router.get('/bookings', admin, ctrl.listAllBookings);
+router.delete('/bookings/:id', admin, ctrl.deleteBooking);
+
 module.exports = router;

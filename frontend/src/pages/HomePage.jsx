@@ -132,6 +132,22 @@ export default function HomePage() {
 
   return (
     <div className="home-page">
+      {/* ─── HEADER NAV ─── */}
+      <header className="home-header">
+        <div className="home-header-inner">
+          <Link to="/" className="home-header-logo">
+            <span className="home-header-emblem">{'\u{1F33F}'}</span>
+            <span>MindSpace</span>
+          </Link>
+          <nav className="home-header-nav">
+            <button className="home-header-link" onClick={() => openModal('about')}>About Us</button>
+            <button className="home-header-link" onClick={() => openModal('mission')}>Our Mission</button>
+            <Link to="/crisis" className="home-header-link">Crisis</Link>
+            <Link to="/healing" className="home-header-link">Resources</Link>
+          </nav>
+        </div>
+      </header>
+
       {/* ─── HERO ─── */}
       <section className="home-hero">
         <div className="home-hero-bg">

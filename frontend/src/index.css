@@ -670,6 +670,55 @@ a { color: var(--primary); text-decoration: none; }
 /* ─── HOME PAGE ─── */
 .home-page { padding-top: 0; }
 
+/* Home header nav */
+.home-header {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  z-index: 10;
+  padding: 0 1.5rem;
+}
+.home-header-inner {
+  max-width: 1000px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 0;
+}
+.home-header-logo {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: #fff;
+  text-decoration: none;
+  text-shadow: 0 1px 8px rgba(0,0,0,0.3);
+}
+.home-header-emblem { font-size: 1.2rem; }
+.home-header-nav {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+.home-header-link {
+  background: none;
+  border: none;
+  color: rgba(255,255,255,0.8);
+  font-size: 0.85rem;
+  font-weight: 500;
+  font-family: inherit;
+  padding: 0.4rem 0.75rem;
+  border-radius: var(--radius);
+  cursor: pointer;
+  text-decoration: none;
+  transition: background 0.2s, color 0.2s;
+}
+.home-header-link:hover {
+  background: rgba(255,255,255,0.1);
+  color: #fff;
+}
+
 /* Hero */
 .home-hero {
   position: relative;

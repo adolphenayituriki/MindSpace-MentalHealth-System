@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTranslation } from '../../i18n/i18n';
@@ -102,6 +102,25 @@ function NavSection({ title, items, startIdx, activePath, onClose }) {
   );
 }
 
+function MobileNav({ items, activePath, color }) {
+  return (
+    <nav className="mobile-nav">
+      {items.map((item) => {
+        const isActive = activePath === item.to;
+        return (
+          <Link key={item.to} to={item.to} className="mobile-nav-link">
+            <span className="mobile-nav-icon" style={{
+              background: isActive ? `${color}18` : 'transparent',
+              color: isActive ? (color || 'var(--primary)') : 'var(--text-muted)',
+            }}>{item.icon}</span>
+            {isActive && <span className="mobile-nav-label" style={{ color: color || 'var(--primary)' }}>{item.label}</span>}
+          </Link>
+        );
+      })}
+    </nav>
+  );
+}
+
 export default function Sidebar() {
   const { setLanguage, getLanguage } = useTranslation();
   const { user, logout } = useAuth();
@@ -110,6 +129,7 @@ export default function Sidebar() {
   const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+  const [showMore, setShowMore] = useState(false);
 
   const closeMenu = useCallback(() => setMenuOpen(false), []);
 
@@ -144,52 +164,124 @@ export default function Sidebar() {
   const navItems = isAdmin ? ADMIN_NAV : isCounselor ? COUNSELOR_NAV : USER_NAV;
   const bottomItems = isAdmin ? ADMIN_BOTTOM : isCounselor ? COUNSELOR_BOTTOM : USER_BOTTOM;
   const activePath = location.pathname;
+  const accentColor = isAdmin ? '#EF4444' : isCounselor ? '#6366F1' : '#0D9488';
 
-  return (
-    <>
-      <header className="mobile-topbar">
-        <Link to="/" className="mobile-topbar-logo" onClick={closeMenu}>
-          MindSpace
-        </Link>
-        <motion.button
-          className="hamburger"
-          onClick={() => setMenuOpen((v) => !v)}
-          aria-label="Toggle navigation menu"
-          aria-expanded={menuOpen}
-          whileTap={{ scale: 0.9 }}
-        >
-          <span /><span /><span />
-        </motion.button>
-      </header>
-
-      <AnimatePresence>
-        {menuOpen && (
-          <motion.div
-            className="sidebar-overlay visible"
-            variants={overlayVariants}
-            initial="hidden"
-            animate="visible"
-            exit="hidden"
-            transition={{ duration: 0.2 }}
-            onClick={closeMenu}
-            aria-hidden="true"
-          />
-        )}
-      </AnimatePresence>
-
-      <aside className={`sidebar ${menuOpen ? 'open' : ''}`}>
-        <div className="sidebar-header">
-          <Link to="/" className="sidebar-logo" onClick={closeMenu}>
+  if (isMobile) {
+    return (
+      <>
+        <header className="mobile-topbar">
+          <Link to="/" className="mobile-topbar-logo">
             MindSpace
           </Link>
           <motion.button
-            className="hamburger open"
-            onClick={closeMenu}
-            aria-label="Close menu"
+            className="hamburger"
+            onClick={() => setShowMore((v) => !v)}
+            aria-label="More options"
             whileTap={{ scale: 0.9 }}
           >
             <span /><span /><span />
           </motion.button>
+        </header>
+
+        <MobileNav items={navItems} activePath={activePath} color={accentColor} />
+
+        <AnimatePresence>
+          {showMore && (
+            <motion.div
+              className="sidebar-overlay visible"
+              variants={overlayVariants}
+              initial="hidden"
+              animate="visible"
+              exit="hidden"
+              transition={{ duration: 0.2 }}
+              onClick={() => setShowMore(false)}
+              aria-hidden="true"
+            />
+          )}
+        </AnimatePresence>
+
+        <aside className={`sidebar mobile-drawer ${showMore ? 'open' : ''}`}>
+          <div className="sidebar-header">
+            <Link to="/" className="sidebar-logo" onClick={() => setShowMore(false)}>
+              MindSpace
+            </Link>
+            <motion.button
+              className="hamburger open"
+              onClick={() => setShowMore(false)}
+              aria-label="Close menu"
+              whileTap={{ scale: 0.9 }}
+            >
+              <span /><span /><span />
+            </motion.button>
+          </div>
+
+          <nav className="sidebar-nav">
+            <NavSection items={bottomItems} startIdx={0} activePath={activePath} onClose={() => setShowMore(false)} />
+          </nav>
+
+          <div className="sidebar-footer">
+            <div className="sidebar-controls">
+              <motion.button
+                className="sidebar-icon-btn"
+                onClick={toggleLang}
+                title="Switch language"
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
+              >
+                {getLanguage() === 'rw' ? 'EN' : 'RW'}
+              </motion.button>
+              <motion.button
+                className="sidebar-icon-btn"
+                onClick={toggleDark}
+                title={darkMode ? 'Light mode' : 'Dark mode'}
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
+              >
+                {darkMode ? '\u2600' : '\u263E'}
+              </motion.button>
+            </div>
+
+            <motion.div
+              className="sidebar-user"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.25, duration: 0.3 }}
+            >
+              <div className="sidebar-avatar" style={{
+                background: accentColor,
+              }}>
+                {(user?.displayName || 'G').charAt(0)}
+              </div>
+              <div className="sidebar-user-info">
+                <span className="sidebar-user-name">{user?.displayName || 'Guest'}</span>
+                <span className="sidebar-user-tag" style={{ textTransform: 'capitalize' }}>
+                  {isAdmin ? 'Admin' : isCounselor ? 'Counselor' : user?.isAnonymous ? 'Anonymous' : 'User'}
+                </span>
+              </div>
+              <motion.button
+                className="sidebar-logout"
+                onClick={() => { logout(); navigate('/'); setShowMore(false); }}
+                title="Log out"
+                whileHover={{ backgroundColor: 'rgba(239,68,68,0.12)', borderColor: 'var(--danger)' }}
+                whileTap={{ scale: 0.97 }}
+              >
+                <span>{'\u{23FB}'}</span>
+                <span>{getLanguage() === 'rw' ? 'Sohoka' : 'Logout'}</span>
+              </motion.button>
+            </motion.div>
+          </div>
+        </aside>
+      </>
+    );
+  }
+
+  return (
+    <>
+      <aside className="sidebar">
+        <div className="sidebar-header">
+          <Link to="/" className="sidebar-logo">
+            MindSpace
+          </Link>
         </div>
 
         <nav className="sidebar-nav">
@@ -204,7 +296,7 @@ export default function Sidebar() {
             </div>
           )}
 
-          <NavSection items={navItems} startIdx={0} activePath={activePath} onClose={closeMenu} />
+          <NavSection items={navItems} startIdx={0} activePath={activePath} onClose={() => {}} />
 
           {isAdmin && (
             <NavSection
@@ -218,7 +310,7 @@ export default function Sidebar() {
               ]}
               startIdx={navItems.length}
               activePath={activePath}
-              onClose={closeMenu}
+              onClose={() => {}}
             />
           )}
 
@@ -230,13 +322,13 @@ export default function Sidebar() {
               ]}
               startIdx={navItems.length}
               activePath={activePath}
-              onClose={closeMenu}
+              onClose={() => {}}
             />
           )}
         </nav>
 
         <div className="sidebar-footer">
-          <NavSection items={bottomItems} startIdx={0} activePath={activePath} onClose={closeMenu} />
+          <NavSection items={bottomItems} startIdx={0} activePath={activePath} onClose={() => {}} />
 
           <div className="sidebar-controls">
             <motion.button
@@ -266,7 +358,7 @@ export default function Sidebar() {
             transition={{ delay: 0.25, duration: 0.3 }}
           >
             <div className="sidebar-avatar" style={{
-              background: isAdmin ? '#EF4444' : isCounselor ? '#6366F1' : 'var(--primary)',
+              background: accentColor,
             }}>
               {(user?.displayName || 'G').charAt(0)}
             </div>
@@ -278,7 +370,7 @@ export default function Sidebar() {
             </div>
             <motion.button
               className="sidebar-logout"
-              onClick={() => { logout(); navigate('/'); closeMenu(); }}
+              onClick={() => { logout(); navigate('/'); }}
               title="Log out"
               whileHover={{ backgroundColor: 'rgba(239,68,68,0.12)', borderColor: 'var(--danger)' }}
               whileTap={{ scale: 0.97 }}

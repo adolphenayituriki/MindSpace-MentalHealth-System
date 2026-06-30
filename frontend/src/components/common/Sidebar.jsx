@@ -47,12 +47,10 @@ const USER_BOTTOM = [
 
 function SidebarLink({ to, icon, label, desc, active, onClick, collapsed, onExpand }) {
   const handleClick = (e) => {
-    if (collapsed) {
-      e.preventDefault();
-      if (onExpand) onExpand();
-    } else if (onClick) {
-      onClick();
+    if (collapsed && onExpand) {
+      onExpand();
     }
+    if (onClick) onClick();
   };
 
   return (

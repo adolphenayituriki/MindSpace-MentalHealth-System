@@ -53,7 +53,7 @@ function Modal({ open, title, onClose, children }) {
           >
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
               <h2 style={{ margin: 0, textAlign: 'left', fontSize: '1.15rem' }}>{title}</h2>
-              <button onClick={onClose} className="btn" style={{ padding: '0.3rem 0.6rem', fontSize: '1.1rem', lineHeight: 1, border: 'none', background: 'var(--bg-muted)', borderRadius: 'var(--radius-md)', cursor: 'pointer' }}>&times;</button>
+              <button onClick={onClose} className="btn" style={{ padding: '0.3rem 0.6rem', fontSize: '1.1rem', lineHeight: 1, border: 'none', background: 'var(--bg-muted)', borderRadius: 'var(--radius)', cursor: 'pointer' }}>&times;</button>
             </div>
             {children}
           </motion.div>
@@ -157,13 +157,21 @@ export default function AdminPage() {
         </p>
       </div>
 
-      <div className="flex-row" style={{ gap: '0.4rem', marginBottom: '1.5rem', flexWrap: 'wrap' }}>
+      <div style={{ display: 'flex', gap: '0.25rem', marginBottom: '1.5rem', flexWrap: 'wrap', padding: '0.25rem', background: 'var(--bg-muted)', borderRadius: 'var(--radius-lg)' }}>
         {TABS.map((t) => (
           <button
             key={t}
-            className={`btn btn-sm ${tab === t ? 'btn-primary' : ''}`}
             onClick={() => setTab(t)}
-            style={{ fontSize: '0.85rem', padding: '0.4rem 0.85rem' }}
+            style={{
+              flex: 1, minWidth: 0, whiteSpace: 'nowrap',
+              padding: '0.45rem 0.85rem', fontSize: '0.82rem', fontWeight: tab === t ? 600 : 500,
+              border: 'none', borderRadius: 'var(--radius)',
+              background: tab === t ? 'var(--bg-card)' : 'transparent',
+              color: tab === t ? 'var(--text)' : 'var(--text-secondary)',
+              boxShadow: tab === t ? 'var(--shadow-sm)' : 'none',
+              cursor: 'pointer', transition: 'all var(--transition)',
+              fontFamily: 'var(--font)',
+            }}
           >
             {TAB_ICONS[t]} {LABELS[t][lang]}
           </button>

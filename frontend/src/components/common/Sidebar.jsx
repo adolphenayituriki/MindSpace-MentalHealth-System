@@ -19,7 +19,7 @@ const ADMIN_BOTTOM = [
 const COUNSELOR_NAV = [
   { to: '/', label: 'Home', icon: '\u{1F3E0}', desc: 'Go to homepage' },
   { to: '/dashboard', label: 'Dashboard', icon: '\u{1F4CB}', desc: 'Your counseling overview' },
-  { to: '/counseling', label: 'Counseling', icon: '\u{1F9D1}\u200D\u{2764}\uFE0F', desc: 'Sessions & messages' },
+  { to: '/counseling', label: 'Counseling', icon: '\u{1F4AC}', desc: 'Sessions & messages' },
   { to: '/assessments', label: 'Assessments', icon: '\u{1F9E9}', desc: 'Self-assessment tools' },
   { to: '/learning', label: 'Learn', icon: '\u{1F4DA}', desc: 'Courses & training' },
   { to: '/communities', label: 'Communities', icon: '\u{1F46B}', desc: 'Support groups' },
@@ -43,7 +43,7 @@ const USER_NAV = [
   { to: '/assessments', label: 'Assessments', icon: '\u{1F9E9}', desc: 'Self-assessment tests' },
   { to: '/learning', label: 'Learn', icon: '\u{1F4DA}', desc: 'Courses & training' },
   { to: '/communities', label: 'Communities', icon: '\u{1F46B}', desc: 'Connect with others' },
-  { to: '/counseling', label: 'Counseling', icon: '\u{1F9D1}\u200D\u{2764}\uFE0F', desc: 'Talk to a counselor' },
+  { to: '/counseling', label: 'Counseling', icon: '\u{1F4AC}', desc: 'Talk to a counselor' },
   { to: '/insights', label: 'Insights', icon: '\u{1F4CA}', desc: 'See your patterns' },
 ];
 

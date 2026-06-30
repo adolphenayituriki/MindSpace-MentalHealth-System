@@ -8,8 +8,10 @@ import HomeChartFab from '../components/chat/HomeChartFab';
 const features = [
   { icon: '\u{1F4CB}', title: 'Mood Tracking', desc: 'Log how you feel each day and watch your emotional patterns emerge. Small daily check-ins build self-awareness.' },
   { icon: '\u{1F4DD}', title: 'Guided Journaling', desc: 'Write with culturally relevant prompts that help you reflect. No blank page \u2014 just a gentle starting point.' },
+  { icon: '\u{1F9E9}', title: 'Self-Assessments', desc: 'Take guided tests for relationship health, stress levels, and wellbeing. Get instant scores and recommendations.' },
+  { icon: '\u{1F4DA}', title: 'Learning Center', desc: 'Access courses on marriage preparation, parenting, grief, retirement, and emotional wellbeing at your own pace.' },
   { icon: '\u{1F46B}', title: 'Peer Communities', desc: 'Join anonymous topic-based communities. Share, listen, and connect with others who understand.' },
-  { icon: '\u{1F9D1}\u200D\u2764\uFE0F', title: 'Counselor Support', desc: 'Message a licensed counselor when you need more than a conversation. No booking, no waiting room.' },
+  { icon: '\u{1F9D1}\u200D\u2764\uFE0F', title: 'Counselor Support', desc: 'Message a licensed counselor when you need more than a conversation. Book a session that fits your schedule.' },
   { icon: '\u{1F4CA}', title: 'Weekly Reflections', desc: 'Review your emotional patterns with weekly summaries. See your progress over time.' },
   { icon: '\u{1F6E1}\uFE0F', title: 'Crisis Resources', desc: 'Verified local hotlines, health centers, and NGOs \u2014 available in one tap when you need them most.' },
 ];
@@ -34,6 +36,16 @@ const quickHelpItems = [
     icon: '\u{1F4AD}', title: 'AI-Guided Reflection',
     desc: 'A private, judgment-free space to explore your thoughts with gentle guidance.',
     link: '/reflect', label: 'Reflect Now',
+  },
+  {
+    icon: '\u{1F9E9}', title: 'Take an Assessment',
+    desc: 'Evaluate relationship health, stress, or emotional wellbeing with a guided self-test.',
+    link: '/assessments', label: 'Start Test',
+  },
+  {
+    icon: '\u{1F4DA}', title: 'Explore Courses',
+    desc: 'Learn at your own pace with courses designed for life\u2019s big transitions.',
+    link: '/learning', label: 'Browse Courses',
   },
 ];
 
@@ -220,8 +232,8 @@ export default function HomePage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.15, ease: 'easeOut' }}
           >
-            Mental health support that is accessible, anonymous, and culturally
-            grounded for every Rwandan.
+            Mental health, relationship, and life transition support that is
+            accessible, anonymous, and culturally grounded for every Rwandan.
           </motion.p>
           <motion.div
             className="home-hero-actions"
@@ -419,8 +431,8 @@ export default function HomePage() {
               <span>MindSpace</span>
             </div>
             <p>
-              Mental health support that is accessible, anonymous, and culturally
-              grounded for every Rwandan.
+              Mental health, relationship, and life transition support for every
+              Rwandan.
             </p>
             <div className="footer-social">
               <span className="footer-social-icon" title="Twitter">{'\u{1D54F}'}</span>

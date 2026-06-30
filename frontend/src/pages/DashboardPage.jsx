@@ -49,8 +49,12 @@ function StatCard({ icon, label, value, color }) {
 }
 
 function ActionCard({ to, icon, label, desc, color }) {
+  const [hovered, setHovered] = useState(false);
   return (
-    <Link to={to} style={{ textDecoration: 'none', display: 'block' }}>
+    <Link to={to} style={{ textDecoration: 'none', display: 'block' }}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+    >
       <motion.div
         whileHover={{ y: -2 }}
         whileTap={{ scale: 0.97 }}
@@ -60,10 +64,11 @@ function ActionCard({ to, icon, label, desc, color }) {
           display: 'flex',
           alignItems: 'center',
           gap: '0.65rem',
-          background: 'var(--bg-card)',
-          border: '1px solid var(--border)',
+          background: hovered ? 'var(--bg-muted)' : 'var(--bg-card)',
+          border: `1px solid ${hovered ? (color || 'var(--primary)') : 'var(--border)'}`,
           borderRadius: 'var(--radius)',
-          transition: 'border-color 0.2s, transform 0.2s',
+          transition: 'background 0.2s, border-color 0.2s, box-shadow 0.2s',
+          boxShadow: hovered ? 'var(--shadow-sm)' : 'none',
         }}
       >
         <div style={{
@@ -77,6 +82,11 @@ function ActionCard({ to, icon, label, desc, color }) {
           <div style={{ fontWeight: 600, color: 'var(--text)', fontSize: '0.84rem' }}>{label}</div>
           <div style={{ fontSize: '0.7rem', color: 'var(--text-secondary)', marginTop: '0.05rem', lineHeight: 1.3 }}>{desc}</div>
         </div>
+        <div style={{
+          fontSize: '1rem', color: 'var(--text-muted)', flexShrink: 0,
+          transform: hovered ? 'translateX(3px)' : 'translateX(0)',
+          transition: 'transform 0.2s, color 0.2s',
+        }}>&rarr;</div>
       </motion.div>
     </Link>
   );

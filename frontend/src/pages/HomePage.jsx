@@ -104,6 +104,16 @@ export default function HomePage() {
   const { user } = useAuth();
   const [slideIdx, setSlideIdx] = useState(0);
   const [modalKey, setModalKey] = useState(null);
+  const [scrollPct, setScrollPct] = useState(0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const h = document.documentElement.scrollHeight - window.innerHeight;
+      setScrollPct(h > 0 ? Math.min((window.scrollY / h) * 100, 100) : 0);
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -132,6 +142,9 @@ export default function HomePage() {
 
   return (
     <div className="home-page">
+      {/* ─── SCROLL PROGRESS ─── */}
+      <div className="scroll-progress"><div className="scroll-progress-bar" style={{ width: `${scrollPct}%` }} /></div>
+
       {/* ─── HEADER NAV ─── */}
       <header className="home-header">
         <div className="home-header-inner">

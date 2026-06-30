@@ -670,6 +670,22 @@ a { color: var(--primary); text-decoration: none; }
 /* ─── HOME PAGE ─── */
 .home-page { padding-top: 0; }
 
+/* Scroll progress bar */
+.scroll-progress {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  z-index: 999;
+  background: transparent;
+}
+.scroll-progress-bar {
+  height: 100%;
+  background: var(--primary);
+  transition: width 0.1s linear;
+  border-radius: 0 2px 2px 0;
+  box-shadow: 0 0 6px rgba(13,148,136,0.5);
+}
+
 /* Home header nav */
 .home-header {
   position: absolute;

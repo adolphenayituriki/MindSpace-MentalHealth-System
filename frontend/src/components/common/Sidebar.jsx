@@ -45,12 +45,21 @@ const USER_BOTTOM = [
   { to: '/crisis', label: 'Crisis Support', icon: '\u{1F6E1}', desc: 'Get help now' },
 ];
 
-function SidebarLink({ to, icon, label, desc, active, onClick }) {
+function SidebarLink({ to, icon, label, desc, active, onClick, collapsed, onExpand }) {
+  const handleClick = (e) => {
+    if (collapsed) {
+      e.preventDefault();
+      if (onExpand) onExpand();
+    } else if (onClick) {
+      onClick();
+    }
+  };
+
   return (
     <Link
       to={to}
       className={`sidebar-link ${active ? 'active' : ''}`}
-      onClick={onClick}
+      onClick={handleClick}
       title={desc}
     >
       <span className="sidebar-link-icon">{icon}</span>
@@ -62,7 +71,7 @@ function SidebarLink({ to, icon, label, desc, active, onClick }) {
   );
 }
 
-function NavSection({ title, items, activePath, onClose }) {
+function NavSection({ title, items, activePath, onClose, collapsed, onExpand }) {
   return (
     <div className="sidebar-section">
       {title && <div className="sidebar-section-title">{title}</div>}
@@ -75,6 +84,8 @@ function NavSection({ title, items, activePath, onClose }) {
           desc={l.desc}
           active={activePath === l.to}
           onClick={onClose}
+          collapsed={collapsed}
+          onExpand={onExpand}
         />
       ))}
     </div>
@@ -174,7 +185,7 @@ export default function Sidebar() {
             </div>
           )}
 
-          <NavSection items={navItems} activePath={activePath} onClose={close} />
+          <NavSection items={navItems} activePath={activePath} onClose={close} collapsed={!expanded} onExpand={() => setExpanded(true)} />
 
           {isAdmin && (
             <NavSection
@@ -188,6 +199,8 @@ export default function Sidebar() {
               ]}
               activePath={activePath}
               onClose={close}
+              collapsed={!expanded}
+              onExpand={() => setExpanded(true)}
             />
           )}
 
@@ -199,12 +212,14 @@ export default function Sidebar() {
               ]}
               activePath={activePath}
               onClose={close}
+              collapsed={!expanded}
+              onExpand={() => setExpanded(true)}
             />
           )}
         </nav>
 
         <div className="sidebar-footer">
-          <NavSection items={bottomItems} activePath={activePath} onClose={close} />
+          <NavSection items={bottomItems} activePath={activePath} onClose={close} collapsed={!expanded} onExpand={() => setExpanded(true)} />
 
           <div className="sidebar-controls">
             <motion.button

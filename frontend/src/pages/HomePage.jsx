@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTranslation } from '../i18n/i18n';
 import { useAuth } from '../contexts/AuthContext';
+import HomeChartFab from '../components/chat/HomeChartFab';
 
 const features = [
   { icon: '\u{1F4CB}', title: 'Mood Tracking', desc: 'Log how you feel each day and watch your emotional patterns emerge. Small daily check-ins build self-awareness.' },
@@ -73,12 +74,11 @@ const heroSlides = [
 ];
 
 const partners = [
-  { name: 'ICT Chamber', icon: '\u{1F4F1}' },
-  { name: 'RBC', icon: '\u{2695}\uFE0F' },
-  { name: 'MOH Rwanda', icon: '\u{1F3E5}' },
-  { name: 'CHUB', icon: '\u{1F3E2}' },
-  { name: 'WHO Rwanda', icon: '\u{1F30D}' },
-  { name: 'UNICEF Rwanda', icon: '\u{1F49C}' },
+  { name: 'RBC', image: 'rbc.png' },
+  { name: 'MOH Rwanda', image: 'moh.png' },
+  { name: 'WHO Rwanda', image: 'WHO.png' },
+  { name: 'Ibuka', image: 'ibuka.jpg' },
+  { name: 'MINUBUMWE', image: 'minubumwe.jpg' },
 ];
 
 const modalContent = {
@@ -240,28 +240,69 @@ export default function HomePage() {
       </section>
 
       {/* ─── STATS ─── */}
-      <section className="home-section">
+      <section className="home-section stats-section">
+        <div className="section-heading">
+          <span className="stats-eyebrow">Why MindSpace Exists</span>
+          <h2>The Reality We Can't Ignore</h2>
+        </div>
         <div className="stats-bar">
-          {[
-            { icon: '\u{1F9E0}', number: '18.6%', label: 'of Rwandans face a mental health condition' },
-            { icon: '\u{1F4BA}', number: '~18', label: 'psychiatrists for 14M+ Rwandans' },
-            { icon: '\u{1F6B7}', number: '95%', label: 'of youth avoid clinical care' },
-            { icon: '\u{2705}', number: '100%', label: 'Free and anonymous by default', highlight: true },
-          ].map((s, i) => (
-            <motion.div
-              key={s.label}
-              className={`stat-item ${s.highlight ? 'stat-highlight' : ''}`}
-              custom={i}
-              variants={stagger}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, margin: '-40px' }}
-            >
-              <span className="stat-icon">{s.icon}</span>
-              <span className="stat-number">{s.number}</span>
-              <span className="stat-label">{s.label}</span>
-            </motion.div>
-          ))}
+          <motion.div
+            className="stat-item stat-gap"
+            custom={0}
+            variants={stagger}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: '-40px' }}
+          >
+            <span className="stat-figure">
+              <span className="stat-emoji">{'\u{1F9E0}'}</span>
+              <span className="stat-number">18.6%</span>
+            </span>
+            <span className="stat-label">of Rwandans face a mental health condition — yet most suffer in silence.</span>
+          </motion.div>
+          <motion.div
+            className="stat-item stat-gap"
+            custom={1}
+            variants={stagger}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: '-40px' }}
+          >
+            <span className="stat-figure">
+              <span className="stat-emoji">{'\u{1F4BA}'}</span>
+              <span className="stat-number">~18</span>
+            </span>
+            <span className="stat-label">psychiatrists for over 14 million Rwandans. That's one for every 777K people.</span>
+          </motion.div>
+          <motion.div
+            className="stat-item stat-gap"
+            custom={2}
+            variants={stagger}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: '-40px' }}
+          >
+            <span className="stat-figure">
+              <span className="stat-emoji">{'\u{1F6B7}'}</span>
+              <span className="stat-number">95%</span>
+            </span>
+            <span className="stat-label">of young Rwandans avoid clinical care — stigma is still the biggest barrier.</span>
+          </motion.div>
+          <motion.div
+            className="stat-item stat-promise"
+            custom={3}
+            variants={stagger}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: '-40px' }}
+          >
+            <span className="stat-promise-badge">{'\u{2764}\uFE0F'} Our Promise</span>
+            <span className="stat-figure">
+              <span className="stat-emoji">{'\u{2705}'}</span>
+              <span className="stat-number promise-number">100%</span>
+            </span>
+            <span className="stat-label">Free, anonymous, and confidential — always. No judgment. No cost. No data shared.</span>
+          </motion.div>
         </div>
       </section>
 
@@ -356,7 +397,7 @@ export default function HomePage() {
               whileInView="visible"
               viewport={{ once: true }}
             >
-              <span className="partner-icon">{p.icon}</span>
+              <img className="partner-img" src={`/partners/${p.image}`} alt={p.name} loading="lazy" />
               <span className="partner-name">{p.name}</span>
             </motion.div>
           ))}
@@ -414,6 +455,9 @@ export default function HomePage() {
           </p>
         </div>
       </footer>
+      {/* ─── AI CHART FAB ─── */}
+      <HomeChartFab />
+
       {/* ─── ABOUT / MISSION MODAL ─── */}
       <AnimatePresence>
         {modalKey && (

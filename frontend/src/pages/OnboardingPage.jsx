@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import WelcomeCarousel from '../components/onboarding/WelcomeCarousel';
 import LanguageSelect from '../components/onboarding/LanguageSelect';
@@ -40,6 +40,10 @@ export default function OnboardingPage() {
     setStep('auth');
   };
 
+  const stepOrder = ['welcome', 'language', 'onboard', 'auth'];
+  const currentIndex = stepOrder.indexOf(step);
+  const prevStep = currentIndex > 0 ? stepOrder[currentIndex - 1] : null;
+
   const handleAuthComplete = async () => {
     try {
       await authAPI.updateProfile({
@@ -53,6 +57,23 @@ export default function OnboardingPage() {
 
   return (
     <div className="onboarding-screen">
+      <nav className="onboarding-nav">
+        <Link to="/" className="onboarding-nav-btn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+            <polyline points="9 22 9 12 15 12 15 22"/>
+          </svg>
+          Home
+        </Link>
+        {prevStep && (
+          <button className="onboarding-nav-btn" onClick={() => setStep(prevStep)}>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <polyline points="15 18 9 12 15 6"/>
+            </svg>
+            Previous
+          </button>
+        )}
+      </nav>
       <AnimatePresence mode="wait">
         <motion.div
           key={step}

@@ -2,6 +2,8 @@ import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-route
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 import { ThemeProvider } from './contexts/ThemeContext';
 import ErrorBoundary from './components/common/ErrorBoundary';
+import { ToastProvider } from './contexts/ToastContext';
+import ToastContainer from './components/common/ToastContainer';
 import Sidebar from './components/common/Sidebar';
 import SOSButton from './components/crisis/SOSButton';
 import HomePage from './pages/HomePage';
@@ -94,7 +96,10 @@ export default function App() {
       <BrowserRouter>
         <ThemeProvider>
           <AuthProvider>
-            <AppRoutes />
+            <ToastProvider>
+              <AppRoutes />
+              <ToastContainer />
+            </ToastProvider>
           </AuthProvider>
         </ThemeProvider>
       </BrowserRouter>

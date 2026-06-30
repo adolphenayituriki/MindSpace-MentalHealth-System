@@ -18,6 +18,9 @@ import CrisisPage from './pages/CrisisPage';
 import InsightsPage from './pages/InsightsPage';
 import HealingPage from './pages/HealingPage';
 import AdminPage from './pages/AdminPage';
+import AssessmentsPage from './pages/AssessmentsPage';
+import LearningPage from './pages/LearningPage';
+import ProfilePage from './pages/ProfilePage';
 import './index.css';
 
 function LoadingSkeleton() {
@@ -81,6 +84,9 @@ function AppRoutes() {
           <Route path="/crisis" element={<ProtectedRoute><CrisisPage /></ProtectedRoute>} />
           <Route path="/insights" element={<ProtectedRoute><InsightsPage /></ProtectedRoute>} />
           <Route path="/healing" element={<ProtectedRoute><HealingPage /></ProtectedRoute>} />
+          <Route path="/assessments" element={<ProtectedRoute><AssessmentsPage /></ProtectedRoute>} />
+          <Route path="/learning" element={<ProtectedRoute><LearningPage /></ProtectedRoute>} />
+          <Route path="/profile" element={<ProtectedRoute><ProfilePage /></ProtectedRoute>} />
           <Route path="/admin" element={<ProtectedRoute><AdminPage /></ProtectedRoute>} />
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>

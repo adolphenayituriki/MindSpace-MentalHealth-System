@@ -13,12 +13,15 @@ const ADMIN_NAV = [
 
 const ADMIN_BOTTOM = [
   { to: '/crisis', label: 'Crisis Support', icon: '\u{1F6E1}', desc: 'Emergency resources' },
+  { to: '/profile', label: 'Profile', icon: '\u{1F464}', desc: 'Your profile & settings' },
 ];
 
 const COUNSELOR_NAV = [
   { to: '/', label: 'Home', icon: '\u{1F3E0}', desc: 'Go to homepage' },
   { to: '/dashboard', label: 'Dashboard', icon: '\u{1F4CB}', desc: 'Your counseling overview' },
   { to: '/counseling', label: 'Counseling', icon: '\u{1F9D1}\u200D\u{2764}\uFE0F', desc: 'Sessions & messages' },
+  { to: '/assessments', label: 'Assessments', icon: '\u{1F9E9}', desc: 'Self-assessment tools' },
+  { to: '/learning', label: 'Learn', icon: '\u{1F4DA}', desc: 'Courses & training' },
   { to: '/communities', label: 'Communities', icon: '\u{1F46B}', desc: 'Support groups' },
   { to: '/healing', label: 'Healing', icon: '\u{1F33F}', desc: 'Resources & tools' },
   { to: '/insights', label: 'Insights', icon: '\u{1F4CA}', desc: 'Track progress' },
@@ -26,6 +29,7 @@ const COUNSELOR_NAV = [
 
 const COUNSELOR_BOTTOM = [
   { to: '/crisis', label: 'Crisis Support', icon: '\u{1F6E1}', desc: 'Emergency resources' },
+  { to: '/profile', label: 'Profile', icon: '\u{1F464}', desc: 'Your profile & settings' },
   { to: '/admin', label: 'Settings', icon: '\u{2699}\uFE0F', desc: 'Profile & availability' },
 ];
 
@@ -36,6 +40,8 @@ const USER_NAV = [
   { to: '/mood', label: 'Mood', icon: '\u{1F60A}', desc: 'Track your feelings' },
   { to: '/healing', label: 'Heal', icon: '\u{1F33F}', desc: 'Self-care resources' },
   { to: '/journal', label: 'Journal', icon: '\u{1F4DD}', desc: 'Write your thoughts' },
+  { to: '/assessments', label: 'Assessments', icon: '\u{1F9E9}', desc: 'Self-assessment tests' },
+  { to: '/learning', label: 'Learn', icon: '\u{1F4DA}', desc: 'Courses & training' },
   { to: '/communities', label: 'Communities', icon: '\u{1F46B}', desc: 'Connect with others' },
   { to: '/counseling', label: 'Counseling', icon: '\u{1F9D1}\u200D\u{2764}\uFE0F', desc: 'Talk to a counselor' },
   { to: '/insights', label: 'Insights', icon: '\u{1F4CA}', desc: 'See your patterns' },
@@ -43,6 +49,7 @@ const USER_NAV = [
 
 const USER_BOTTOM = [
   { to: '/crisis', label: 'Crisis Support', icon: '\u{1F6E1}', desc: 'Get help now' },
+  { to: '/profile', label: 'Profile', icon: '\u{1F464}', desc: 'Your profile & settings' },
 ];
 
 function SidebarLink({ to, icon, label, desc, active, onClick, collapsed, onExpand }) {

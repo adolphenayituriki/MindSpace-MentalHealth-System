@@ -107,6 +107,7 @@ export default function HomePage() {
   const [slideIdx, setSlideIdx] = useState(0);
   const [modalKey, setModalKey] = useState(null);
   const [scrollPct, setScrollPct] = useState(0);
+  const [navOpen, setNavOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -124,7 +125,7 @@ export default function HomePage() {
     return () => clearInterval(timer);
   }, []);
 
-  const openModal = (key) => setModalKey(key);
+  const openModal = (key) => { setModalKey(key); setNavOpen(false); };
   const closeModal = () => setModalKey(null);
 
   useEffect(() => {
@@ -154,11 +155,16 @@ export default function HomePage() {
             <span className="home-header-emblem">{'\u{1F33F}'}</span>
             <span>MindSpace</span>
           </Link>
-          <nav className="home-header-nav">
+          <button className="home-header-toggle" onClick={() => setNavOpen((v) => !v)} aria-label="Toggle navigation" aria-expanded={navOpen}>
+            <span className={`toggle-bar ${navOpen ? 'open' : ''}`} />
+            <span className={`toggle-bar ${navOpen ? 'open' : ''}`} />
+            <span className={`toggle-bar ${navOpen ? 'open' : ''}`} />
+          </button>
+          <nav className={`home-header-nav ${navOpen ? 'open' : ''}`}>
             <button className="home-header-link" onClick={() => openModal('about')}>About Us</button>
             <button className="home-header-link" onClick={() => openModal('mission')}>Our Mission</button>
-            <Link to="/crisis" className="home-header-link">Crisis</Link>
-            <Link to="/healing" className="home-header-link">Resources</Link>
+            <Link to="/crisis" className="home-header-link" onClick={() => setNavOpen(false)}>Crisis</Link>
+            <Link to="/healing" className="home-header-link" onClick={() => setNavOpen(false)}>Resources</Link>
           </nav>
         </div>
       </header>

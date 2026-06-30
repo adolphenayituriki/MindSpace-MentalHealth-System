@@ -30,4 +30,20 @@ router.post(
 router.get('/profile', auth, ctrl.getProfile);
 router.patch('/profile', auth, ctrl.updateProfile);
 
+router.post(
+  '/forgot-password',
+  [body('email').isEmail().normalizeEmail(), validate],
+  ctrl.forgotPassword
+);
+
+router.post(
+  '/reset-password',
+  [
+    body('token').notEmpty(),
+    body('password').isLength({ min: 6 }),
+    validate,
+  ],
+  ctrl.resetPassword
+);
+
 module.exports = router;

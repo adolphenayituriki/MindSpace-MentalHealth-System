@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTranslation } from '../../i18n/i18n';
 import { useAuth } from '../../contexts/AuthContext';
+import { authAPI } from '../../services/api';
 
 const modeVariants = {
   enter: { x: 40, opacity: 0 },
@@ -18,6 +19,7 @@ export default function AuthScreen({ onComplete }) {
   const [name, setName] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [resetSent, setResetSent] = useState(false);
 
   const handleAnonymous = async () => {
     setLoading(true);
@@ -71,7 +73,69 @@ export default function AuthScreen({ onComplete }) {
         transition={{ duration: 0.35, ease: 'easeOut' }}
       >
         <AnimatePresence mode="wait">
-          {mode === 'choose' ? (
+          {mode === 'forgot' ? (
+            <motion.div
+              key="forgot"
+              variants={modeVariants}
+              initial="enter"
+              animate="center"
+              exit="exit"
+              transition={{ duration: 0.25 }}
+              style={{ display: 'flex', flexDirection: 'column', gap: '0.85rem' }}
+            >
+              <h2>Reset Password</h2>
+              {resetSent ? (
+                <>
+                  <div className="auth-shield-icon">{'\u2709\uFE0F'}</div>
+                  <p style={{ fontSize: '0.88rem', color: 'var(--text-secondary)' }}>
+                    If an account exists with that email, we've sent a reset link.
+                  </p>
+                  <motion.button
+                    className="btn btn-secondary btn-lg w-full"
+                    onClick={() => { setMode('login'); setResetSent(false); }}
+                    whileTap={{ scale: 0.98 }}
+                  >
+                    Back to Sign In
+                  </motion.button>
+                </>
+              ) : (
+                <>
+                  {error && <p className="error-text">{error}</p>}
+                  <motion.input
+                    type="email" placeholder="Your email address"
+                    value={email} onChange={(e) => setEmail(e.target.value)}
+                    className="input" whileFocus={{ scale: 1.01 }}
+                  />
+                  <motion.button
+                    className="btn btn-primary btn-lg w-full"
+                    onClick={async () => {
+                      if (!email.includes('@')) { setError('Enter a valid email'); return; }
+                      setLoading(true);
+                      try {
+                        await authAPI.forgotPassword?.(email) || await (await fetch('/api/auth/forgot-password', {
+                          method: 'POST', headers: { 'Content-Type': 'application/json' },
+                          body: JSON.stringify({ email }),
+                        })).json();
+                        setResetSent(true);
+                      } catch (_) { setError('Something went wrong'); }
+                      setLoading(false);
+                    }}
+                    disabled={loading}
+                    whileTap={{ scale: 0.98 }}
+                  >
+                    {loading ? 'Sending...' : 'Send Reset Link'}
+                  </motion.button>
+                  <motion.button
+                    className="btn btn-ghost btn-sm w-full"
+                    onClick={() => { setMode('login'); setError(''); }}
+                    whileTap={{ scale: 0.98 }}
+                  >
+                    Back
+                  </motion.button>
+                </>
+              )}
+            </motion.div>
+          ) : mode === 'choose' ? (
             <motion.div
               key="choose"
               variants={modeVariants}
@@ -171,6 +235,12 @@ export default function AuthScreen({ onComplete }) {
                     ? 'Create Account'
                     : 'Sign In'}
               </motion.button>
+
+              {mode === 'login' && (
+                <button className="forgot-password-link" onClick={() => { setMode('forgot'); setError(''); }}>
+                  Forgot password?
+                </button>
+              )}
 
               <p className="text-center text-muted" style={{ fontSize: '0.85rem' }}>
                 {mode === 'register' ? (

@@ -115,4 +115,28 @@ export const adminAPI = {
   deleteCommunity: (id) => callApi(() => api.delete(`/admin/communities/${id}`)),
 };
 
+export const assessmentAPI = {
+  getAll: () => callApi(() => api.get('/assessments')),
+  getOne: (id) => callApi(() => api.get(`/assessments/${id}`)),
+  submit: (id, answers) => callApi(() => api.post(`/assessments/${id}/submit`, { answers })),
+  getResults: () => callApi(() => api.get('/assessments/results')),
+};
+
+export const courseAPI = {
+  getAll: () => callApi(() => api.get('/courses')),
+  getMine: () => callApi(() => api.get('/courses/mine')),
+  getOne: (id) => callApi(() => api.get(`/courses/${id}`)),
+  enroll: (id) => callApi(() => api.post(`/courses/${id}/enroll`)),
+  updateProgress: (id, lessonId) => callApi(() => api.post(`/courses/${id}/progress`, { lessonId })),
+};
+
+export const bookingAPI = {
+  getAll: () => callApi(() => api.get('/bookings')),
+  create: (data) => callApi(() => api.post('/bookings', data)),
+  cancel: (id) => callApi(() => api.patch(`/bookings/${id}/cancel`)),
+  getCounselorBookings: () => callApi(() => api.get('/bookings/counselor')),
+  confirm: (id) => callApi(() => api.patch(`/bookings/${id}/confirm`)),
+  getAvailability: (counselorId) => callApi(() => api.get(`/bookings/availability/${counselorId}`)),
+};
+
 export default api;

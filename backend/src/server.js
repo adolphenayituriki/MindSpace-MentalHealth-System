@@ -39,6 +39,9 @@ app.use('/api/crisis', crisisRoutes);
 app.use('/api/insights', require('./routes/insights'));
 app.use('/api/healing', require('./routes/healing'));
 app.use('/api/admin', require('./routes/admin'));
+app.use('/api/assessments', require('./routes/assessments'));
+app.use('/api/courses', require('./routes/courses'));
+app.use('/api/bookings', require('./routes/bookings'));
 
 app.use(errorHandler);
 

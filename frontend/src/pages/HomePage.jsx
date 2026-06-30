@@ -84,19 +84,21 @@ const partners = [
 const modalContent = {
   about: {
     title: 'About MindSpace',
-    body: `MindSpace is a digital mental health platform built by Rwandans for Rwandans. We believe that mental health support should be accessible, anonymous, and culturally grounded — no matter who you are or where you live.
-
-Our platform connects users with mood tracking, guided journaling, peer support communities, professional counseling, and crisis resources — all in one secure space.
-
-We work closely with the Rwanda Biomedical Center (RBC), the Ministry of Health, and local healthcare providers to ensure our resources are accurate, relevant, and trustworthy.`,
+    icon: '\u{1F33F}',
+    body: [
+      'MindSpace is a digital mental health platform built by Rwandans for Rwandans. We believe that mental health support should be accessible, anonymous, and culturally grounded \u2014 no matter who you are or where you live.',
+      'Our platform connects users with mood tracking, guided journaling, peer support communities, professional counseling, and crisis resources \u2014 all in one secure space.',
+      'We work closely with the Rwanda Biomedical Center (RBC), the Ministry of Health, and local healthcare providers to ensure our resources are accurate, relevant, and trustworthy.',
+    ],
   },
   mission: {
     title: 'Our Mission',
-    body: `To break the silence around mental health in Rwanda by providing a free, anonymous, and culturally sensitive digital safe space where every Rwandan can understand, track, and improve their mental well-being.
-
-We envision a Rwanda where seeking mental health support is as natural as visiting a health center — where no one suffers in silence, and where every individual has the tools they need to thrive.
-
-Our approach is rooted in community, confidentiality, and cultural relevance — meeting people where they are, in the languages they speak.`,
+    icon: '\u{1F4A1}',
+    body: [
+      'To break the silence around mental health in Rwanda by providing a free, anonymous, and culturally sensitive digital safe space where every Rwandan can understand, track, and improve their mental well-being.',
+      'We envision a Rwanda where seeking mental health support is as natural as visiting a health center \u2014 where no one suffers in silence, and where every individual has the tools they need to thrive.',
+      'Our approach is rooted in community, confidentiality, and cultural relevance \u2014 meeting people where they are, in the languages they speak.',
+    ],
   },
 };
 
@@ -416,14 +418,16 @@ export default function HomePage() {
               transition={{ duration: 0.25, ease: 'easeOut' }}
               onClick={(e) => e.stopPropagation()}
             >
-              <div className="modal-header">
-                <h3>{modalContent[modalKey]?.title}</h3>
-                <button className="modal-close" onClick={closeModal} aria-label="Close">
-                  &times;
-                </button>
-              </div>
+              <button className="modal-close" onClick={closeModal} aria-label="Close">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                  <path d="M4 4l8 8M12 4l-8 8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                </svg>
+              </button>
+              <div className="modal-emblem">{modalContent[modalKey]?.icon}</div>
+              <h2 className="modal-title">{modalContent[modalKey]?.title}</h2>
+              <div className="modal-divider" />
               <div className="modal-body">
-                {modalContent[modalKey]?.body.split('\n\n').map((p, i) => (
+                {modalContent[modalKey]?.body.map((p, i) => (
                   <p key={i}>{p}</p>
                 ))}
               </div>

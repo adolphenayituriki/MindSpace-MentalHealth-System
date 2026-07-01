@@ -158,7 +158,8 @@ export default function Sidebar() {
 
   return (
     <>
-      {/* Mobile top bar */}
+
+
       <header className="mobile-topbar">
         <motion.button
           className="hamburger"
@@ -171,12 +172,14 @@ export default function Sidebar() {
         <Link to="/" className="mobile-topbar-logo">MindSpace</Link>
       </header>
 
-      {/* Mobile overlay */}
+
+
       {isMobile && expanded && (
         <div className="sidebar-overlay visible" onClick={close} aria-hidden="true" />
       )}
 
-      {/* Sidebar - always visible on both desktop and mobile */}
+
+
       <aside className={`sidebar ${!expanded ? 'sidebar-collapsed' : ''} ${isMobile ? 'sidebar-mobile' : ''}`}>
         <div className="sidebar-header">
           <Link to="/" className="sidebar-logo" onClick={close}>MindSpace</Link>

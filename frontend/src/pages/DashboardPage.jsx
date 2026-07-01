@@ -118,8 +118,6 @@ export default function DashboardPage() {
   if (user?.role === 'counselor') return <CounselorDashboard user={user} lang={lang} greeting={greeting} />;
   return <UserDashboard user={user} lang={lang} greeting={greeting} />;
 }
-
-/* ─── USER DASHBOARD ─── */
 function UserDashboard({ user, lang, greeting }) {
   return (
     <div>
@@ -166,8 +164,6 @@ function UserDashboard({ user, lang, greeting }) {
     </div>
   );
 }
-
-/* ─── COUNSELOR DASHBOARD ─── */
 function CounselorDashboard({ user, lang, greeting }) {
   return (
     <div>
@@ -219,8 +215,6 @@ function CounselorDashboard({ user, lang, greeting }) {
     </div>
   );
 }
-
-/* ─── ADMIN DASHBOARD ─── */
 function AdminDashboard({ user, lang, greeting }) {
   const [stats, setStats] = useState(null);
   const [recentUsers, setRecentUsers] = useState([]);
@@ -267,7 +261,8 @@ function AdminDashboard({ user, lang, greeting }) {
         </div>
       </div>
 
-      {/* Stats */}
+
+
       <SectionTitle icon=<FaChartLine /> label={lang === 'rw' ? 'Incamake' : 'Platform Stats'} />
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(165px, 1fr))', gap: '0.75rem', marginBottom: '1.5rem' }}>
         {stats ? (
@@ -287,7 +282,8 @@ function AdminDashboard({ user, lang, greeting }) {
         )}
       </div>
 
-      {/* Quick Admin Actions */}
+
+
       <SectionTitle icon=<FaCog /> label={lang === 'rw' ? 'Ibikorwa byihuse' : 'Quick Admin Actions'} />
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '0.75rem', marginBottom: '1.5rem' }}>
         <ActionCard to="/admin?tab=users" icon=<FaUsers /> label={lang === 'rw' ? 'Abakoresha' : 'Manage Users'} desc={lang === 'rw' ? 'Cunga konti n\'inshingano' : 'Accounts & roles'} color="#0D9488" />
@@ -298,7 +294,8 @@ function AdminDashboard({ user, lang, greeting }) {
         <ActionCard to="/crisis" icon=<FaShieldAlt /> label={lang === 'rw' ? 'Ihutirwa' : 'Crisis Support'} desc={lang === 'rw' ? 'Reba ibikoresho by\'ihutirwa' : 'View emergency resources'} color="#EF4444" />
       </div>
 
-      {/* Recent Users */}
+
+
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.65rem' }}>
         <SectionTitle icon=<FaUsers /> label={lang === 'rw' ? 'Abakoresha ba vuba' : 'Recent Users'} />
         <Link to="/admin?tab=users" className="btn btn-sm" style={{ fontSize: '0.78rem' }}>

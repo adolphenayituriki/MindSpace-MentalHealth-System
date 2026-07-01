@@ -50,7 +50,7 @@ export default function OnboardingPage() {
         onboardingComplete: true,
         preferredTopics: onboardAnswers.topics || [],
       });
-    } catch (_) { /* offline fallback */ }
+    } catch (_) {  }
     updateUser({ onboardingComplete: true });
     navigate('/dashboard');
   };

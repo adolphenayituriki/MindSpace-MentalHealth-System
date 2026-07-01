@@ -208,8 +208,6 @@ export default function AdminPage() {
     </motion.div>
   );
 }
-
-/* ─── STATS ─── */
 function StatsPanel({ lang }) {
   const [stats, setStats] = useState(null);
 
@@ -247,8 +245,6 @@ function StatsPanel({ lang }) {
     </div>
   );
 }
-
-/* ─── USERS ─── */
 function UsersPanel({ lang }) {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -376,8 +372,6 @@ function UsersPanel({ lang }) {
     </div>
   );
 }
-
-/* ─── GENERIC CRUD PANEL ─── */
 function CrudPanel({
   lang, fetchFn, extractItems,
   createFn, updateFn, deleteFn,
@@ -478,8 +472,6 @@ function CrudPanel({
     </div>
   );
 }
-
-/* ─── HEALING ─── */
 function HealingPanel({ lang }) {
   const fields = [
     { key: 'title', label: 'Title', type: 'text', required: true },
@@ -523,8 +515,6 @@ function HealingPanel({ lang }) {
     />
   );
 }
-
-/* ─── COUNSELORS ─── */
 function CounselorsPanel({ lang }) {
   const fields = [
     { key: 'fullName', label: 'Full Name', type: 'text', required: true },
@@ -582,8 +572,6 @@ function CounselorsPanel({ lang }) {
     />
   );
 }
-
-/* ─── CRISIS ─── */
 function CrisisPanel({ lang }) {
   const fields = [
     { key: 'name', label: 'Name', type: 'text', required: true },
@@ -627,8 +615,6 @@ function CrisisPanel({ lang }) {
     />
   );
 }
-
-/* ─── COMMUNITIES ─── */
 function CommunitiesPanel({ lang }) {
   const fields = [
     { key: 'name', label: 'Name', type: 'text', required: true },
@@ -670,8 +656,6 @@ function CommunitiesPanel({ lang }) {
     />
   );
 }
-
-/* ─── ASSESSMENTS ─── */
 function AssessmentsPanel({ lang }) {
   const fields = [
     { key: 'title', label: 'Title', type: 'text', required: true },
@@ -716,8 +700,6 @@ function AssessmentsPanel({ lang }) {
     />
   );
 }
-
-/* ─── COURSES ─── */
 function CoursesPanel({ lang }) {
   const fields = [
     { key: 'title', label: 'Title', type: 'text', required: true },
@@ -779,8 +761,6 @@ function CoursesPanel({ lang }) {
     />
   );
 }
-
-/* ─── BOOKINGS ─── */
 function BookingsPanel({ lang }) {
   const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(true);

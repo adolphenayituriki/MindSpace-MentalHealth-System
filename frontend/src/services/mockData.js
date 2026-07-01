@@ -7,7 +7,8 @@ function lang() {
   return getLanguage() || 'rw';
 }
 
-// ── Auth ──
+
+
 export const mockAuth = {
   anonymous: (language) => {
     const id = 'user_' + Math.random().toString(36).slice(2, 8);
@@ -72,7 +73,8 @@ export const mockAuth = {
   getCurrentUser: () => _user,
 };
 
-// ── Moods ──
+
+
 function generateMoods() {
   const moods = [];
   const emojis = { 5: '\u{1F60A}', 4: '\u{1F642}', 3: '\u{1F610}', 2: '\u{1F614}', 1: '\u{1F622}' };
@@ -150,7 +152,8 @@ export const mockMoods = {
   },
 };
 
-// ── Journal ──
+
+
 const _journalEntries = [
   { _id: 'j1', title: 'Umutima wuje amahoro', content: 'Uyu munsi narose ndeba uko izuba rirashe. Nibutse ko buri munsi ari ikindi gitangaza. Nshimira akanya k\'amahoro nafite. Byambukijije ko n\'ubwo hari ibibazo, hari ibyiza.', prompt: 'Ni iki cyaguteye amahoro mu mutima wawe uyu munsi?', mood: 4, tags: ['gratitude', 'amahoro'], createdAt: new Date(Date.now() - 86400000 * 2).toISOString() },
   { _id: 'j2', title: 'Kugira ubwoba bw\'ibizamini', content: 'Ntekereza cyane ku bizamini biri imbere. Umutima wange uradunda iyo ntekereje. Nkeneye kwibuka guhumeka no gufata buri kintu gikurikiye ikindi. Sinifuza gukomeza kugira ubwoba.', prompt: 'Ni iki kiguteye ubwoba?', mood: 2, tags: ['anxiety', 'ubwoba'], createdAt: new Date(Date.now() - 86400000 * 5).toISOString() },
@@ -240,7 +243,8 @@ export const mockJournals = {
   },
 };
 
-// ── Chat / Reflection ──
+
+
 const reflectionResponses = [
   'Thank you for sharing that. It takes courage to speak what is in your heart. You are not alone.',
   'I hear you. How does this affect your daily life? Sometimes naming it is the first step.',
@@ -295,7 +299,8 @@ export const mockChat = {
   },
 };
 
-// ── Communities ──
+
+
 const _communities = [
   {
     _id: 'c1', name: 'Anxiety Support', nameRw: 'Ubufasha ku Bwoba',
@@ -421,7 +426,8 @@ export const mockCommunities = {
   },
 };
 
-// ── Counselors ──
+
+
 const _counselors = [
   {
     _id: 'counselor_1', fullName: 'Dr. Alice Mukamana',
@@ -527,7 +533,8 @@ export const mockCounseling = {
   }),
 };
 
-// ── Crisis Resources ──
+
+
 const _resources = [
   { _id: 'r1', name: 'Rwanda Mental Health Hotline', nameRw: 'Terefone y\'Ubufasha mu Mutima', type: 'hotline', phone: '3002', description: 'Free 24/7 mental health support hotline.', descriptionRw: 'Terefone y\'ubufasha mu mutima ku buntu, 24/7.', location: '', isVerified: true },
   { _id: 'r2', name: 'National Emergency Service', nameRw: 'Serivisi y\'Ikiza', type: 'emergency', phone: '112', description: 'National emergency response — police, ambulance, fire.', descriptionRw: 'Serivisi y\'ikiza — polisi, ambulance, umuriro.', location: '', isVerified: true },
@@ -551,7 +558,8 @@ export const mockCrisis = {
   }),
 };
 
-// ── Healing Resources ──
+
+
 const _healingResources = [
   {
     _id: 'h_breathe_1', title: '4-7-8 Breathing', titleRw: 'Guhumeka 4-7-8',
@@ -692,7 +700,8 @@ export const mockHealing = {
   },
 };
 
-// ── Insights ──
+
+
 export const mockInsights = {
   getWeekly: () => ({
     data: {

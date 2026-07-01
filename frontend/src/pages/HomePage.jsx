@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+﻿import { useState, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTranslation, setLanguage as setAppLanguage, getLanguage } from '../i18n/i18n';
@@ -165,10 +165,7 @@ export default function HomePage() {
 
   return (
     <div className="home-page">
-      {/* ─── SCROLL PROGRESS ─── */}
       <div className="scroll-progress"><div className="scroll-progress-bar" style={{ width: `${scrollPct}%` }} /></div>
-
-      {/* ─── HEADER NAV ─── */}
       <header className="home-header">
         <div className="home-header-inner">
           <Link to="/" className="home-header-logo">
@@ -193,9 +190,7 @@ export default function HomePage() {
           </nav>
         </div>
       </header>
-
-      {/* ─── HERO ─── */}
-      <section className="home-hero" aria-label="Hero banner">
+<section className="home-hero" aria-label="Hero banner">
         <div className="home-hero-bg" aria-hidden="true">
           <AnimatePresence>
             <motion.div
@@ -286,9 +281,7 @@ export default function HomePage() {
           </svg>
         </div>
       </section>
-
-      {/* ─── STATS ─── */}
-      <section className="home-section stats-section">
+<section className="home-section stats-section">
         <div className="section-heading">
           <span className="stats-eyebrow">Why MindSpace Exists</span>
           <h2>The Reality We Can't Ignore</h2>
@@ -311,7 +304,7 @@ export default function HomePage() {
               <span className="stat-emoji"><FaBrain /></span>
               <span className="stat-number">18.6%</span>
             </span>
-            <span className="stat-label">of Rwandans face a mental health condition — yet most suffer in silence.</span>
+            <span className="stat-label">of Rwandans face a mental health condition â€” yet most suffer in silence.</span>
           </motion.div>
           <motion.div
             className="stat-item stat-gap"
@@ -339,7 +332,7 @@ export default function HomePage() {
               <span className="stat-emoji"><FaBan /></span>
               <span className="stat-number">95%</span>
             </span>
-            <span className="stat-label">of young Rwandans avoid clinical care — stigma is still the biggest barrier.</span>
+            <span className="stat-label">of young Rwandans avoid clinical care â€” stigma is still the biggest barrier.</span>
           </motion.div>
           <motion.div
             className="stat-item stat-promise"
@@ -354,13 +347,11 @@ export default function HomePage() {
               <span className="stat-emoji"><FaCheckCircle /></span>
               <span className="stat-number promise-number">100%</span>
             </span>
-            <span className="stat-label">Free, anonymous, and confidential — always. No judgment. No cost. No data shared.</span>
+            <span className="stat-label">Free, anonymous, and confidential â€” always. No judgment. No cost. No data shared.</span>
           </motion.div>
         </div>
       </section>
-
-      {/* ─── HOW IT WORKS ─── */}
-      <section className="home-section">
+<section className="home-section">
         <div className="section-heading">
           <h2>How MindSpace Works</h2>
           <div className="heading-divider" aria-hidden="true">
@@ -405,9 +396,7 @@ export default function HomePage() {
           ])}
         </div>
       </section>
-
-      {/* ─── QUICK HELP & SUPPORT ─── */}
-      <section className="home-section">
+<section className="home-section">
         <div className="section-heading">
           <h2>Quick Help &amp; Support</h2>
           <div className="heading-divider" aria-hidden="true">
@@ -441,9 +430,7 @@ export default function HomePage() {
           ))}
         </div>
       </section>
-
-      {/* ─── CTA BANNER ─── */}
-      <section className="home-section home-cta-banner-section">
+<section className="home-section home-cta-banner-section">
         <div className="home-cta-banner">
           <div className="home-cta-banner-bg" />
           <h2>Your well-being matters</h2>
@@ -453,9 +440,7 @@ export default function HomePage() {
           </Link>
         </div>
       </section>
-
-      {/* ─── PARTNERS ─── */}
-      <section className="home-section home-partners-section">
+<section className="home-section home-partners-section">
         <div className="section-heading">
           <h2>Trusted Partners</h2>
           <div className="heading-divider" aria-hidden="true">
@@ -482,9 +467,7 @@ export default function HomePage() {
           ))}
         </div>
       </section>
-
-      {/* ─── FOOTER ─── */}
-      <footer className="home-footer">
+<footer className="home-footer">
         <div className="footer-inner">
           <div className="footer-brand">
             <div className="footer-logo">
@@ -540,11 +523,8 @@ export default function HomePage() {
           </p>
         </div>
       </footer>
-      {/* ─── AI CHART FAB ─── */}
-      <HomeChartFab />
-
-      {/* ─── ABOUT / MISSION MODAL ─── */}
-      <AnimatePresence>
+<HomeChartFab />
+<AnimatePresence>
         {modalKey && (
           <motion.div
             className="modal-overlay"
@@ -597,3 +577,5 @@ export default function HomePage() {
     </div>
   );
 }
+
+

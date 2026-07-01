@@ -11,6 +11,7 @@ import ChatCards from '../components/dashboard/ChatCards';
 import HealingResources from '../components/healing/HealingResources';
 import { useTranslation } from '../i18n/i18n';
 import { adminAPI, counselingAPI } from '../services/api';
+import { FaLeaf, FaBrain, FaSmile, FaPenFancy, FaHeart, FaUsers, FaRegComments, FaChartLine, FaShieldAlt, FaUserMd, FaHome, FaHandshake, FaCog } from 'react-icons/fa';
 
 const roleStyles = {
   admin: { color: '#EF4444', bg: '#EF444418', border: '#EF444430' },
@@ -100,7 +101,7 @@ function SectionTitle({ icon, label }) {
       </h3>
       <div className="heading-divider">
         <span className="heading-divider-line" />
-        <span className="heading-divider-icon">{'\u{1F33F}'}</span>
+        <span className="heading-divider-icon"><FaLeaf /></span>
         <span className="heading-divider-line" />
       </div>
     </div>
@@ -131,19 +132,19 @@ function UserDashboard({ user, lang, greeting }) {
           <p>{lang === 'rw' ? 'Umeze ute uyu munsi?' : 'How are you doing today?'}</p>
           <div className="heading-divider" style={{ justifyContent: 'flex-start', margin: '0.5rem 0 0' }}>
             <span className="heading-divider-line" style={{ width: '60px' }} />
-            <span className="heading-divider-icon">{'\u{1F33F}'}</span>
+            <span className="heading-divider-icon"><FaLeaf /></span>
             <span className="heading-divider-line" style={{ width: '60px' }} />
           </div>
         </div>
       </div>
 
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(170px, 1fr))', gap: '0.65rem', marginBottom: '1.5rem' }}>
-        <ActionCard to="/reflect" icon={'\u{1F4AD}'} label={lang === 'rw' ? 'Ganira' : 'Reflect'} desc={lang === 'rw' ? 'Vugana n\'umujyanama w\'ubuzima' : 'Chat with your AI guide'} color="#0D9488" />
-        <ActionCard to="/mood" icon={'\u{1F60A}'} label={lang === 'rw' ? 'Ibyiyumvo' : 'Mood'} desc={lang === 'rw' ? 'Andika uko umeze' : 'Log how you feel'} color="#F97316" />
-        <ActionCard to="/journal" icon={'\u{1F4DD}'} label={lang === 'rw' ? 'Inyandiko' : 'Journal'} desc={lang === 'rw' ? 'Andika ibiri ku mutima' : 'Write your thoughts'} color="#8B5CF6" />
-        <ActionCard to="/healing" icon={'\u{1F33F}'} label={lang === 'rw' ? 'Kwivura' : 'Heal'} desc={lang === 'rw' ? 'Ibikoresho byo kwita kuri wowe' : 'Self-care resources'} color="#10B981" />
-        <ActionCard to="/counseling" icon={'\u{1F9D1}\u200D\u{2764}\uFE0F'} label={lang === 'rw' ? 'Ubujyanama' : 'Counseling'} desc={lang === 'rw' ? 'Vugana n\'umujyanama' : 'Talk to a counselor'} color="#6366F1" />
-        <ActionCard to="/communities" icon={'\u{1F46B}'} label={lang === 'rw' ? 'Imiryango' : 'Communities'} desc={lang === 'rw' ? 'Shyira hamwe n\'abandi' : 'Join support groups'} color="#EC4899" />
+        <ActionCard to="/reflect" icon=<FaBrain /> label={lang === 'rw' ? 'Ganira' : 'Reflect'} desc={lang === 'rw' ? 'Vugana n\'umujyanama w\'ubuzima' : 'Chat with your AI guide'} color="#0D9488" />
+        <ActionCard to="/mood" icon=<FaSmile /> label={lang === 'rw' ? 'Ibyiyumvo' : 'Mood'} desc={lang === 'rw' ? 'Andika uko umeze' : 'Log how you feel'} color="#F97316" />
+        <ActionCard to="/journal" icon=<FaPenFancy /> label={lang === 'rw' ? 'Inyandiko' : 'Journal'} desc={lang === 'rw' ? 'Andika ibiri ku mutima' : 'Write your thoughts'} color="#8B5CF6" />
+        <ActionCard to="/healing" icon=<FaLeaf /> label={lang === 'rw' ? 'Kwivura' : 'Heal'} desc={lang === 'rw' ? 'Ibikoresho byo kwita kuri wowe' : 'Self-care resources'} color="#10B981" />
+        <ActionCard to="/counseling" icon=<FaHeart /> label={lang === 'rw' ? 'Ubujyanama' : 'Counseling'} desc={lang === 'rw' ? 'Vugana n\'umujyanama' : 'Talk to a counselor'} color="#6366F1" />
+        <ActionCard to="/communities" icon=<FaUsers /> label={lang === 'rw' ? 'Imiryango' : 'Communities'} desc={lang === 'rw' ? 'Shyira hamwe n\'abandi' : 'Join support groups'} color="#EC4899" />
       </div>
 
       <div className="dashboard-grid">
@@ -154,12 +155,12 @@ function UserDashboard({ user, lang, greeting }) {
       </div>
 
       <div style={{ marginTop: '1.5rem' }}>
-        <SectionTitle icon={'\u{1F4AC}'} label={lang === 'rw' ? 'Ganira vuba' : 'Quick Chat'} />
+        <SectionTitle icon=<FaRegComments /> label={lang === 'rw' ? 'Ganira vuba' : 'Quick Chat'} />
         <ChatCards />
       </div>
 
       <div style={{ marginTop: '1.5rem' }}>
-        <SectionTitle icon={'\u{1F33F}'} label={lang === 'rw' ? 'Ibikoresho by\'ubuvuzi' : 'Recommended for You'} />
+        <SectionTitle icon=<FaLeaf /> label={lang === 'rw' ? 'Ibikoresho by\'ubuvuzi' : 'Recommended for You'} />
         <HealingResources recommendedOnly />
       </div>
     </div>
@@ -181,23 +182,23 @@ function CounselorDashboard({ user, lang, greeting }) {
           </p>
           <div className="heading-divider" style={{ justifyContent: 'flex-start', margin: '0.5rem 0 0' }}>
             <span className="heading-divider-line" style={{ width: '60px' }} />
-            <span className="heading-divider-icon">{'\u{1F33F}'}</span>
+            <span className="heading-divider-icon"><FaLeaf /></span>
             <span className="heading-divider-line" style={{ width: '60px' }} />
           </div>
         </div>
       </div>
 
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '0.75rem', marginBottom: '1.5rem' }}>
-        <ActionCard to="/counseling" icon={'\u{1F9D1}\u200D\u{2764}\uFE0F'} label={lang === 'rw' ? 'Sessions' : 'Counseling Sessions'} desc={lang === 'rw' ? 'Reba ibibazo, ohereza ubutumwa' : 'View sessions & send messages'} color="#6366F1" />
-        <ActionCard to="/communities" icon={'\u{1F46B}'} label={lang === 'rw' ? 'Imiryango' : 'Communities'} desc={lang === 'rw' ? 'Fasha mu nzego z\'abantu' : 'Engage with support groups'} color="#EC4899" />
-        <ActionCard to="/healing" icon={'\u{1F33F}'} label={lang === 'rw' ? 'Ibikoresho' : 'Healing Resources'} desc={lang === 'rw' ? 'Reba ibikoresho by\'ubuvuzi' : 'Browse tools to recommend'} color="#10B981" />
-        <ActionCard to="/insights" icon={'\u{1F4CA}'} label={lang === 'rw' ? 'Ibipimo' : 'Insights'} desc={lang === 'rw' ? 'Reba imikorere y\'abakoresha' : 'Track community progress'} color="#F97316" />
-        <ActionCard to="/crisis" icon={'\u{1F6E1}\uFE0F'} label={lang === 'rw' ? 'Ihutirwa' : 'Crisis Support'} desc={lang === 'rw' ? 'Ibikoresho by\'ihutirwa' : 'Emergency resources'} color="#EF4444" />
+        <ActionCard to="/counseling" icon=<FaHeart /> label={lang === 'rw' ? 'Sessions' : 'Counseling Sessions'} desc={lang === 'rw' ? 'Reba ibibazo, ohereza ubutumwa' : 'View sessions & send messages'} color="#6366F1" />
+        <ActionCard to="/communities" icon=<FaUsers /> label={lang === 'rw' ? 'Imiryango' : 'Communities'} desc={lang === 'rw' ? 'Fasha mu nzego z\'abantu' : 'Engage with support groups'} color="#EC4899" />
+        <ActionCard to="/healing" icon=<FaLeaf /> label={lang === 'rw' ? 'Ibikoresho' : 'Healing Resources'} desc={lang === 'rw' ? 'Reba ibikoresho by\'ubuvuzi' : 'Browse tools to recommend'} color="#10B981" />
+        <ActionCard to="/insights" icon=<FaChartLine /> label={lang === 'rw' ? 'Ibipimo' : 'Insights'} desc={lang === 'rw' ? 'Reba imikorere y\'abakoresha' : 'Track community progress'} color="#F97316" />
+        <ActionCard to="/crisis" icon=<FaShieldAlt /> label={lang === 'rw' ? 'Ihutirwa' : 'Crisis Support'} desc={lang === 'rw' ? 'Ibikoresho by\'ihutirwa' : 'Emergency resources'} color="#EF4444" />
       </div>
 
       <div className="card card-accent" style={{ padding: '1.25rem', marginBottom: '1.5rem' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-          <div style={{ fontSize: '2rem' }}>{'\u{1F9D1}\u200D\u{2764}\uFE0F'}</div>
+          <div style={{ fontSize: '2rem' }}><FaHeart /></div>
           <div>
             <div style={{ fontWeight: 600, marginBottom: '0.2rem' }}>
               {lang === 'rw' ? 'Uruhare rwawe nk\'umujyanama' : 'Your Role as a Counselor'}
@@ -212,7 +213,7 @@ function CounselorDashboard({ user, lang, greeting }) {
       </div>
 
       <div style={{ marginTop: '1.5rem' }}>
-        <SectionTitle icon={'\u{1F33F}'} label={lang === 'rw' ? 'Ibikoresho by\'ubuvuzi' : 'Healing Resources'} />
+        <SectionTitle icon=<FaLeaf /> label={lang === 'rw' ? 'Ibikoresho by\'ubuvuzi' : 'Healing Resources'} />
         <HealingResources recommendedOnly />
       </div>
     </div>
@@ -244,7 +245,7 @@ function AdminDashboard({ user, lang, greeting }) {
           </p>
           <div className="heading-divider" style={{ justifyContent: 'flex-start', margin: '0.5rem 0 0' }}>
             <span className="heading-divider-line" style={{ width: '60px' }} />
-            <span className="heading-divider-icon">{'\u{1F33F}'}</span>
+            <span className="heading-divider-icon"><FaLeaf /></span>
             <span className="heading-divider-line" style={{ width: '60px' }} />
           </div>
         </div>
@@ -252,7 +253,7 @@ function AdminDashboard({ user, lang, greeting }) {
 
       <div className="card card-accent" style={{ padding: '1.25rem', marginBottom: '1.5rem' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-          <div style={{ fontSize: '2rem' }}>{'\u{1F6E1}\uFE0F'}</div>
+          <div style={{ fontSize: '2rem' }}><FaShieldAlt /></div>
           <div>
             <div style={{ fontWeight: 600, marginBottom: '0.2rem' }}>
               {lang === 'rw' ? 'Uruhare rwawe nk\'umuyobozi' : 'Your Role as Admin'}
@@ -267,17 +268,17 @@ function AdminDashboard({ user, lang, greeting }) {
       </div>
 
       {/* Stats */}
-      <SectionTitle icon={'\u{1F4CA}'} label={lang === 'rw' ? 'Incamake' : 'Platform Stats'} />
+      <SectionTitle icon=<FaChartLine /> label={lang === 'rw' ? 'Incamake' : 'Platform Stats'} />
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(165px, 1fr))', gap: '0.75rem', marginBottom: '1.5rem' }}>
         {stats ? (
           <>
-            <StatCard icon={'\u{1F465}'} label={lang === 'rw' ? 'Abakoresha' : 'Users'} value={stats.users} color="#0D9488" />
-            <StatCard icon={'\u{1F9D1}\u200D\u2695\uFE0F'} label={lang === 'rw' ? 'Abajyanama' : 'Counselors'} value={stats.counselors} color="#6366F1" />
-            <StatCard icon={'\u{1F33F}'} label={lang === 'rw' ? 'Ibikoresho' : 'Healing'} value={stats.healing} color="#10B981" />
-            <StatCard icon={'\u{1F6E1}\uFE0F'} label={lang === 'rw' ? 'Ihutirwa' : 'Crisis'} value={stats.crisis} color="#F59E0B" />
-            <StatCard icon={'\u{1F3E0}'} label={lang === 'rw' ? 'Imiryango' : 'Communities'} value={stats.communities} color="#EC4899" />
-            <StatCard icon={'\u{1F91D}'} label={lang === 'rw' ? 'Sessions' : 'Sessions'} value={stats.sessions} color="#8B5CF6" />
-            <StatCard icon={'\u{1F60A}'} label={lang === 'rw' ? 'Ibyiyumvo' : 'Moods'} value={stats.moods} color="#F97316" />
+            <StatCard icon=<FaUsers /> label={lang === 'rw' ? 'Abakoresha' : 'Users'} value={stats.users} color="#0D9488" />
+            <StatCard icon=<FaUserMd /> label={lang === 'rw' ? 'Abajyanama' : 'Counselors'} value={stats.counselors} color="#6366F1" />
+            <StatCard icon=<FaLeaf /> label={lang === 'rw' ? 'Ibikoresho' : 'Healing'} value={stats.healing} color="#10B981" />
+            <StatCard icon=<FaShieldAlt /> label={lang === 'rw' ? 'Ihutirwa' : 'Crisis'} value={stats.crisis} color="#F59E0B" />
+            <StatCard icon=<FaHome /> label={lang === 'rw' ? 'Imiryango' : 'Communities'} value={stats.communities} color="#EC4899" />
+            <StatCard icon=<FaHandshake /> label={lang === 'rw' ? 'Sessions' : 'Sessions'} value={stats.sessions} color="#8B5CF6" />
+            <StatCard icon=<FaSmile /> label={lang === 'rw' ? 'Ibyiyumvo' : 'Moods'} value={stats.moods} color="#F97316" />
           </>
         ) : (
           [1,2,3,4,5,6,7].map(i => (
@@ -287,19 +288,19 @@ function AdminDashboard({ user, lang, greeting }) {
       </div>
 
       {/* Quick Admin Actions */}
-      <SectionTitle icon={'\u{2699}\uFE0F'} label={lang === 'rw' ? 'Ibikorwa byihuse' : 'Quick Admin Actions'} />
+      <SectionTitle icon=<FaCog /> label={lang === 'rw' ? 'Ibikorwa byihuse' : 'Quick Admin Actions'} />
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '0.75rem', marginBottom: '1.5rem' }}>
-        <ActionCard to="/admin?tab=users" icon={'\u{1F465}'} label={lang === 'rw' ? 'Abakoresha' : 'Manage Users'} desc={lang === 'rw' ? 'Cunga konti n\'inshingano' : 'Accounts & roles'} color="#0D9488" />
-        <ActionCard to="/admin?tab=healing" icon={'\u{1F33F}'} label={lang === 'rw' ? 'Ibikoresho' : 'Healing Resources'} desc={lang === 'rw' ? 'Ongeraho cyangwa hindura' : 'Add or edit'} color="#10B981" />
-        <ActionCard to="/admin?tab=counselors" icon={'\u{1F9D1}\u200D\u2695\uFE0F'} label={lang === 'rw' ? 'Abajyanama' : 'Counselors'} desc={lang === 'rw' ? 'Cunga urutonde' : 'Manage list'} color="#6366F1" />
-        <ActionCard to="/admin?tab=crisis" icon={'\u{1F6E1}\uFE0F'} label={lang === 'rw' ? 'Ihutirwa' : 'Crisis Resources'} desc={lang === 'rw' ? 'Reba ibikoresho' : 'View & manage'} color="#F59E0B" />
-        <ActionCard to="/admin?tab=communities" icon={'\u{1F3E0}'} label={lang === 'rw' ? 'Imiryango' : 'Communities'} desc={lang === 'rw' ? 'Cunga imiryango' : 'Manage groups'} color="#EC4899" />
-        <ActionCard to="/crisis" icon={'\u{1F6E1}\uFE0F'} label={lang === 'rw' ? 'Ihutirwa' : 'Crisis Support'} desc={lang === 'rw' ? 'Reba ibikoresho by\'ihutirwa' : 'View emergency resources'} color="#EF4444" />
+        <ActionCard to="/admin?tab=users" icon=<FaUsers /> label={lang === 'rw' ? 'Abakoresha' : 'Manage Users'} desc={lang === 'rw' ? 'Cunga konti n\'inshingano' : 'Accounts & roles'} color="#0D9488" />
+        <ActionCard to="/admin?tab=healing" icon=<FaLeaf /> label={lang === 'rw' ? 'Ibikoresho' : 'Healing Resources'} desc={lang === 'rw' ? 'Ongeraho cyangwa hindura' : 'Add or edit'} color="#10B981" />
+        <ActionCard to="/admin?tab=counselors" icon=<FaUserMd /> label={lang === 'rw' ? 'Abajyanama' : 'Counselors'} desc={lang === 'rw' ? 'Cunga urutonde' : 'Manage list'} color="#6366F1" />
+        <ActionCard to="/admin?tab=crisis" icon=<FaShieldAlt /> label={lang === 'rw' ? 'Ihutirwa' : 'Crisis Resources'} desc={lang === 'rw' ? 'Reba ibikoresho' : 'View & manage'} color="#F59E0B" />
+        <ActionCard to="/admin?tab=communities" icon=<FaHome /> label={lang === 'rw' ? 'Imiryango' : 'Communities'} desc={lang === 'rw' ? 'Cunga imiryango' : 'Manage groups'} color="#EC4899" />
+        <ActionCard to="/crisis" icon=<FaShieldAlt /> label={lang === 'rw' ? 'Ihutirwa' : 'Crisis Support'} desc={lang === 'rw' ? 'Reba ibikoresho by\'ihutirwa' : 'View emergency resources'} color="#EF4444" />
       </div>
 
       {/* Recent Users */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.65rem' }}>
-        <SectionTitle icon={'\u{1F465}'} label={lang === 'rw' ? 'Abakoresha ba vuba' : 'Recent Users'} />
+        <SectionTitle icon=<FaUsers /> label={lang === 'rw' ? 'Abakoresha ba vuba' : 'Recent Users'} />
         <Link to="/admin?tab=users" className="btn btn-sm" style={{ fontSize: '0.78rem' }}>
           {lang === 'rw' ? 'Reba byose \u2192' : 'View all \u2192'}
         </Link>

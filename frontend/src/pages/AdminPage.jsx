@@ -5,19 +5,20 @@ import { useAuth } from '../contexts/AuthContext';
 import { useTranslation } from '../i18n/i18n';
 import { useToast } from '../contexts/ToastContext';
 import { adminAPI, healingAPI, counselingAPI, crisisAPI, communityAPI } from '../services/api';
+import { FaChartLine, FaUsers, FaLeaf, FaUserMd, FaShieldAlt, FaHome, FaPuzzlePiece, FaBookOpen, FaCalendarAlt, FaSmile, FaHandshake } from 'react-icons/fa';
 
 const TABS = ['stats', 'users', 'healing', 'counselors', 'crisis', 'communities', 'assessments', 'courses', 'bookings'];
 
 const TAB_ICONS = {
-  stats: '\u{1F4CA}',
-  users: '\u{1F465}',
-  healing: '\u{1F33F}',
-  counselors: '\u{1F9D1}\u200D\u2695\uFE0F',
-  crisis: '\u{1F6E1}\uFE0F',
-  communities: '\u{1F3E0}',
-  assessments: '\u{1F9E9}',
-  courses: '\u{1F4DA}',
-  bookings: '\u{1F4C5}',
+  stats: <FaChartLine />,
+  users: <FaUsers />,
+  healing: <FaLeaf />,
+  counselors: <FaUserMd />,
+  crisis: <FaShieldAlt />,
+  communities: <FaHome />,
+  assessments: <FaPuzzlePiece />,
+  courses: <FaBookOpen />,
+  bookings: <FaCalendarAlt />,
 };
 
 const LABELS = {
@@ -219,13 +220,13 @@ function StatsPanel({ lang }) {
   if (!stats) return <LoadingSkeleton />;
 
   const items = [
-    { icon: '\u{1F465}', label: lang === 'rw' ? 'Abakoresha' : 'Users', value: stats.users, color: '#0D9488' },
-    { icon: '\u{1F9D1}\u200D\u2695\uFE0F', label: lang === 'rw' ? 'Abajyanama' : 'Counselors', value: stats.counselors, color: '#6366F1' },
-    { icon: '\u{1F33F}', label: lang === 'rw' ? 'Ibikoresho by\'ubuvuzi' : 'Healing Resources', value: stats.healing, color: '#10B981' },
-    { icon: '\u{1F6E1}\uFE0F', label: lang === 'rw' ? 'Ibikoresho by\'ihutirwa' : 'Crisis Resources', value: stats.crisis, color: '#F59E0B' },
-    { icon: '\u{1F3E0}', label: lang === 'rw' ? 'Imiryango' : 'Communities', value: stats.communities, color: '#EC4899' },
-    { icon: '\u{1F91D}', label: lang === 'rw' ? 'Ibibazo' : 'Counseling Sessions', value: stats.sessions, color: '#8B5CF6' },
-    { icon: '\u{1F60A}', label: lang === 'rw' ? 'Ibyiyumvo' : 'Mood Entries', value: stats.moods, color: '#F97316' },
+    { icon: <FaUsers />, label: lang === 'rw' ? 'Abakoresha' : 'Users', value: stats.users, color: '#0D9488' },
+    { icon: <FaUserMd />, label: lang === 'rw' ? 'Abajyanama' : 'Counselors', value: stats.counselors, color: '#6366F1' },
+    { icon: <FaLeaf />, label: lang === 'rw' ? 'Ibikoresho by\'ubuvuzi' : 'Healing Resources', value: stats.healing, color: '#10B981' },
+    { icon: <FaShieldAlt />, label: lang === 'rw' ? 'Ibikoresho by\'ihutirwa' : 'Crisis Resources', value: stats.crisis, color: '#F59E0B' },
+    { icon: <FaHome />, label: lang === 'rw' ? 'Imiryango' : 'Communities', value: stats.communities, color: '#EC4899' },
+    { icon: <FaHandshake />, label: lang === 'rw' ? 'Ibibazo' : 'Counseling Sessions', value: stats.sessions, color: '#8B5CF6' },
+    { icon: <FaSmile />, label: lang === 'rw' ? 'Ibyiyumvo' : 'Mood Entries', value: stats.moods, color: '#F97316' },
   ];
 
   return (

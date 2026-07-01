@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useTranslation } from '../../i18n/i18n';
 import { crisisAPI } from '../../services/api';
+import { FaShieldAlt } from 'react-icons/fa';
 
 export default function CrisisResources() {
   const { getLanguage } = useTranslation();
@@ -57,7 +58,7 @@ export default function CrisisResources() {
       {isEmpty && (
         <div className="card">
           <div className="empty-state">
-            <div style={{ fontSize: '2.5rem', marginBottom: '0.5rem', opacity: 0.4 }}>{'\u{1F6E1}\uFE0F'}</div>
+            <div style={{ fontSize: '2.5rem', marginBottom: '0.5rem', opacity: 0.4 }}><FaShieldAlt /></div>
             <p>{lang === 'rw' ? 'Nta bikoresho bibonetse.' : 'No resources available yet.'}</p>
           </div>
         </div>

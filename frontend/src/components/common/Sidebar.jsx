@@ -4,52 +4,63 @@ import { motion } from 'framer-motion';
 import { useTranslation } from '../../i18n/i18n';
 import { useAuth } from '../../contexts/AuthContext';
 import { useTheme } from '../../contexts/ThemeContext';
+import { FaHome, FaChartBar, FaCog, FaExclamationTriangle, FaUser, FaComments, FaPuzzlePiece, FaBookOpen, FaUsers, FaLeaf, FaChartLine, FaSmile, FaPenFancy, FaHeart, FaShieldAlt, FaMoon, FaSun, FaSignOutAlt } from 'react-icons/fa';
+
+const iconMap = {
+  home: <FaHome />, dashboard: <FaChartBar />, admin: <FaCog />,
+  crisis: <FaExclamationTriangle />, profile: <FaUser />,
+  counseling: <FaComments />, assessments: <FaPuzzlePiece />,
+  learn: <FaBookOpen />, communities: <FaUsers />,
+  healing: <FaLeaf />, insights: <FaChartLine />,
+  reflect: <FaHeart />, mood: <FaSmile />, journal: <FaPenFancy />,
+  heal: <FaLeaf />, settings: <FaCog />,
+};
 
 const ADMIN_NAV = [
-  { to: '/', label: 'Home', icon: '\u{1F3E0}', desc: 'Go to homepage' },
-  { to: '/dashboard', label: 'Dashboard', icon: '\u{1F4CA}', desc: 'Platform overview & stats' },
-  { to: '/admin', label: 'Admin Panel', icon: '\u{2699}\uFE0F', desc: 'Manage users, resources & more' },
+  { to: '/', label: 'Home', icon: 'home', desc: 'Go to homepage' },
+  { to: '/dashboard', label: 'Dashboard', icon: 'dashboard', desc: 'Platform overview & stats' },
+  { to: '/admin', label: 'Admin Panel', icon: 'admin', desc: 'Manage users, resources & more' },
 ];
 
 const ADMIN_BOTTOM = [
-  { to: '/crisis', label: 'Crisis Support', icon: '\u{1F6E1}', desc: 'Emergency resources' },
-  { to: '/profile', label: 'Profile', icon: '\u{1F464}', desc: 'Your profile & settings' },
+  { to: '/crisis', label: 'Crisis Support', icon: 'crisis', desc: 'Emergency resources' },
+  { to: '/profile', label: 'Profile', icon: 'profile', desc: 'Your profile & settings' },
 ];
 
 const COUNSELOR_NAV = [
-  { to: '/', label: 'Home', icon: '\u{1F3E0}', desc: 'Go to homepage' },
-  { to: '/dashboard', label: 'Dashboard', icon: '\u{1F4CB}', desc: 'Your counseling overview' },
-  { to: '/counseling', label: 'Counseling', icon: '\u{1F4AC}', desc: 'Sessions & messages' },
-  { to: '/assessments', label: 'Assessments', icon: '\u{1F9E9}', desc: 'Self-assessment tools' },
-  { to: '/learning', label: 'Learn', icon: '\u{1F4DA}', desc: 'Courses & training' },
-  { to: '/communities', label: 'Communities', icon: '\u{1F46B}', desc: 'Support groups' },
-  { to: '/healing', label: 'Healing', icon: '\u{1F33F}', desc: 'Resources & tools' },
-  { to: '/insights', label: 'Insights', icon: '\u{1F4CA}', desc: 'Track progress' },
+  { to: '/', label: 'Home', icon: 'home', desc: 'Go to homepage' },
+  { to: '/dashboard', label: 'Dashboard', icon: 'dashboard', desc: 'Your counseling overview' },
+  { to: '/counseling', label: 'Counseling', icon: 'counseling', desc: 'Sessions & messages' },
+  { to: '/assessments', label: 'Assessments', icon: 'assessments', desc: 'Self-assessment tools' },
+  { to: '/learning', label: 'Learn', icon: 'learn', desc: 'Courses & training' },
+  { to: '/communities', label: 'Communities', icon: 'communities', desc: 'Support groups' },
+  { to: '/healing', label: 'Healing', icon: 'healing', desc: 'Resources & tools' },
+  { to: '/insights', label: 'Insights', icon: 'insights', desc: 'Track progress' },
 ];
 
 const COUNSELOR_BOTTOM = [
-  { to: '/crisis', label: 'Crisis Support', icon: '\u{1F6E1}', desc: 'Emergency resources' },
-  { to: '/profile', label: 'Profile', icon: '\u{1F464}', desc: 'Your profile & settings' },
-  { to: '/admin', label: 'Settings', icon: '\u{2699}\uFE0F', desc: 'Profile & availability' },
+  { to: '/crisis', label: 'Crisis Support', icon: 'crisis', desc: 'Emergency resources' },
+  { to: '/profile', label: 'Profile', icon: 'profile', desc: 'Your profile & settings' },
+  { to: '/admin', label: 'Settings', icon: 'settings', desc: 'Profile & availability' },
 ];
 
 const USER_NAV = [
-  { to: '/', label: 'Home', icon: '\u{1F3E0}', desc: 'Go to homepage' },
-  { to: '/dashboard', label: 'Dashboard', icon: '\u{1F4CB}', desc: 'Your daily overview' },
-  { to: '/reflect', label: 'Reflect', icon: '\u{1F4AD}', desc: 'Guided reflection chat' },
-  { to: '/mood', label: 'Mood', icon: '\u{1F60A}', desc: 'Track your feelings' },
-  { to: '/healing', label: 'Heal', icon: '\u{1F33F}', desc: 'Self-care resources' },
-  { to: '/journal', label: 'Journal', icon: '\u{1F4DD}', desc: 'Write your thoughts' },
-  { to: '/assessments', label: 'Assessments', icon: '\u{1F9E9}', desc: 'Self-assessment tests' },
-  { to: '/learning', label: 'Learn', icon: '\u{1F4DA}', desc: 'Courses & training' },
-  { to: '/communities', label: 'Communities', icon: '\u{1F46B}', desc: 'Connect with others' },
-  { to: '/counseling', label: 'Counseling', icon: '\u{1F4AC}', desc: 'Talk to a counselor' },
-  { to: '/insights', label: 'Insights', icon: '\u{1F4CA}', desc: 'See your patterns' },
+  { to: '/', label: 'Home', icon: 'home', desc: 'Go to homepage' },
+  { to: '/dashboard', label: 'Dashboard', icon: 'dashboard', desc: 'Your daily overview' },
+  { to: '/reflect', label: 'Reflect', icon: 'reflect', desc: 'Guided reflection chat' },
+  { to: '/mood', label: 'Mood', icon: 'mood', desc: 'Track your feelings' },
+  { to: '/healing', label: 'Heal', icon: 'heal', desc: 'Self-care resources' },
+  { to: '/journal', label: 'Journal', icon: 'journal', desc: 'Write your thoughts' },
+  { to: '/assessments', label: 'Assessments', icon: 'assessments', desc: 'Self-assessment tests' },
+  { to: '/learning', label: 'Learn', icon: 'learn', desc: 'Courses & training' },
+  { to: '/communities', label: 'Communities', icon: 'communities', desc: 'Connect with others' },
+  { to: '/counseling', label: 'Counseling', icon: 'counseling', desc: 'Talk to a counselor' },
+  { to: '/insights', label: 'Insights', icon: 'insights', desc: 'See your patterns' },
 ];
 
 const USER_BOTTOM = [
-  { to: '/crisis', label: 'Crisis Support', icon: '\u{1F6E1}', desc: 'Get help now' },
-  { to: '/profile', label: 'Profile', icon: '\u{1F464}', desc: 'Your profile & settings' },
+  { to: '/crisis', label: 'Crisis Support', icon: 'crisis', desc: 'Get help now' },
+  { to: '/profile', label: 'Profile', icon: 'profile', desc: 'Your profile & settings' },
 ];
 
 function SidebarLink({ to, icon, label, desc, active, onClick, collapsed, onExpand }) {
@@ -67,7 +78,7 @@ function SidebarLink({ to, icon, label, desc, active, onClick, collapsed, onExpa
       onClick={handleClick}
       title={desc}
     >
-      <span className="sidebar-link-icon">{icon}</span>
+      <span className="sidebar-link-icon">{iconMap[icon] || icon}</span>
       <span className="sidebar-link-label">
         <span>{label}</span>
         <span className="sidebar-link-desc">{desc}</span>
@@ -185,12 +196,12 @@ export default function Sidebar() {
         <nav className="sidebar-nav">
           {isAdmin && (
             <div className="sidebar-role-banner" style={{ background: '#EF444418', color: '#EF4444', borderBottom: '1px solid #EF444420' }}>
-              {'\u{1F6E1}\uFE0F'} Admin Panel
+              <FaShieldAlt style={{ marginRight: 6 }} /> Admin Panel
             </div>
           )}
           {isCounselor && (
             <div className="sidebar-role-banner" style={{ background: '#6366F118', color: '#6366F1', borderBottom: '1px solid #6366F120' }}>
-              {'\u{1F9D1}\u200D\u2695\uFE0F'} Counselor Workspace
+              <FaHeart style={{ marginRight: 6 }} /> Counselor Workspace
             </div>
           )}
 
@@ -200,11 +211,11 @@ export default function Sidebar() {
             <NavSection
               title="Management"
               items={[
-                { to: '/admin?tab=users', label: 'Users', icon: '\u{1F465}', desc: 'Manage accounts & roles' },
-                { to: '/admin?tab=healing', label: 'Healing', icon: '\u{1F33F}', desc: 'Manage resources' },
-                { to: '/admin?tab=counselors', label: 'Counselors', icon: '\u{1F9D1}\u200D\u2695\uFE0F', desc: 'Manage counselors' },
-                { to: '/admin?tab=crisis', label: 'Crisis', icon: '\u{1F6E1}\uFE0F', desc: 'Manage crisis resources' },
-                { to: '/admin?tab=communities', label: 'Communities', icon: '\u{1F3E0}', desc: 'Manage communities' },
+                { to: '/admin?tab=users', label: 'Users', icon: 'profile', desc: 'Manage accounts & roles' },
+                { to: '/admin?tab=healing', label: 'Healing', icon: 'healing', desc: 'Manage resources' },
+                { to: '/admin?tab=counselors', label: 'Counselors', icon: 'counseling', desc: 'Manage counselors' },
+                { to: '/admin?tab=crisis', label: 'Crisis', icon: 'crisis', desc: 'Manage crisis resources' },
+                { to: '/admin?tab=communities', label: 'Communities', icon: 'communities', desc: 'Manage communities' },
               ]}
               activePath={activePath}
               onClose={close}
@@ -217,7 +228,7 @@ export default function Sidebar() {
             <NavSection
               title="Resources"
               items={[
-                { to: '/healing', label: 'Healing Tools', icon: '\u{1F33F}', desc: 'Self-care resources' },
+                { to: '/healing', label: 'Healing Tools', icon: <FaLeaf />, desc: 'Self-care resources' },
               ]}
               activePath={activePath}
               onClose={close}
@@ -247,7 +258,7 @@ export default function Sidebar() {
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
             >
-              {darkMode ? '\u2600' : '\u263E'}
+              {darkMode ? <FaSun /> : <FaMoon />}
             </motion.button>
           </div>
 
@@ -273,7 +284,7 @@ export default function Sidebar() {
               whileHover={{ backgroundColor: 'rgba(239,68,68,0.12)', borderColor: 'var(--danger)' }}
               whileTap={{ scale: 0.97 }}
             >
-              <span>{'\u{23FB}'}</span>
+              <FaSignOutAlt />
               <span>{getLanguage() === 'rw' ? 'Sohoka' : 'Logout'}</span>
             </motion.button>
           </motion.div>

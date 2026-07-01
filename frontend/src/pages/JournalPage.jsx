@@ -6,8 +6,9 @@ import JournalEntry from '../components/journal/JournalEntry';
 import JournalPrompt from '../components/journal/JournalPrompt';
 import Loading from '../components/common/Loading';
 import { formatDate } from '../utils/helpers';
+import { FaSmile, FaMeh, FaFrown, FaTired, FaPenFancy } from 'react-icons/fa';
 
-const MOOD_EMOJIS = { 5: '\u{1F60A}', 4: '\u{1F642}', 3: '\u{1F610}', 2: '\u{1F614}', 1: '\u{1F622}' };
+const MOOD_EMOJIS = { 5: <FaSmile />, 4: <FaSmile />, 3: <FaMeh />, 2: <FaFrown />, 1: <FaTired /> };
 
 export default function JournalPage() {
   const { t } = useTranslation();
@@ -95,7 +96,7 @@ export default function JournalPage() {
         ))}
         {entries.length === 0 && (
           <div className="empty-msg">
-            <div style={{ fontSize: '2.5rem', marginBottom: '0.5rem', opacity: 0.4 }}>{'\u{1F4DD}'}</div>
+            <div style={{ fontSize: '2.5rem', marginBottom: '0.5rem', opacity: 0.4 }}><FaPenFancy /></div>
             <p>No entries yet. Tap the prompt above or write something new.</p>
           </div>
         )}

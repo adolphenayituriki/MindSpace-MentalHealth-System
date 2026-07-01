@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useTranslation } from '../../i18n/i18n';
+import { FaHeart, FaRegComments } from 'react-icons/fa';
 
 const cardVariants = {
   hidden: { opacity: 0, y: 20 },
@@ -25,7 +26,7 @@ export default function ChatCards() {
         variants={cardVariants}
       >
         <Link to="/counseling" className="chat-card chat-card-counselor">
-          <div className="chat-card-icon">{'\u{1F9D1}\u200D\u{2764}\uFE0F'}</div>
+          <div className="chat-card-icon"><FaHeart /></div>
           <div className="chat-card-body">
             <h4>{lang === 'rw' ? 'Ganira n\'umujyanama' : 'Chat with Counselor'}</h4>
             <p>{lang === 'rw' ? 'Vugana n\'umujyanama w\'ubuzima mu ibanga.' : 'Speak privately with a professional counselor.'}</p>
@@ -45,7 +46,7 @@ export default function ChatCards() {
         variants={cardVariants}
       >
         <Link to="/reflect" className="chat-card chat-card-ai">
-          <div className="chat-card-icon">{'\u{1F4AC}'}</div>
+          <div className="chat-card-icon"><FaRegComments /></div>
           <div className="chat-card-body">
             <h4>{lang === 'rw' ? 'Ganira na AI' : 'Chat with AI'}</h4>
             <p>{lang === 'rw' ? 'Vugana n\'imikorere yacu y\'ubwenge buhangano kugirango ubone ubufasha bwihuse.' : 'Talk to our AI assistant for immediate support and reflection.'}</p>

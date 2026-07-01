@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { journalAPI } from '../../services/api';
 import { useTranslation } from '../../i18n/i18n';
 import Loading from '../common/Loading';
+import { FaBrain } from 'react-icons/fa';
 
 export default function JournalPrompt({ onSelect }) {
   const { getLanguage } = useTranslation();
@@ -27,7 +28,7 @@ export default function JournalPrompt({ onSelect }) {
     <div className="journal-prompts">
       {featured && (
         <div className="journal-featured-prompt" onClick={onSelect}>
-          <span className="journal-featured-icon">{'\u{1F4AD}'}</span>
+          <span className="journal-featured-icon"><FaBrain /></span>
           <p>{featured}</p>
           <span className="journal-featured-cta">Write &rarr;</span>
         </div>

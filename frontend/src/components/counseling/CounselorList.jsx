@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { counselingAPI } from '../../services/api';
+import { FaHeart, FaCheck } from 'react-icons/fa';
 
 const cardVariants = {
   hidden: { opacity: 0, y: 16 },
@@ -36,7 +37,7 @@ export default function CounselorList() {
         <div className="loading-container"><div className="spinner" /><p>Loading counselors...</p></div>
       ) : counselors.length === 0 ? (
         <div className="empty-state">
-          <div style={{ fontSize: '2.5rem', marginBottom: '0.5rem', opacity: 0.4 }}>{'\u{1F9D1}\u200D\u2764\uFE0F'}</div>
+          <div style={{ fontSize: '2.5rem', marginBottom: '0.5rem', opacity: 0.4 }}><FaHeart /></div>
           <p>No counselors available at the moment.</p>
         </div>
       ) : (
@@ -74,7 +75,7 @@ export default function CounselorList() {
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ delay: i * 0.06 + 0.15 }}
                 >
-                  {'\u{2713}'} Available
+                  <FaCheck /> Available
                 </motion.span>
               )}
             </motion.div>

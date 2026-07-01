@@ -6,14 +6,15 @@ import Loading from '../common/Loading';
 import BreathingExercise from './BreathingExercise';
 import StepTool from './StepTool';
 import VideoPlayer from './VideoPlayer';
+import { FaSpa, FaVolumeUp, FaMoon, FaVideo, FaBook, FaLeaf, FaHeart } from 'react-icons/fa';
 
 const TYPE_ICONS = {
-  breathing: '\u{1F9D8}',
-  sound: '\u{1F50A}',
-  sleep_tool: '\u{1F31C}',
-  video: '\u{1F3AC}',
-  article: '\u{1F4D6}',
-  guided_exercise: '\u{1F338}',
+  breathing: <FaSpa />,
+  sound: <FaVolumeUp />,
+  sleep_tool: <FaMoon />,
+  video: <FaVideo />,
+  article: <FaBook />,
+  guided_exercise: <FaLeaf />,
 };
 
 const TYPE_LABELS = {
@@ -137,7 +138,7 @@ export default function HealingResources({ recommendedOnly }) {
           animate={{ opacity: 1 }}
           transition={{ duration: 0.3 }}
         >
-          <div style={{ fontSize: '2.5rem', marginBottom: '0.75rem', opacity: 0.4 }}>{'\u{1F33F}'}</div>
+          <div style={{ fontSize: '2.5rem', marginBottom: '0.75rem', opacity: 0.4 }}><FaLeaf /></div>
           <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>
             {lang === 'rw' ? 'Nta bikoresho bibonetse.' : 'No resources found.'}
           </p>
@@ -156,7 +157,7 @@ export default function HealingResources({ recommendedOnly }) {
             transition={{ duration: 0.2 }}
           >
             <div className="resource-group-header">
-              <span className="resource-group-icon">{TYPE_ICONS[type] || '\u{2764}'}</span>
+              <span className="resource-group-icon">{TYPE_ICONS[type] || <FaHeart />}</span>
               <h2>{TYPE_LABELS[type]?.[lang] || type}</h2>
               <span className="resource-group-count">{items.length}</span>
             </div>
@@ -172,7 +173,7 @@ export default function HealingResources({ recommendedOnly }) {
                   whileTap={{ scale: 0.99 }}
                 >
                   <div className="resource-item-icon">
-                    {r.icon || TYPE_ICONS[r.type] || '\u{2764}'}
+                    {TYPE_ICONS[r.type] || <FaHeart />}
                   </div>
                   <div className="resource-item-body">
                     <h3>{lang === 'rw' && r.titleRw ? r.titleRw : r.title}</h3>

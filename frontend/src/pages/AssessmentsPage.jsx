@@ -2,12 +2,13 @@ import { useState, useEffect, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import { assessmentAPI } from '../services/api';
 import LoadingSkeleton from '../components/common/LoadingSkeleton';
+import { FaHandshake, FaWind, FaLeaf, FaGraduationCap, FaBrain } from 'react-icons/fa';
 
 function AssessmentCard({ assessment, onStart }) {
-  const typeIcons = { relationship: '\u{1F91D}', stress: '\u{1F4A8}', wellbeing: '\u{1F33F}', readiness: '\u{1F3EB}', general: '\u{1F9E0}' };
+  const typeIcons = { relationship: <FaHandshake />, stress: <FaWind />, wellbeing: <FaLeaf />, readiness: <FaGraduationCap />, general: <FaBrain /> };
   return (
     <motion.div className="feature-card" whileHover={{ y: -4 }} onClick={() => onStart(assessment)} style={{ cursor: 'pointer' }}>
-      <span className="feature-icon" style={{ fontSize: '1.6rem' }}>{typeIcons[assessment.type] || '\u{1F9E0}'}</span>
+      <span className="feature-icon" style={{ fontSize: '1.6rem' }}>{typeIcons[assessment.type] || <FaBrain />}</span>
       <h3>{assessment.title}</h3>
       <p>{assessment.description || `Estimated ${assessment.estimatedMinutes} min`}</p>
       <span className="feature-cta">Start Assessment {'\u2192'}</span>

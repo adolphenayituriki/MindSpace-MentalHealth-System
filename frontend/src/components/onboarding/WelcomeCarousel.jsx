@@ -1,24 +1,25 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { FaLeaf, FaClipboardList, FaHeart, FaPenFancy } from 'react-icons/fa';
 
 const SLIDES = [
   {
-    icon: '\u{1F33F}',
+    icon: <FaLeaf />,
     title: 'Welcome to MindSpace',
     desc: 'Mental health support that is accessible, anonymous, and culturally grounded for every Rwandan.',
   },
   {
-    icon: '\u{1F4CB}',
+    icon: <FaClipboardList />,
     title: 'Track Your Mood',
     desc: 'Log how you feel each day and watch your emotional patterns emerge. Small daily check-ins build self-awareness.',
   },
   {
-    icon: '\u{1F9D1}\u200D\u2764\uFE0F',
+    icon: <FaHeart />,
     title: 'Talk to Someone',
     desc: 'Message a licensed counselor or join anonymous peer communities. You are never alone.',
   },
   {
-    icon: '\u{1F4DD}',
+    icon: <FaPenFancy />,
     title: 'Reflect & Grow',
     desc: 'Write with culturally relevant prompts, access healing resources, and review your journey over time.',
   },
@@ -85,7 +86,7 @@ export default function WelcomeCarousel({ onComplete }) {
               <h2>{SLIDES[slide].title}</h2>
               <div className="heading-divider" aria-hidden="true">
                 <span className="heading-divider-line" />
-                <span className="heading-divider-icon" style={{ fontSize: '0.75rem' }}>{'\u{1F33F}'}</span>
+                <span className="heading-divider-icon" style={{ fontSize: '0.75rem' }}><FaLeaf /></span>
                 <span className="heading-divider-line" />
               </div>
               <p>{SLIDES[slide].desc}</p>

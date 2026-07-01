@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useTranslation } from '../../i18n/i18n';
 import { communityAPI } from '../../services/api';
 import { formatDate } from '../../utils/helpers';
+import { FaRegComments } from 'react-icons/fa';
 
 const msgVariants = {
   enter: { opacity: 0, y: 12, scale: 0.97 },
@@ -82,7 +83,7 @@ export default function CommunityRoom({ community, onBack }) {
           <div className="loading-container"><div className="spinner" /><p>Loading messages...</p></div>
         ) : messages.length === 0 ? (
           <div className="empty-state" style={{ padding: '2rem' }}>
-            <div style={{ fontSize: '2.5rem', marginBottom: '0.5rem', opacity: 0.4 }}>{'\u{1F4AC}'}</div>
+            <div style={{ fontSize: '2.5rem', marginBottom: '0.5rem', opacity: 0.4 }}><FaRegComments /></div>
             <p>{lang === 'rw' ? 'Nta butumwa buracyari. Ube uwambere.' : 'No messages yet. Be the first to share.'}</p>
           </div>
         ) : (

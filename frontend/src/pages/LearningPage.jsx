@@ -2,8 +2,9 @@ import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { courseAPI } from '../services/api';
 import LoadingSkeleton from '../components/common/LoadingSkeleton';
+import { FaGem, FaHandshake, FaBaby, FaLeaf, FaGraduationCap, FaBookOpen, FaPlay, FaFileAlt, FaPodcast, FaDumbbell, FaQuestionCircle, FaBook } from 'react-icons/fa';
 
-const catIcons = { premarital: '\u{1F48D}', couples: '\u{1F91D}', parenting: '\u{1F476}', grief: '\u{1F490}', retirement: '\u{1F3EB}', wellbeing: '\u{1F33F}' };
+const catIcons = { premarital: <FaGem />, couples: <FaHandshake />, parenting: <FaBaby />, grief: <FaLeaf />, retirement: <FaGraduationCap />, wellbeing: <FaLeaf /> };
 
 export default function LearningPage() {
   const [courses, setCourses] = useState([]);
@@ -59,10 +60,10 @@ export default function LearningPage() {
             <div className="learning-lessons">
               {mod.lessons?.map((lesson, li) => {
                 const isDone = enrollment?.progress?.completedLessons?.includes(lesson._id);
-                const iconMap = { video: '\u{25B6}', article: '\u{1F4C4}', podcast: '\u{1F3A7}', exercise: '\u{1F3CB}', quiz: '\u{2753}' };
+                const iconMap = { video: <FaPlay />, article: <FaFileAlt />, podcast: <FaPodcast />, exercise: <FaDumbbell />, quiz: <FaQuestionCircle /> };
                 return (
                   <motion.div key={li} className={`learning-lesson ${isDone ? 'done' : ''}`} whileHover={{ x: 4 }}>
-                    <span className="lesson-icon">{iconMap[lesson.type] || '\u{1F4D6}'}</span>
+                    <span className="lesson-icon">{iconMap[lesson.type] || <FaBook />}</span>
                     <div className="lesson-info">
                       <strong>{lesson.title}</strong>
                       {lesson.durationMinutes && <span className="lesson-duration">{lesson.durationMinutes} min</span>}
@@ -103,7 +104,7 @@ export default function LearningPage() {
           <motion.div key={c._id || i} className="feature-card course-card" whileHover={{ y: -4 }}
             onClick={() => { courseAPI.getOne(c._id).then((res) => setActive(res.data)).catch(() => setActive(c)); }}
             style={{ cursor: 'pointer' }}>
-            <span className="feature-icon" style={{ fontSize: '1.6rem' }}>{catIcons[c.category] || '\u{1F4DA}'}</span>
+            <span className="feature-icon" style={{ fontSize: '1.6rem' }}>{catIcons[c.category] || <FaBookOpen />}</span>
             <div className="course-meta">
               <span className="course-category">{c.category}</span>
               <span className="course-level">{c.level}</span>

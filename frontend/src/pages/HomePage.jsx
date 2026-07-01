@@ -4,46 +4,47 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useTranslation, setLanguage as setAppLanguage, getLanguage } from '../i18n/i18n';
 import { useAuth } from '../contexts/AuthContext';
 import HomeChartFab from '../components/chat/HomeChartFab';
+import { FaClipboardList, FaPenFancy, FaPuzzlePiece, FaBookOpen, FaUsers, FaHeart, FaChartLine, FaShieldAlt, FaHospital, FaPhone, FaRegComments, FaBrain, FaLeaf, FaUserMd, FaBan, FaCheckCircle, FaHandHoldingHeart } from 'react-icons/fa';
 
 const features = [
-  { icon: '\u{1F4CB}', title: 'Mood Tracking', desc: 'Log how you feel each day and watch your emotional patterns emerge. Small daily check-ins build self-awareness.' },
-  { icon: '\u{1F4DD}', title: 'Guided Journaling', desc: 'Write with culturally relevant prompts that help you reflect. No blank page \u2014 just a gentle starting point.' },
-  { icon: '\u{1F9E9}', title: 'Self-Assessments', desc: 'Take guided tests for relationship health, stress levels, and wellbeing. Get instant scores and recommendations.' },
-  { icon: '\u{1F4DA}', title: 'Learning Center', desc: 'Access courses on marriage preparation, parenting, grief, retirement, and emotional wellbeing at your own pace.' },
-  { icon: '\u{1F46B}', title: 'Peer Communities', desc: 'Join anonymous topic-based communities. Share, listen, and connect with others who understand.' },
-  { icon: '\u{1F9D1}\u200D\u2764\uFE0F', title: 'Counselor Support', desc: 'Message a licensed counselor when you need more than a conversation. Book a session that fits your schedule.' },
-  { icon: '\u{1F4CA}', title: 'Weekly Reflections', desc: 'Review your emotional patterns with weekly summaries. See your progress over time.' },
-  { icon: '\u{1F6E1}\uFE0F', title: 'Crisis Resources', desc: 'Verified local hotlines, health centers, and NGOs \u2014 available in one tap when you need them most.' },
+  { icon: <FaClipboardList />, title: 'Mood Tracking', desc: 'Log how you feel each day and watch your emotional patterns emerge. Small daily check-ins build self-awareness.' },
+  { icon: <FaPenFancy />, title: 'Guided Journaling', desc: 'Write with culturally relevant prompts that help you reflect. No blank page \u2014 just a gentle starting point.' },
+  { icon: <FaPuzzlePiece />, title: 'Self-Assessments', desc: 'Take guided tests for relationship health, stress levels, and wellbeing. Get instant scores and recommendations.' },
+  { icon: <FaBookOpen />, title: 'Learning Center', desc: 'Access courses on marriage preparation, parenting, grief, retirement, and emotional wellbeing at your own pace.' },
+  { icon: <FaUsers />, title: 'Peer Communities', desc: 'Join anonymous topic-based communities. Share, listen, and connect with others who understand.' },
+  { icon: <FaHeart />, title: 'Counselor Support', desc: 'Message a licensed counselor when you need more than a conversation. Book a session that fits your schedule.' },
+  { icon: <FaChartLine />, title: 'Weekly Reflections', desc: 'Review your emotional patterns with weekly summaries. See your progress over time.' },
+  { icon: <FaShieldAlt />, title: 'Crisis Resources', desc: 'Verified local hotlines, health centers, and NGOs \u2014 available in one tap when you need them most.' },
 ];
 
 const quickHelpItems = [
   {
-    icon: '\u{1F3E2}', title: 'Visit a Health Center',
+    icon: <FaHospital />, title: 'Visit a Health Center',
     desc: 'Find verified mental health centers near you with opening hours and contact info.',
     link: '/healing', label: 'Find Centers',
   },
   {
-    icon: '\u{1F4DE}', title: 'Crisis Hotline',
+    icon: <FaPhone />, title: 'Crisis Hotline',
     desc: 'Immediate support from trained counselors. Confidential and free, 24/7.',
     link: '/crisis', label: 'Get Help Now',
   },
   {
-    icon: '\u{1F9D1}\u200D\u2764\uFE0F', title: 'Talk to a Counselor',
+    icon: <FaHeart />, title: 'Talk to a Counselor',
     desc: 'Schedule a one-on-one session with a licensed mental health professional.',
     link: '/counseling', label: 'Start Chat',
   },
   {
-    icon: '\u{1F4AD}', title: 'AI-Guided Reflection',
+    icon: <FaBrain />, title: 'AI-Guided Reflection',
     desc: 'A private, judgment-free space to explore your thoughts with gentle guidance.',
     link: '/reflect', label: 'Reflect Now',
   },
   {
-    icon: '\u{1F9E9}', title: 'Take an Assessment',
+    icon: <FaPuzzlePiece />, title: 'Take an Assessment',
     desc: 'Evaluate relationship health, stress, or emotional wellbeing with a guided self-test.',
     link: '/assessments', label: 'Start Test',
   },
   {
-    icon: '\u{1F4DA}', title: 'Explore Courses',
+    icon: <FaBookOpen />, title: 'Explore Courses',
     desc: 'Learn at your own pace with courses designed for life\u2019s big transitions.',
     link: '/learning', label: 'Browse Courses',
   },
@@ -95,7 +96,7 @@ const partners = [
 const modalContent = {
   about: {
     title: 'About MindSpace',
-    icon: '\u{1F33F}',
+    icon: <FaLeaf />,
     body: [
       'MindSpace is a digital mental health platform built by Rwandans for Rwandans. We believe that mental health support should be accessible, anonymous, and culturally grounded \u2014 no matter who you are or where you live.',
       'Our platform connects users with mood tracking, guided journaling, peer support communities, professional counseling, and crisis resources \u2014 all in one secure space.',
@@ -104,7 +105,7 @@ const modalContent = {
   },
   mission: {
     title: 'Our Mission',
-    icon: '\u{1F4A1}',
+    icon: <FaBrain />,
     body: [
       'To break the silence around mental health in Rwanda by providing a free, anonymous, and culturally sensitive digital safe space where every Rwandan can understand, track, and improve their mental well-being.',
       'We envision a Rwanda where seeking mental health support is as natural as visiting a health center \u2014 where no one suffers in silence, and where every individual has the tools they need to thrive.',
@@ -171,7 +172,7 @@ export default function HomePage() {
       <header className="home-header">
         <div className="home-header-inner">
           <Link to="/" className="home-header-logo">
-            <span className="home-header-emblem">{'\u{1F33F}'}</span>
+            <span className="home-header-emblem"><FaLeaf /></span>
             <span>MindSpace</span>
           </Link>
           <button className="home-header-toggle" onClick={() => setNavOpen((v) => !v)} aria-label="Toggle navigation" aria-expanded={navOpen}>
@@ -237,7 +238,7 @@ export default function HomePage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: 'easeOut' }}
           >
-            <span className="hero-emblem">{'\u{1F33F}'}</span>
+            <span className="hero-emblem"><FaLeaf /></span>
             <span className="highlight">MindSpace</span>
           </motion.h1>
           <motion.p
@@ -293,7 +294,7 @@ export default function HomePage() {
           <h2>The Reality We Can't Ignore</h2>
           <div className="heading-divider" aria-hidden="true">
             <span className="heading-divider-line" />
-            <span className="heading-divider-icon">{'\u{1F33F}'}</span>
+            <span className="heading-divider-icon"><FaLeaf /></span>
             <span className="heading-divider-line" />
           </div>
         </div>
@@ -307,7 +308,7 @@ export default function HomePage() {
             viewport={{ once: true, margin: '-40px' }}
           >
             <span className="stat-figure">
-              <span className="stat-emoji">{'\u{1F9E0}'}</span>
+              <span className="stat-emoji"><FaBrain /></span>
               <span className="stat-number">18.6%</span>
             </span>
             <span className="stat-label">of Rwandans face a mental health condition — yet most suffer in silence.</span>
@@ -321,7 +322,7 @@ export default function HomePage() {
             viewport={{ once: true, margin: '-40px' }}
           >
             <span className="stat-figure">
-              <span className="stat-emoji">{'\u{1F4BA}'}</span>
+              <span className="stat-emoji"><FaUserMd /></span>
               <span className="stat-number">~18</span>
             </span>
             <span className="stat-label">psychiatrists for over 14 million Rwandans. That's one for every 777K people.</span>
@@ -335,7 +336,7 @@ export default function HomePage() {
             viewport={{ once: true, margin: '-40px' }}
           >
             <span className="stat-figure">
-              <span className="stat-emoji">{'\u{1F6B7}'}</span>
+              <span className="stat-emoji"><FaBan /></span>
               <span className="stat-number">95%</span>
             </span>
             <span className="stat-label">of young Rwandans avoid clinical care — stigma is still the biggest barrier.</span>
@@ -348,9 +349,9 @@ export default function HomePage() {
             whileInView="visible"
             viewport={{ once: true, margin: '-40px' }}
           >
-            <span className="stat-promise-badge">{'\u{2764}\uFE0F'} Our Promise</span>
+            <span className="stat-promise-badge"><FaHandHoldingHeart /> Our Promise</span>
             <span className="stat-figure">
-              <span className="stat-emoji">{'\u{2705}'}</span>
+              <span className="stat-emoji"><FaCheckCircle /></span>
               <span className="stat-number promise-number">100%</span>
             </span>
             <span className="stat-label">Free, anonymous, and confidential — always. No judgment. No cost. No data shared.</span>
@@ -364,7 +365,7 @@ export default function HomePage() {
           <h2>How MindSpace Works</h2>
           <div className="heading-divider" aria-hidden="true">
             <span className="heading-divider-line" />
-            <span className="heading-divider-icon">{'\u{1F33F}'}</span>
+            <span className="heading-divider-icon"><FaLeaf /></span>
             <span className="heading-divider-line" />
           </div>
           <p>Everything you need to support your mental health journey</p>
@@ -411,7 +412,7 @@ export default function HomePage() {
           <h2>Quick Help &amp; Support</h2>
           <div className="heading-divider" aria-hidden="true">
             <span className="heading-divider-line" />
-            <span className="heading-divider-icon">{'\u{1F33F}'}</span>
+            <span className="heading-divider-icon"><FaLeaf /></span>
             <span className="heading-divider-line" />
           </div>
           <p>Get the support you need, right when you need it</p>
@@ -459,7 +460,7 @@ export default function HomePage() {
           <h2>Trusted Partners</h2>
           <div className="heading-divider" aria-hidden="true">
             <span className="heading-divider-line" />
-            <span className="heading-divider-icon">{'\u{1F33F}'}</span>
+            <span className="heading-divider-icon"><FaLeaf /></span>
             <span className="heading-divider-line" />
           </div>
           <p>Working together to make mental health support accessible to all Rwandans</p>
@@ -487,7 +488,7 @@ export default function HomePage() {
         <div className="footer-inner">
           <div className="footer-brand">
             <div className="footer-logo">
-              <span className="footer-logo-icon">{'\u{1F33F}'}</span>
+              <span className="footer-logo-icon"><FaLeaf /></span>
               <span>MindSpace</span>
             </div>
             <p>

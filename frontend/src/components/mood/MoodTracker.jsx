@@ -1,13 +1,14 @@
 import { useState, useEffect } from 'react';
 import { useTranslation } from '../../i18n/i18n';
 import { useMood } from '../../hooks/useMood';
+import { FaSmile, FaMeh, FaFrown, FaTired, FaPenFancy } from 'react-icons/fa';
 
 const MOODS = [
-  { value: 5, emoji: '\u{1F60A}', labelRw: 'Murakoze cyane', labelEn: 'Great' },
-  { value: 4, emoji: '\u{1F642}', labelRw: 'Mesa', labelEn: 'Good' },
-  { value: 3, emoji: '\u{1F610}', labelRw: 'Bisanzwe', labelEn: 'Okay' },
-  { value: 2, emoji: '\u{1F614}', labelRw: 'Mbi', labelEn: 'Low' },
-  { value: 1, emoji: '\u{1F622}', labelRw: 'Mbi cyane', labelEn: 'Very Low' },
+  { value: 5, emoji: <FaSmile />, labelRw: 'Murakoze cyane', labelEn: 'Great' },
+  { value: 4, emoji: <FaSmile />, labelRw: 'Mesa', labelEn: 'Good' },
+  { value: 3, emoji: <FaMeh />, labelRw: 'Bisanzwe', labelEn: 'Okay' },
+  { value: 2, emoji: <FaFrown />, labelRw: 'Mbi', labelEn: 'Low' },
+  { value: 1, emoji: <FaTired />, labelRw: 'Mbi cyane', labelEn: 'Very Low' },
 ];
 
 export default function MoodTracker() {
@@ -142,7 +143,7 @@ export default function MoodTracker() {
       )}
       {savedNote && selected && (
         <p className="mood-saved-note">
-          {'\u{1F4DD}'} {savedNote}
+          <FaPenFancy /> {savedNote}
         </p>
       )}
     </div>

@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useTranslation } from '../../i18n/i18n';
 import { useAuth } from '../../contexts/AuthContext';
 import { authAPI } from '../../services/api';
+import { FaShieldAlt, FaLock, FaMoneyBillWave, FaGlobeAfrica } from 'react-icons/fa';
 
 const modeVariants = {
   enter: { x: 40, opacity: 0 },
@@ -153,7 +154,7 @@ export default function AuthScreen({ onComplete }) {
                   animate={{ scale: 1, rotate: 0 }}
                   transition={{ type: 'spring', stiffness: 180, damping: 12 }}
                 >
-                  {'\u{1F6E1}\uFE0F'}
+                  <FaShieldAlt />
                 </motion.div>
               </div>
               <h2 className="auth-shield-title">You are safe here</h2>
@@ -161,15 +162,15 @@ export default function AuthScreen({ onComplete }) {
 
               <div className="auth-benefits">
                 <div className="auth-benefit">
-                  <span className="auth-benefit-icon">{'\u{1F512}'}</span>
+                  <span className="auth-benefit-icon"><FaLock /></span>
                   <span className="auth-benefit-text">100% anonymous &amp; private</span>
                 </div>
                 <div className="auth-benefit">
-                  <span className="auth-benefit-icon">{'\u{1F4B5}'}</span>
+                  <span className="auth-benefit-icon"><FaMoneyBillWave /></span>
                   <span className="auth-benefit-text">Free, always</span>
                 </div>
                 <div className="auth-benefit">
-                  <span className="auth-benefit-icon">{'\u{1F30D}'}</span>
+                  <span className="auth-benefit-icon"><FaGlobeAfrica /></span>
                   <span className="auth-benefit-text">Built for Rwanda</span>
                 </div>
               </div>

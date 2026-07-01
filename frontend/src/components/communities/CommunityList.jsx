@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useTranslation } from '../../i18n/i18n';
 import { communityAPI } from '../../services/api';
+import { FaUsers } from 'react-icons/fa';
 
 export default function CommunityList({ onSelect }) {
   const { getLanguage } = useTranslation();
@@ -90,7 +91,7 @@ export default function CommunityList({ onSelect }) {
         })}
         {communities.length === 0 && (
           <div className="empty-state" style={{ gridColumn: '1 / -1' }}>
-            <div style={{ fontSize: '2.5rem', marginBottom: '0.5rem', opacity: 0.4 }}>{'\u{1F46B}'}</div>
+            <div style={{ fontSize: '2.5rem', marginBottom: '0.5rem', opacity: 0.4 }}><FaUsers /></div>
             <p>{lang === 'rw' ? 'Nta materaniro aboneka.' : 'No communities available yet.'}</p>
           </div>
         )}

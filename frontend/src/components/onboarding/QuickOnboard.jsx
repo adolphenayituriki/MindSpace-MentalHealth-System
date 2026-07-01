@@ -1,33 +1,34 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTranslation } from '../../i18n/i18n';
+import { FaBrain, FaHeart, FaLeaf, FaShieldAlt, FaBolt, FaHandshake, FaStar, FaWind, FaSmile, FaMeh, FaFrown, FaTired, FaCheckCircle } from 'react-icons/fa';
 
 const TOPICS = [
-  { label: 'Anxiety', icon: '\u{1F9E0}' },
-  { label: 'Depression', icon: '\u{1F494}' },
-  { label: 'Grief', icon: '\u{1F34B}' },
-  { label: 'PTSD', icon: '\u{1F6E1}\uFE0F' },
-  { label: 'Burnout', icon: '\u{1FA75}' },
-  { label: 'Relationships', icon: '\u{1F91D}' },
-  { label: 'Trauma', icon: '\u{1F4AB}' },
-  { label: 'Stress', icon: '\u{1F4A8}' },
+  { label: 'Anxiety', icon: <FaBrain /> },
+  { label: 'Depression', icon: <FaHeart /> },
+  { label: 'Grief', icon: <FaLeaf /> },
+  { label: 'PTSD', icon: <FaShieldAlt /> },
+  { label: 'Burnout', icon: <FaBolt /> },
+  { label: 'Relationships', icon: <FaHandshake /> },
+  { label: 'Trauma', icon: <FaStar /> },
+  { label: 'Stress', icon: <FaWind /> },
 ];
 
 const FEELINGS = [
-  { value: 5, emoji: '\u{1F60A}', label: 'Great', labelRw: 'Neza cyane' },
-  { value: 4, emoji: '\u{1F642}', label: 'Good', labelRw: 'Neza' },
-  { value: 3, emoji: '\u{1F610}', label: 'Okay', labelRw: 'Bisanzwe' },
-  { value: 2, emoji: '\u{1F614}', label: 'Low', labelRw: 'Ntakibirimo' },
-  { value: 1, emoji: '\u{1F622}', label: 'Very Low', labelRw: 'Byanze' },
+  { value: 5, emoji: <FaSmile />, label: 'Great', labelRw: 'Neza cyane' },
+  { value: 4, emoji: <FaSmile />, label: 'Good', labelRw: 'Neza' },
+  { value: 3, emoji: <FaMeh />, label: 'Okay', labelRw: 'Bisanzwe' },
+  { value: 2, emoji: <FaFrown />, label: 'Low', labelRw: 'Ntakibirimo' },
+  { value: 1, emoji: <FaTired />, label: 'Very Low', labelRw: 'Byanze' },
 ];
 
 const REASONS = [
-  { rw: 'Mfite agahinda n\'ibibazo by\'umutima', en: 'I carry grief and heart pain', icon: '\u{1F494}' },
-  { rw: 'Mfite ubwoba n\'umuhangayiko', en: 'I deal with anxiety and worry', icon: '\u{1F9E0}' },
-  { rw: 'Ntangwa n\'ibintu byankubye, ndashaka gukira', en: 'I want to heal from past wounds', icon: '\u{1F33F}' },
-  { rw: 'Ndananiwe n\'imirimo n\'ishuri', en: 'I am exhausted from work or school', icon: '\u{1F634}' },
-  { rw: 'Ndashaka kumenya neza ibyiyumvo byanjye', en: 'I want to understand my emotions better', icon: '\u{1F4AD}' },
-  { rw: 'Ndashaka ubufasha bw\'abajyanama', en: 'I am looking for someone to talk to', icon: '\u{1F9D1}\u200D\u2764\uFE0F' },
+  { rw: 'Mfite agahinda n\'ibibazo by\'umutima', en: 'I carry grief and heart pain', icon: <FaHeart /> },
+  { rw: 'Mfite ubwoba n\'umuhangayiko', en: 'I deal with anxiety and worry', icon: <FaBrain /> },
+  { rw: 'Ntangwa n\'ibintu byankubye, ndashaka gukira', en: 'I want to heal from past wounds', icon: <FaLeaf /> },
+  { rw: 'Ndananiwe n\'imirimo n\'ishuri', en: 'I am exhausted from work or school', icon: <FaTired /> },
+  { rw: 'Ndashaka kumenya neza ibyiyumvo byanjye', en: 'I want to understand my emotions better', icon: <FaBrain /> },
+  { rw: 'Ndashaka ubufasha bw\'abajyanama', en: 'I am looking for someone to talk to', icon: <FaHeart /> },
 ];
 
 const stepVariants = {
@@ -103,7 +104,7 @@ export default function QuickOnboard({ onComplete }) {
             </h2>
             <div className="heading-divider" aria-hidden="true" style={{ marginBottom: '1rem' }}>
               <span className="heading-divider-line" />
-              <span className="heading-divider-icon" style={{ fontSize: '0.7rem' }}>{'\u{1F33F}'}</span>
+              <span className="heading-divider-icon" style={{ fontSize: '0.7rem' }}><FaLeaf /></span>
               <span className="heading-divider-line" />
             </div>
 
@@ -141,7 +142,7 @@ export default function QuickOnboard({ onComplete }) {
                     <>
                       <div className="heading-divider" aria-hidden="true" style={{ margin: '0.75rem auto 0.5rem' }}>
                         <span className="heading-divider-line" />
-                        <span className="heading-divider-icon" style={{ fontSize: '0.6rem' }}>{'\u{2705}'}</span>
+                        <span className="heading-divider-icon" style={{ fontSize: '0.6rem' }}><FaCheckCircle /></span>
                         <span className="heading-divider-line" />
                       </div>
                       <motion.button

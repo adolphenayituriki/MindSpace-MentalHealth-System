@@ -27,8 +27,13 @@ export default function LanguageSelect({ onSelect, defaultLang }) {
           animate={{ opacity: 1, scale: 1 }}
           transition={{ type: 'spring', stiffness: 150, damping: 12 }}
         >
-          MindSpace
+          {'\u{1F33F}'} MindSpace
         </motion.h1>
+        <div className="heading-divider" aria-hidden="true">
+          <span className="heading-divider-line" />
+          <span className="heading-divider-icon" style={{ fontSize: '0.75rem' }}>{'\u{1F33F}'}</span>
+          <span className="heading-divider-line" />
+        </div>
         <motion.p
           className="brand-sub"
           variants={itemVariants}

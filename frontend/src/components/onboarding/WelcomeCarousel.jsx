@@ -55,10 +55,11 @@ export default function WelcomeCarousel({ onComplete }) {
         <motion.button
           className="welcome-skip"
           onClick={onComplete}
-          whileHover={{ scale: 1.05 }}
+          whileHover={{ scale: 1.03 }}
           whileTap={{ scale: 0.95 }}
         >
-          Skip &rarr;
+          <span className="welcome-skip-label">Skip / Simbuka</span>
+          <span className="welcome-skip-sub">Skip intro &amp; get started</span>
         </motion.button>
 
         <div className="welcome-slide">
@@ -82,6 +83,11 @@ export default function WelcomeCarousel({ onComplete }) {
                 {SLIDES[slide].icon}
               </motion.div>
               <h2>{SLIDES[slide].title}</h2>
+              <div className="heading-divider" aria-hidden="true">
+                <span className="heading-divider-line" />
+                <span className="heading-divider-icon" style={{ fontSize: '0.75rem' }}>{'\u{1F33F}'}</span>
+                <span className="heading-divider-line" />
+              </div>
               <p>{SLIDES[slide].desc}</p>
             </motion.div>
           </AnimatePresence>

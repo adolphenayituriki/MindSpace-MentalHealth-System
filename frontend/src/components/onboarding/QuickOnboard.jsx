@@ -92,9 +92,14 @@ export default function QuickOnboard({ onComplete }) {
             exit="exit"
             transition={{ duration: 0.25, ease: 'easeInOut' }}
           >
-            <h2 style={{ fontSize: '1.15rem', fontWeight: 600, marginBottom: '1rem' }}>
+            <h2 style={{ fontSize: '1.15rem', fontWeight: 600, marginBottom: '0.5rem' }}>
               {current.text}
             </h2>
+            <div className="heading-divider" aria-hidden="true" style={{ marginBottom: '1rem' }}>
+              <span className="heading-divider-line" />
+              <span className="heading-divider-icon" style={{ fontSize: '0.7rem' }}>{'\u{1F33F}'}</span>
+              <span className="heading-divider-line" />
+            </div>
 
             {step === 2 ? (
               <>

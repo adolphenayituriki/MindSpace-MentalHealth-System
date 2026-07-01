@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { useMood } from '../../hooks/useMood';
+import Loading from '../common/Loading';
 
 const MOOD_COLORS = {
   5: '#059669',
@@ -38,8 +39,16 @@ export default function MoodCalendar() {
 
   const todayKey = new Date().toISOString().slice(0, 10);
 
+  if (loading) {
+    return (
+      <div className="card card-accent">
+        <Loading text="Loading mood calendar..." />
+      </div>
+    );
+  }
+
   return (
-    <div className="card">
+    <div className="card card-accent">
       <div className="card-title" style={{ marginBottom: '0.75rem' }}>Mood Calendar</div>
       <div className="calendar-grid">
         {days.map((d) => {

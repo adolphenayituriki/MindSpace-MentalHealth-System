@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTranslation } from '../../i18n/i18n';
 import { healingAPI } from '../../services/api';
+import Loading from '../common/Loading';
 import BreathingExercise from './BreathingExercise';
 import StepTool from './StepTool';
 import VideoPlayer from './VideoPlayer';
@@ -43,16 +44,20 @@ export default function HealingResources({ recommendedOnly }) {
   const [active, setActive] = useState(null);
   const [filter, setFilter] = useState('all');
   const [context, setContext] = useState(null);
+  const [loading, setLoading] = useState(true);
   const lang = getLanguage();
 
   useEffect(() => {
+    setLoading(true);
     const fetch = recommendedOnly
       ? healingAPI.getRecommended()
       : healingAPI.getAll(filter !== 'all' ? { type: filter } : {});
     fetch.then((res) => {
       setResources(res.data?.resources || []);
       if (res.data?.context) setContext(res.data.context);
-    }).catch(() => {});
+    }).catch(() => {}).finally(() => {
+      setLoading(false);
+    });
   }, [filter, recommendedOnly]);
 
   if (active) {
@@ -122,7 +127,9 @@ export default function HealingResources({ recommendedOnly }) {
         </motion.div>
       )}
 
-      {Object.entries(grouped).length === 0 && (
+      {loading && <Loading text="Loading resources..." />}
+
+      {!loading && Object.entries(grouped).length === 0 && (
         <motion.div
           className="card"
           style={{ padding: '2.5rem 1rem', textAlign: 'center' }}

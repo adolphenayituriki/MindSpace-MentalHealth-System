@@ -73,7 +73,7 @@ export default function LanguageSelect({ onSelect, defaultLang }) {
             whileTap={{ scale: 0.97 }}
           >
             <span className="lang-name">Kinyarwanda</span>
-            <span className="lang-sub">Rurimi rwacu &middot; Default</span>
+            <span className="lang-sub">Rurimi rwacu</span>
           </motion.button>
           <motion.button
             className={`lang-btn ${defaultLang === 'en' ? 'lang-btn--default' : ''}`}
@@ -83,7 +83,7 @@ export default function LanguageSelect({ onSelect, defaultLang }) {
             whileTap={{ scale: 0.97 }}
           >
             <span className="lang-name">English</span>
-            <span className="lang-sub">Language of choice</span>
+            <span className="lang-sub">Language of choice &middot; Default</span>
           </motion.button>
         </motion.div>
       </motion.div>

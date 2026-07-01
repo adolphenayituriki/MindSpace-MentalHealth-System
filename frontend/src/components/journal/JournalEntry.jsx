@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useTranslation } from '../../i18n/i18n';
 import { journalAPI } from '../../services/api';
+import Loading from '../common/Loading';
 import { formatDate } from '../../utils/helpers';
 
 export default function JournalEntry({ entry, onSaved, onDeleted }) {
@@ -9,15 +10,20 @@ export default function JournalEntry({ entry, onSaved, onDeleted }) {
   const [title, setTitle] = useState(entry?.title || '');
   const [prompt, setPrompt] = useState('');
   const [saving, setSaving] = useState(false);
+  const [loading, setLoading] = useState(!entry);
 
   useEffect(() => {
     if (!entry) {
       journalAPI.getPrompts(getLanguage()).then((res) => {
         const prompts = res.data?.prompts || [];
         setPrompt(prompts[Math.floor(Math.random() * prompts.length)] || '');
-      }).catch(() => {});
+      }).catch(() => {}).finally(() => {
+        setLoading(false);
+      });
     }
   }, []);
+
+  if (loading) return <Loading text="Preparing your journal..." />;
 
   const handleSave = async () => {
     if (!content.trim()) return;

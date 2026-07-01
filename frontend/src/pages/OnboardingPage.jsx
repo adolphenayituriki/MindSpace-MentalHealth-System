@@ -26,7 +26,7 @@ export default function OnboardingPage() {
   }
 
   const handleWelcomeDone = () => {
-    localStorage.setItem('mindspace_lang', 'rw');
+    localStorage.setItem('mindspace_lang', 'en');
     setStep('language');
   };
 
@@ -63,14 +63,16 @@ export default function OnboardingPage() {
             <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
             <polyline points="9 22 9 12 15 12 15 22"/>
           </svg>
-          Home
+          <span className="nav-label">Home</span>
+          <span className="nav-sub-label">Subira Ahabanza</span>
         </Link>
         {prevStep && (
           <button className="onboarding-nav-btn" onClick={() => setStep(prevStep)}>
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <polyline points="15 18 9 12 15 6"/>
             </svg>
-            Previous
+            <span className="nav-label">Previous</span>
+            <span className="nav-sub-label">Subira Inyuma</span>
           </button>
         )}
       </nav>
@@ -85,7 +87,7 @@ export default function OnboardingPage() {
           style={{ width: '100%', display: 'flex', justifyContent: 'center' }}
         >
           {step === 'welcome' && <WelcomeCarousel onComplete={handleWelcomeDone} />}
-          {step === 'language' && <LanguageSelect onSelect={handleLanguage} defaultLang="rw" />}
+          {step === 'language' && <LanguageSelect onSelect={handleLanguage} defaultLang="en" />}
           {step === 'onboard' && <QuickOnboard onComplete={handleOnboardComplete} />}
           {step === 'auth' && <AuthScreen onComplete={handleAuthComplete} />}
         </motion.div>

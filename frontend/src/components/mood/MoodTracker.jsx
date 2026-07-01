@@ -76,7 +76,7 @@ export default function MoodTracker() {
   };
 
   return (
-    <div className="card">
+    <div className="card card-accent">
       <div className="card-header">
         <div>
           <div className="card-title">How are you feeling?</div>

@@ -3,25 +3,31 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useTranslation } from '../../i18n/i18n';
 
 const TOPICS = [
-  'Anxiety', 'Depression', 'Grief', 'PTSD',
-  'Burnout', 'Relationships', 'Trauma', 'Stress',
+  { label: 'Anxiety', icon: '\u{1F9E0}' },
+  { label: 'Depression', icon: '\u{1F494}' },
+  { label: 'Grief', icon: '\u{1F34B}' },
+  { label: 'PTSD', icon: '\u{1F6E1}\uFE0F' },
+  { label: 'Burnout', icon: '\u{1FA75}' },
+  { label: 'Relationships', icon: '\u{1F91D}' },
+  { label: 'Trauma', icon: '\u{1F4AB}' },
+  { label: 'Stress', icon: '\u{1F4A8}' },
 ];
 
 const FEELINGS = [
-  { value: 5, emoji: '\u{1F60A}', label: 'Numeza neza cyane / Great' },
-  { value: 4, emoji: '\u{1F642}', label: 'Numeza neza / Good' },
-  { value: 3, emoji: '\u{1F610}', label: 'Bisanzwe / Okay' },
-  { value: 2, emoji: '\u{1F614}', label: 'Ntakibirimo / Low' },
-  { value: 1, emoji: '\u{1F622}', label: 'Byanze / Very Low' },
+  { value: 5, emoji: '\u{1F60A}', label: 'Great', labelRw: 'Neza cyane' },
+  { value: 4, emoji: '\u{1F642}', label: 'Good', labelRw: 'Neza' },
+  { value: 3, emoji: '\u{1F610}', label: 'Okay', labelRw: 'Bisanzwe' },
+  { value: 2, emoji: '\u{1F614}', label: 'Low', labelRw: 'Ntakibirimo' },
+  { value: 1, emoji: '\u{1F622}', label: 'Very Low', labelRw: 'Byanze' },
 ];
 
 const REASONS = [
-  { rw: 'Mfite agahinda n\'ibibazo by\'umutima', en: 'I carry grief and heart pain' },
-  { rw: 'Mfite ubwoba n\'umuhangayiko', en: 'I deal with anxiety and worry' },
-  { rw: 'Ntangwa n\'ibintu byankubye, ndashaka gukira', en: 'I want to heal from past wounds' },
-  { rw: 'Ndananiwe n\'imirimo n\'ishuri', en: 'I am exhausted from work or school' },
-  { rw: 'Ndashaka kumenya neza ibyiyumvo byanjye', en: 'I want to understand my emotions better' },
-  { rw: 'Ndashaka ubufasha bw\'abajyanama', en: 'I am looking for someone to talk to' },
+  { rw: 'Mfite agahinda n\'ibibazo by\'umutima', en: 'I carry grief and heart pain', icon: '\u{1F494}' },
+  { rw: 'Mfite ubwoba n\'umuhangayiko', en: 'I deal with anxiety and worry', icon: '\u{1F9E0}' },
+  { rw: 'Ntangwa n\'ibintu byankubye, ndashaka gukira', en: 'I want to heal from past wounds', icon: '\u{1F33F}' },
+  { rw: 'Ndananiwe n\'imirimo n\'ishuri', en: 'I am exhausted from work or school', icon: '\u{1F634}' },
+  { rw: 'Ndashaka kumenya neza ibyiyumvo byanjye', en: 'I want to understand my emotions better', icon: '\u{1F4AD}' },
+  { rw: 'Ndashaka ubufasha bw\'abajyanama', en: 'I am looking for someone to talk to', icon: '\u{1F9D1}\u200D\u2764\uFE0F' },
 ];
 
 const stepVariants = {
@@ -114,33 +120,41 @@ export default function QuickOnboard({ onComplete }) {
                 >
                   {TOPICS.map((t) => (
                     <motion.button
-                      key={t}
-                      className={`topic-chip ${(answers.topics || []).includes(t) ? 'selected' : ''}`}
+                      key={t.label}
+                      className={`topic-chip ${(answers.topics || []).includes(t.label) ? 'selected' : ''}`}
                       onClick={() => {
                         const currentTopics = answers.topics || [];
-                        const next = currentTopics.includes(t)
-                          ? currentTopics.filter((x) => x !== t)
-                          : [...currentTopics, t];
+                        const next = currentTopics.includes(t.label)
+                          ? currentTopics.filter((x) => x !== t.label)
+                          : [...currentTopics, t.label];
                         setAnswers((a) => ({ ...a, topics: next }));
                       }}
                       variants={itemVariants}
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
                     >
-                      {t}
+                      <span className="topic-chip-icon">{t.icon}</span>
+                      <span>{t.label}</span>
                     </motion.button>
                   ))}
                   {(answers.topics || []).length > 0 && (
-                    <motion.button
-                      className="btn btn-primary btn-sm w-full mt-2"
-                      onClick={() => handleNext(answers.topics || [])}
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      whileHover={{ scale: 1.02 }}
-                      whileTap={{ scale: 0.98 }}
-                    >
-                      Continue / Komeza
-                    </motion.button>
+                    <>
+                      <div className="heading-divider" aria-hidden="true" style={{ margin: '0.75rem auto 0.5rem' }}>
+                        <span className="heading-divider-line" />
+                        <span className="heading-divider-icon" style={{ fontSize: '0.6rem' }}>{'\u{2705}'}</span>
+                        <span className="heading-divider-line" />
+                      </div>
+                      <motion.button
+                        className="btn btn-primary btn-sm w-full"
+                        onClick={() => handleNext(answers.topics || [])}
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        whileHover={{ scale: 1.02 }}
+                        whileTap={{ scale: 0.98 }}
+                      >
+                        Continue / Komeza
+                      </motion.button>
+                    </>
                   )}
                 </motion.div>
               </>
@@ -162,7 +176,8 @@ export default function QuickOnboard({ onComplete }) {
                       whileHover={{ scale: 1.015, borderColor: 'var(--primary)' }}
                       whileTap={{ scale: 0.98 }}
                     >
-                      {label}
+                      <span className="reason-icon">{r.icon}</span>
+                      <span className="reason-text">{label}</span>
                     </motion.button>
                   );
                 })}
@@ -177,21 +192,14 @@ export default function QuickOnboard({ onComplete }) {
                 {FEELINGS.map((f) => (
                   <motion.button
                     key={f.value}
-                    className="quick-mood-btn"
+                    className={`quick-mood-btn ${answers.feeling === f.value ? 'selected' : ''}`}
                     onClick={() => handleNext(f.value)}
                     variants={itemVariants}
-                    whileHover={{ scale: 1.15, borderColor: 'var(--primary)' }}
-                    whileTap={{ scale: 0.9 }}
-                    animate={answers.feeling === f.value ? { scale: [1, 1.2, 1], borderColor: 'var(--primary)' } : {}}
-                    style={{
-                      width: 60,
-                      height: 60,
-                      fontSize: '1.8rem',
-                      borderColor: answers.feeling === f.value ? 'var(--primary)' : 'var(--border)',
-                      background: answers.feeling === f.value ? 'var(--primary-light)' : undefined,
-                    }}
+                    whileHover={{ scale: 1.08, borderColor: 'var(--primary)' }}
+                    whileTap={{ scale: 0.92 }}
                   >
-                    {f.emoji}
+                    <span className="quick-mood-emoji">{f.emoji}</span>
+                    <span className="quick-mood-label">{lang === 'rw' ? f.labelRw : f.label}</span>
                   </motion.button>
                 ))}
               </motion.div>

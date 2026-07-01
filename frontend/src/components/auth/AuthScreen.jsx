@@ -145,16 +145,34 @@ export default function AuthScreen({ onComplete }) {
               transition={{ duration: 0.25 }}
               style={{ display: 'flex', flexDirection: 'column', gap: '0.85rem' }}
             >
-              <motion.div
-                className="auth-shield-icon"
-                initial={{ scale: 0 }}
-                animate={{ scale: 1 }}
-                transition={{ type: 'spring', stiffness: 200, damping: 12 }}
-              >
-                {'\u{1F6E1}\uFE0F'}
-              </motion.div>
-              <h2 style={{ marginBottom: '0.25rem' }}>You are safe here</h2>
+              <div className="auth-shield-wrap">
+                <div className="auth-shield-glow" />
+                <motion.div
+                  className="auth-shield-icon"
+                  initial={{ scale: 0, rotate: -15 }}
+                  animate={{ scale: 1, rotate: 0 }}
+                  transition={{ type: 'spring', stiffness: 180, damping: 12 }}
+                >
+                  {'\u{1F6E1}\uFE0F'}
+                </motion.div>
+              </div>
+              <h2 className="auth-shield-title">You are safe here</h2>
               <p className="auth-subtitle">No account needed to get started</p>
+
+              <div className="auth-benefits">
+                <div className="auth-benefit">
+                  <span className="auth-benefit-icon">{'\u{1F512}'}</span>
+                  <span className="auth-benefit-text">100% anonymous &amp; private</span>
+                </div>
+                <div className="auth-benefit">
+                  <span className="auth-benefit-icon">{'\u{1F4B5}'}</span>
+                  <span className="auth-benefit-text">Free, always</span>
+                </div>
+                <div className="auth-benefit">
+                  <span className="auth-benefit-icon">{'\u{1F30D}'}</span>
+                  <span className="auth-benefit-text">Built for Rwanda</span>
+                </div>
+              </div>
 
               <motion.button
                 className="btn btn-primary btn-lg w-full"

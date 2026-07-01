@@ -1,18 +1,31 @@
 import { useState, useEffect } from 'react';
 import { moodAPI } from '../../services/api';
+import Loading from '../common/Loading';
 
 export default function MoodInsights() {
   const [insights, setInsights] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    setLoading(true);
     moodAPI.getInsights().then((res) => {
       setInsights(res.data?.insights);
-    }).catch(() => {});
+    }).catch(() => {}).finally(() => {
+      setLoading(false);
+    });
   }, []);
+
+  if (loading) {
+    return (
+      <div className="card card-accent">
+        <Loading text="Loading insights..." />
+      </div>
+    );
+  }
 
   if (!insights) {
     return (
-      <div className="card">
+      <div className="card card-accent">
         <div className="card-title" style={{ marginBottom: '0.5rem' }}>Mood Insights</div>
         <p className="text-muted" style={{ fontSize: '0.85rem' }}>
           Log your mood for a few days to see insights here.
@@ -22,7 +35,7 @@ export default function MoodInsights() {
   }
 
   return (
-    <div className="card">
+    <div className="card card-accent">
       <div className="card-title" style={{ marginBottom: '0.75rem' }}>Mood Insights</div>
       <div className="insights-grid">
         <div className="insight-stat">

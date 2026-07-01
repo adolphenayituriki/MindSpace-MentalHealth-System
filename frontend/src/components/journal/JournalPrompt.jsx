@@ -1,11 +1,13 @@
 import { useState, useEffect } from 'react';
 import { journalAPI } from '../../services/api';
 import { useTranslation } from '../../i18n/i18n';
+import Loading from '../common/Loading';
 
 export default function JournalPrompt({ onSelect }) {
   const { getLanguage } = useTranslation();
   const [prompts, setPrompts] = useState([]);
   const [featured, setFeatured] = useState('');
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     journalAPI.getPrompts(getLanguage()).then((res) => {
@@ -14,8 +16,12 @@ export default function JournalPrompt({ onSelect }) {
       if (list.length > 0) {
         setFeatured(list[Math.floor(Math.random() * list.length)]);
       }
-    }).catch(() => {});
+    }).catch(() => {}).finally(() => {
+      setLoading(false);
+    });
   }, []);
+
+  if (loading) return <Loading text="Loading prompts..." />;
 
   return (
     <div className="journal-prompts">

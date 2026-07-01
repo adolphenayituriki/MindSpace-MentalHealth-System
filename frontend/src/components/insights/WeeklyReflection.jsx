@@ -16,7 +16,7 @@ export default function WeeklyReflection() {
 
   if (loading) {
     return (
-      <div className="card">
+      <div className="card card-accent">
         <div className="card-title" style={{ marginBottom: '0.5rem' }}>Weekly Reflection</div>
         <p className="text-muted" style={{ fontSize: '0.85rem' }}>Loading...</p>
       </div>
@@ -26,9 +26,8 @@ export default function WeeklyReflection() {
   if (!insight) return null;
 
   return (
-    <div className="card">
+    <div className="card card-accent">
       <div className="card-title" style={{ marginBottom: '0.75rem' }}>Weekly Reflection</div>
-
       {insight.aiReflection && (
         <div className="weekly-reflection">{insight.aiReflection}</div>
       )}

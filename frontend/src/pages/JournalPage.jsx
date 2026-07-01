@@ -4,6 +4,7 @@ import { useAuth } from '../contexts/AuthContext';
 import { journalAPI } from '../services/api';
 import JournalEntry from '../components/journal/JournalEntry';
 import JournalPrompt from '../components/journal/JournalPrompt';
+import Loading from '../components/common/Loading';
 import { formatDate } from '../utils/helpers';
 
 const MOOD_EMOJIS = { 5: '\u{1F60A}', 4: '\u{1F642}', 3: '\u{1F610}', 2: '\u{1F614}', 1: '\u{1F622}' };
@@ -16,14 +17,18 @@ export default function JournalPage() {
   const [creating, setCreating] = useState(false);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+  const [loading, setLoading] = useState(true);
 
   const fetchEntries = async (p = 1) => {
+    setLoading(true);
     try {
       const res = await journalAPI.getAll(p);
       setEntries(res.data?.entries || []);
       setTotalPages(res.data?.pages || 1);
       setPage(res.data?.page || 1);
-    } catch (_) {}
+    } catch (_) {} finally {
+      setLoading(false);
+    }
   };
 
   useEffect(() => { fetchEntries(); }, []);
@@ -74,6 +79,7 @@ export default function JournalPage() {
 
       <JournalPrompt onSelect={() => setCreating(true)} />
 
+      {loading ? <Loading text="Loading entries..." /> : (
       <div className="entries-list">
         {entries.map((e) => (
           <div key={e._id} className="entry-card" onClick={() => setEditing(e)}>
@@ -94,6 +100,7 @@ export default function JournalPage() {
           </div>
         )}
       </div>
+      )}
 
       {totalPages > 1 && (
         <div className="pagination">

@@ -94,9 +94,16 @@ function ActionCard({ to, icon, label, desc, color }) {
 
 function SectionTitle({ icon, label }) {
   return (
-    <h3 className="section-title" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', marginBottom: '0.65rem' }}>
-      <span>{icon}</span> {label}
-    </h3>
+    <div className="dashboard-section-header">
+      <h3>
+        <span>{icon}</span> {label}
+      </h3>
+      <div className="heading-divider">
+        <span className="heading-divider-line" />
+        <span className="heading-divider-icon">{'\u{1F33F}'}</span>
+        <span className="heading-divider-line" />
+      </div>
+    </div>
   );
 }
 
@@ -116,12 +123,17 @@ function UserDashboard({ user, lang, greeting }) {
   return (
     <div>
       <div className="page-header">
-        <div>
+        <div style={{ width: '100%' }}>
           <h1 style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flexWrap: 'wrap' }}>
             {greeting}, {user?.displayName || 'Friend'}
             <RoleBadge role="user" />
           </h1>
           <p>{lang === 'rw' ? 'Umeze ute uyu munsi?' : 'How are you doing today?'}</p>
+          <div className="heading-divider" style={{ justifyContent: 'flex-start', margin: '0.5rem 0 0' }}>
+            <span className="heading-divider-line" style={{ width: '60px' }} />
+            <span className="heading-divider-icon">{'\u{1F33F}'}</span>
+            <span className="heading-divider-line" style={{ width: '60px' }} />
+          </div>
         </div>
       </div>
 
@@ -159,7 +171,7 @@ function CounselorDashboard({ user, lang, greeting }) {
   return (
     <div>
       <div className="page-header">
-        <div>
+        <div style={{ width: '100%' }}>
           <h1 style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flexWrap: 'wrap' }}>
             {greeting}, {user?.displayName || 'Counselor'}
             <RoleBadge role="counselor" />
@@ -167,6 +179,11 @@ function CounselorDashboard({ user, lang, greeting }) {
           <p style={{ color: 'var(--text-secondary)' }}>
             {lang === 'rw' ? 'Murakaza neza kuri porogaramu. Hano ni ho uzitabira abantu bakeneye ubufasha.' : 'Welcome. This is where you support people in need.'}
           </p>
+          <div className="heading-divider" style={{ justifyContent: 'flex-start', margin: '0.5rem 0 0' }}>
+            <span className="heading-divider-line" style={{ width: '60px' }} />
+            <span className="heading-divider-icon">{'\u{1F33F}'}</span>
+            <span className="heading-divider-line" style={{ width: '60px' }} />
+          </div>
         </div>
       </div>
 
@@ -178,7 +195,7 @@ function CounselorDashboard({ user, lang, greeting }) {
         <ActionCard to="/crisis" icon={'\u{1F6E1}\uFE0F'} label={lang === 'rw' ? 'Ihutirwa' : 'Crisis Support'} desc={lang === 'rw' ? 'Ibikoresho by\'ihutirwa' : 'Emergency resources'} color="#EF4444" />
       </div>
 
-      <div className="card" style={{ padding: '1.25rem', marginBottom: '1.5rem', borderLeft: '3px solid #6366F1' }}>
+      <div className="card card-accent" style={{ padding: '1.25rem', marginBottom: '1.5rem' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
           <div style={{ fontSize: '2rem' }}>{'\u{1F9D1}\u200D\u{2764}\uFE0F'}</div>
           <div>
@@ -217,7 +234,7 @@ function AdminDashboard({ user, lang, greeting }) {
   return (
     <div>
       <div className="page-header" style={{ marginBottom: '1.25rem' }}>
-        <div>
+        <div style={{ width: '100%' }}>
           <h1 style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flexWrap: 'wrap' }}>
             {greeting}, {user?.displayName || 'Admin'}
             <RoleBadge role="admin" />
@@ -225,10 +242,15 @@ function AdminDashboard({ user, lang, greeting }) {
           <p style={{ color: 'var(--text-secondary)' }}>
             {lang === 'rw' ? 'Reba incamake ya porogaramu, cunga abakoresha n\'ibikoresho.' : 'Platform overview — manage users, resources, and content.'}
           </p>
+          <div className="heading-divider" style={{ justifyContent: 'flex-start', margin: '0.5rem 0 0' }}>
+            <span className="heading-divider-line" style={{ width: '60px' }} />
+            <span className="heading-divider-icon">{'\u{1F33F}'}</span>
+            <span className="heading-divider-line" style={{ width: '60px' }} />
+          </div>
         </div>
       </div>
 
-      <div className="card" style={{ padding: '1.25rem', marginBottom: '1.5rem', borderLeft: '3px solid #EF4444' }}>
+      <div className="card card-accent" style={{ padding: '1.25rem', marginBottom: '1.5rem' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
           <div style={{ fontSize: '2rem' }}>{'\u{1F6E1}\uFE0F'}</div>
           <div>

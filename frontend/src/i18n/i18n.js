@@ -3,7 +3,7 @@ import rw from './rw.json';
 
 const translations = { en, rw };
 
-let currentLang = localStorage.getItem('mindspace_lang') || 'rw';
+let currentLang = localStorage.getItem('mindspace_lang') || 'en';
 
 export function t(key) {
   const keys = key.split('.');
